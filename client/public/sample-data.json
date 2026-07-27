@@ -1,0 +1,132 @@
+
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Manish Shriwas",
+      "email": "manish@example.com",
+      "password": "$2b$10$hashedPassword",
+      "createdAt": "2026-07-23T09:00:00Z",
+      "updatedAt": "2026-07-23T09:00:00Z"
+    }
+  ],
+
+  "projects": [
+    {
+      "id": "p1",
+      "name": "Internship Training",
+      "description": "Complete the 30-day MEAN Stack internship roadmap.",
+      "userId": "u1",
+      "createdAt": "2026-07-23T09:10:00Z",
+      "updatedAt": "2026-07-23T09:10:00Z"
+    },
+    {
+      "id": "p2",
+      "name": "Personal Learning",
+      "description": "Practice Angular, Node.js and MongoDB.",
+      "userId": "u1",
+      "createdAt": "2026-07-23T09:20:00Z",
+      "updatedAt": "2026-07-23T09:20:00Z"
+    },
+    {
+      "id": "p3",
+      "name": "College Project",
+      "description": "Build the final year academic project.",
+      "userId": "u1",
+      "createdAt": "2026-07-23T09:30:00Z",
+      "updatedAt": "2026-07-23T09:30:00Z"
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Design Login Screen",
+      "description": "Create the login page wireframe.",
+      "status": "Completed",
+      "priority": "High",
+      "dueDate": "2026-07-24",
+      "projectId": "p1",
+      "createdAt": "2026-07-23T10:00:00Z",
+      "updatedAt": "2026-07-23T10:00:00Z"
+    },
+    {
+      "id": "t2",
+      "title": "Design Dashboard",
+      "description": "Create dashboard layout with task cards.",
+      "status": "Completed",
+      "priority": "High",
+      "dueDate": "2026-07-25",
+      "projectId": "p1",
+      "createdAt": "2026-07-23T10:10:00Z",
+      "updatedAt": "2026-07-23T10:10:00Z"
+    },
+    {
+      "id": "t3",
+      "title": "Build Task Form",
+      "description": "Design Create/Edit Task form.",
+      "status": "In Progress",
+      "priority": "High",
+      "dueDate": "2026-07-26",
+      "projectId": "p1",
+      "createdAt": "2026-07-23T10:20:00Z",
+      "updatedAt": "2026-07-23T10:20:00Z"
+    },
+    {
+      "id": "t4",
+      "title": "Create Entity Diagram",
+      "description": "Prepare ER diagram for User, Project and Task.",
+      "status": "Pending",
+      "priority": "Medium",
+      "dueDate": "2026-07-27",
+      "projectId": "p1",
+      "createdAt": "2026-07-23T10:30:00Z",
+      "updatedAt": "2026-07-23T10:30:00Z"
+    },
+    {
+      "id": "t5",
+      "title": "Learn Angular Components",
+      "description": "Understand component architecture.",
+      "status": "Pending",
+      "priority": "Medium",
+      "dueDate": "2026-07-28",
+      "projectId": "p2",
+      "createdAt": "2026-07-23T10:40:00Z",
+      "updatedAt": "2026-07-23T10:40:00Z"
+    },
+    {
+      "id": "t6",
+      "title": "Practice MongoDB CRUD",
+      "description": "Perform CRUD operations using MongoDB.",
+      "status": "Pending",
+      "priority": "High",
+      "dueDate": "2026-07-29",
+      "projectId": "p2",
+      "createdAt": "2026-07-23T10:50:00Z",
+      "updatedAt": "2026-07-23T10:50:00Z"
+    },
+    {
+      "id": "t7",
+      "title": "Prepare Project Report",
+      "description": "Write documentation for the final project.",
+      "status": "Pending",
+      "priority": "Low",
+      "dueDate": "2026-08-05",
+      "projectId": "p3",
+      "createdAt": "2026-07-23T11:00:00Z",
+      "updatedAt": "2026-07-23T11:00:00Z"
+    },
+    {
+      "id": "t8",
+      "title": "Deploy Backend",
+      "description": "Deploy backend server for the college project.",
+      "status": "Pending",
+      "priority": "High",
+      "dueDate": "2026-08-08",
+      "projectId": "p3",
+      "createdAt": "2026-07-23T11:10:00Z",
+      "updatedAt": "2026-07-23T11:10:00Z"
+    }
+  ]
+}
+

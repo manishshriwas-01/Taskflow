@@ -1,0 +1,38 @@
+<div class="card">
+
+    <div class="card-header">
+        <h3>{{ task.title }}</h3>
+        <span class="status">{{ task.status }}</span>
+    </div>
+
+    <p class="description">
+        {{ task.description }}
+    </p>
+
+    <div class="details">
+
+        <p>
+            <strong>Priority:</strong>
+            {{ task.priority }}
+        </p>
+
+        <p>
+            <strong>Due Date:</strong>
+            {{ task.dueDate }}
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button class="edit-btn" (click)="edit.emit()">
+             Edit
+        </button>
+
+        <button class="delete-btn" (click)="delete.emit()">
+             Delete
+        </button>
+
+    </div>
+
+</div>
