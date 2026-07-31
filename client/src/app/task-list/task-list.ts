@@ -25,10 +25,8 @@ export class TaskList {
 
   isEditMode = false;
 
-  ngOnInit() {
-    this.taskService.loadTasks();
-  }
-
+  
+ 
   addTask() {
 
     if (this.isEditMode) {
@@ -37,11 +35,14 @@ export class TaskList {
       this.isEditMode = false;
 
     } else {
+      const tasks=this.taskService.tasks();
+
+      const newId=tasks.length>0 ? Math.max(...tasks.map(task=>task.id))+1:1;
 
       this.taskService.addTask({
         ...this.newTask,
-        id: this.taskService
-      });
+        id:newId,
+      })
 
     }
 

@@ -32,6 +32,8 @@
         <button class="delete-btn" (click)="delete.emit()">
              Delete
         </button>
+        
+        <a [routerLink]="['/task',task.id]">Details</a>
 
     </div>
 
