@@ -1,72 +1,223 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, signal, effect } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+
 import { TaskCard } from '../task-card/task-card';
 import { Services } from '../services/services';
+import { Task } from '../models/task';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskCard, FormsModule],
+  imports: [TaskCard, ReactiveFormsModule],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
-export class TaskList {
+export class TaskList implements OnInit {
 
-  constructor(public taskService: Services) {}
+  searchControl = new FormControl('');
+  statusControl = new FormControl('All');
 
-  newTask = {
-    id: 0,
-    title: '',
-    description: '',
-    status: 'Todo',
-    priority: 'Medium',
-    dueDate: ''
-  };
+  filteredTasks = signal<Task[]>([]);
+
+  taskForm!: FormGroup;
 
   isEditMode = false;
+  editTaskId = 0;
 
-  
- 
+  constructor(
+    public taskService: Services,
+    private fb: FormBuilder
+  ) {
+
+
+    effect(() => {
+
+      this.filteredTasks.set(this.taskService.tasks());
+
+    });
+
+  }
+  ngOnInit(): void {
+
+    this.taskService.loadTasks();
+
+    this.taskForm = this.fb.group({
+
+      title: ['', [Validators.required, Validators.minLength(3)]],
+
+      description: [''],
+
+      status: ['Todo', Validators.required],
+
+      priority: ['Medium'],
+
+      dueDate: ['', Validators.required]
+
+    });
+
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+
+        this.applyFilters();
+
+      });
+
+    this.statusControl.valueChanges.subscribe(() => {
+
+      this.applyFilters();
+
+    });
+
+  }
+
   addTask() {
 
-    if (this.isEditMode) {
+    if (this.taskForm.invalid) {
 
-      this.taskService.updateTask(this.newTask);
-      this.isEditMode = false;
-
-    } else {
-      const tasks=this.taskService.tasks();
-
-      const newId=tasks.length>0 ? Math.max(...tasks.map(task=>task.id))+1:1;
-
-      this.taskService.addTask({
-        ...this.newTask,
-        id:newId,
-      })
+      this.taskForm.markAllAsTouched();
+      return;
 
     }
 
-    this.resetForm();
-  }
+    const taskData = this.taskForm.value;
 
-  editTask(task: any) {
-    this.newTask = { ...task };
+    if (this.isEditMode) {
+
+      this.taskService.updateTask({
+
+        ...taskData,
+
+        id: this.editTaskId
+
+      }).subscribe(() => {
+
+        this.taskService.loadTasks();
+
+        this.isEditMode = false;
+
+        this.applyFilters();
+
+        this.resetForm();
+
+      });
+
+    } else {
+
+      const tasks = this.taskService.tasks();
+
+      const newId =
+        tasks.length > 0
+          ? Math.max(...tasks.map(task => task.id)) + 1
+          : 1;
+
+      this.taskService.addTask({
+
+        ...taskData,
+
+        id: newId
+
+      }).subscribe(() => {
+
+        this.taskService.loadTasks();
+
+        this.applyFilters();
+
+        this.resetForm();
+
+      });
+
+    }
+
+  }
+  editTask(task: Task) {
+
+    this.taskForm.patchValue({
+
+      title: task.title,
+
+      description: task.description,
+
+      status: task.status,
+
+      priority: task.priority,
+
+      dueDate: task.dueDate
+
+    });
+
+    this.editTaskId = task.id;
+
     this.isEditMode = true;
+
   }
 
   deleteTask(id: number) {
-    this.taskService.deleteTask(id);
+
+    this.taskService.deleteTask(id)
+
+      .subscribe(() => {
+
+        this.taskService.loadTasks();
+
+        this.applyFilters();
+
+      });
+
+  }
+
+  applyFilters() {
+
+    const search = this.searchControl.value?.toLowerCase() || '';
+
+    const status = this.statusControl.value;
+
+    const filtered = this.taskService.tasks().filter(task => {
+
+      const matchSearch =
+
+        task.title.toLowerCase().includes(search);
+
+      const matchStatus =
+
+        status === 'All' ||
+
+        task.status === status;
+
+      return matchSearch && matchStatus;
+
+    });
+
+    this.filteredTasks.set(filtered);
+
   }
 
   resetForm() {
-    this.newTask = {
-      id: 0,
+
+    this.taskForm.reset({
+
       title: '',
+
       description: '',
+
       status: 'Todo',
+
       priority: 'Medium',
+
       dueDate: ''
-    };
+
+    });
+
   }
 
 }

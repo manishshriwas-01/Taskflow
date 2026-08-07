@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "id": "2",
+      "title": "Build Login",
+      "description": "Reactive Forms",
+      "status": "In Progress",
+      "priority": "Medium",
+      "dueDate": "2026-08-12"
+    },
+    {
+      "id": "3",
+      "title": "Deploy Project",
+      "description": "Upload to GitHub",
+      "status": "Done",
+      "priority": "Low",
+      "dueDate": "2026-08-15"
+    },
+    {
+      "title": "Learn Angular",
+      "description": "mearn",
+      "status": "Todo",
+      "priority": "Medium",
+      "dueDate": "2026-08-15",
+      "id": "jlPjPqS_oCc"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

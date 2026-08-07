@@ -1,59 +1,142 @@
-<div class="task-form">
+<form class="task-form"
+      [formGroup]="taskForm"
+      (ngSubmit)="addTask()">
+
   @if(isEditMode){
-    <h2>Edit Task </h2>
-  }
-  @else{
+
+    <h2>Edit Task</h2>
+
+  }@else{
+
     <h2>Add New Task</h2>
+
   }
-  
 
+  <input
+      type="text"
+      placeholder="Title"
+      formControlName="title">
 
+  @if(taskForm.get('title')?.touched &&
+      taskForm.get('title')?.hasError('required')){
 
-  <input type="text" placeholder="Title" [(ngModel)]="newTask.title">
+      <p class="error">
 
-  <textarea placeholder="Description" [(ngModel)]="newTask.description">
-    </textarea>
+          Title is required
+
+      </p>
+
+  }
+
+  @if(taskForm.get('title')?.touched &&
+      taskForm.get('title')?.hasError('minlength')){
+
+      <p class="error">
+
+          Minimum 3 characters required
+
+      </p>
+
+  }
+
+  <textarea
+      placeholder="Description"
+      formControlName="description">
+  </textarea>
 
   <div class="row">
 
-    <select [(ngModel)]="newTask.status">
-      <option>Todo</option>
-      <option>In Progress</option>
-      <option>Done</option>
-    </select>
+      <select formControlName="status">
 
-    <select [(ngModel)]="newTask.priority">
-      <option>Low</option>
-      <option>Medium</option>
-      <option>High</option>
-    </select>
+          <option>Todo</option>
+
+          <option>In Progress</option>
+
+          <option>Done</option>
+
+      </select>
+
+      <select formControlName="priority">
+
+          <option>Low</option>
+
+          <option>Medium</option>
+
+          <option>High</option>
+
+      </select>
 
   </div>
 
-  <input type="date" [(ngModel)]="newTask.dueDate">
+  <input
+      type="date"
+      formControlName="dueDate">
 
-  @if(isEditMode){
-  <button (click)="addTask()">
-    Edit
-  </button>
-  }
-  @else{
-  <button (click)="addTask()">
-    Add Task
-  </button>
+  @if(taskForm.get('dueDate')?.touched &&
+      taskForm.get('dueDate')?.hasError('required')){
+
+      <p class="error">
+
+          Due Date is required
+
+      </p>
+
   }
 
-</div>
+  <button
+      type="submit"
+      [disabled]="taskForm.invalid">
+
+      {{isEditMode ? 'Update Task' : 'Add Task'}}
+
+  </button>
+
+</form>
 
 <hr>
 
+<div class="search-box">
+
+    <input
+
+        type="text"
+
+        placeholder="Search Task..."
+
+        [formControl]="searchControl">
+
+</div>
+
+<div class="filter-row">
+
+    <select [formControl]="statusControl">
+
+        <option value="All">All</option>
+
+        <option value="Todo">Todo</option>
+
+        <option value="In Progress">In Progress</option>
+
+        <option value="Done">Done</option>
+
+    </select>
+
+</div>
+
 <div class="task-container">
 
-  @for(task of taskService.tasks(); track task.id){
+@for(task of filteredTasks(); track task.id){
 
-  <app-task-card [task]="task" (delete)="deleteTask(task.id)" (edit)="editTask(task)">
-  </app-task-card>
+    <app-task-card
 
-  }
+        [task]="task"
+
+        (delete)="deleteTask(task.id)"
+
+        (edit)="editTask(task)">
+
+    </app-task-card>
+
+}
 
 </div>

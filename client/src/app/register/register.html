@@ -1,0 +1,102 @@
+<form
+class="register-form"
+[formGroup]="registerForm"
+(ngSubmit)="register()">
+
+<h2>Create Account</h2>
+
+<label>Full Name</label>
+
+<input
+type="text"
+placeholder="Enter full name"
+formControlName="name">
+
+@if(registerForm.get('name')?.touched &&
+registerForm.get('name')?.hasError('required')){
+
+<p class="error">
+Full Name is required
+</p>
+
+}
+
+@if(registerForm.get('name')?.touched &&
+registerForm.get('name')?.hasError('minlength')){
+
+<p class="error">
+Minimum 3 characters required
+</p>
+
+}
+
+<label>Email</label>
+
+<input
+type="email"
+placeholder="Enter email"
+formControlName="email">
+
+@if(registerForm.get('email')?.touched &&
+registerForm.get('email')?.hasError('required')){
+
+<p class="error">
+Email is required
+</p>
+
+}
+
+@if(registerForm.get('email')?.touched &&
+registerForm.get('email')?.hasError('email')){
+
+<p class="error">
+Enter a valid email
+</p>
+
+}
+
+<label>Password</label>
+
+<input
+type="password"
+placeholder="Enter password"
+formControlName="password">
+
+@if(registerForm.get('password')?.touched &&
+registerForm.get('password')?.hasError('required')){
+
+<p class="error">
+Password is required
+</p>
+
+}
+
+@if(registerForm.get('password')?.touched &&
+registerForm.get('password')?.hasError('minlength')){
+
+<p class="error">
+Minimum 6 characters required
+</p>
+
+}
+
+<button
+type="submit"
+[disabled]="registerForm.invalid">
+
+Register
+
+</button>
+
+<p class="login-link">
+Already have an account?
+
+<a routerLink="/login">
+
+Login
+
+</a>
+
+</p>
+
+</form>

@@ -8,21 +8,29 @@ import {
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrl: './login.css'
+  imports: [ReactiveFormsModule,RouterLink],
+  templateUrl: './register.html',
+  styleUrl: './register.css'
 })
-export class Login implements OnInit {
+export class Register implements OnInit {
 
-  loginForm!: FormGroup;
+  registerForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
 
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
+
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
 
       email: [
         '',
@@ -44,18 +52,18 @@ export class Login implements OnInit {
 
   }
 
-  login() {
+  register() {
 
-    if (this.loginForm.invalid) {
+    if (this.registerForm.invalid) {
 
-      this.loginForm.markAllAsTouched();
+      this.registerForm.markAllAsTouched();
       return;
 
     }
 
-    console.log(this.loginForm.value);
+    console.log(this.registerForm.value);
 
-    this.loginForm.reset();
+    this.registerForm.reset();
 
   }
 
