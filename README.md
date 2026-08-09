@@ -1,132 +1,244 @@
-# TaskFlow
+#  TaskFlow – MEAN Stack Task Management Application
 
-TaskFlow is a task management application built using the MEAN Stack (MongoDB, Express.js, Angular, and Node.js). It helps users organize their work by creating projects and managing tasks in a simple and efficient way.
+TaskFlow is a task management application developed as part of my MEAN Stack training. The project is being built incrementally to learn Angular, RxJS, Authentication, HTTP APIs, Routing, Reactive Forms, and other modern web development concepts.
 
-## Overview
+---
 
-The goal of TaskFlow is to provide a simple platform where users can:
+# Project Timeline
 
-- Create and manage projects
-- Add, edit, and delete tasks
-- Track task status and priority
-- Set due dates
-- Search and filter tasks
-- Monitor project progress
+## Day 0 – Project Planning
 
-## Features
+### Learning
+- Understood the MEAN Stack project roadmap.
+- Planned the application architecture.
 
-- User Authentication
-- Project Management
-- Task Management
-- Dashboard
-- Search & Filter
-- Task Status Tracking
-- Priority Management
-- Due Date Management
-- Responsive User Interface
+### Implemented
+- Selected **TaskFlow** as the project.
+- Defined the overall project goal and development phases.
 
-## Tech Stack
+---
 
-### Frontend
-- Angular
+# Phase 0 – Project Setup & Planning
 
-### Backend
+##  Day 1 – Feature Planning
+
+### Learning
+- Requirement Analysis
+- User Stories
+- Acceptance Criteria
+
+### Implemented
+- Selected **TaskFlow** as the application.
+- Created feature list.
+- Wrote user stories.
+- Defined acceptance criteria.
+
+---
+
+## Day 2 – UI Design & Entity Planning
+
+### Learning
+- UI Planning
+- Entity Relationship Design
+
+### Implemented
+- Designed Login page.
+- Designed Dashboard.
+- Designed Task Form.
+- Identified entities:
+  - User
+  - Project
+  - Task
+
+---
+
+##  Day 3 – JSON Data Design
+
+### Learning
+- JSON Structure
+- Object Relationships
+
+### Implemented
+- Designed JSON structure for:
+  - User
+  - Project
+  - Task
+- Created sample-data.json.
+
+---
+
+##  Day 4 – Repository Setup
+
+### Learning
+- Git & GitHub Basics
+
+### Implemented
+- Created GitHub repository.
+- Added README.md.
+- Added .gitignore.
+- Created:
+  - client/
+  - server/
+
+---
+
+##  Day 5 – Node.js Data Processing
+
+### Learning
 - Node.js
-- Express.js
+- File System
+- JSON Handling
 
-### Database
-- MongoDB
+### Implemented
+- Loaded sample JSON.
+- Grouped tasks by status.
+- Sorted tasks by due date.
 
-### Tools
-- Git
-- GitHub
-- VS Code
+---
 
-## Project Structure
+# Phase 1 – Angular Frontend
 
-```text
-TaskFlow/
-│
-├── client/
-│
-├── server/
-│
-├── docs/
-│   ├── features.md
-│   ├── user-stories.md
-│   ├── entities.md
-│   └── sample-data.json
-│
-├── .gitignore
-│
-└── README.md
-```
+##  Day 6 – Angular Setup & Components
 
-## Data Model
+### Learning
+- Angular CLI
+- Standalone Components
+- Templates
+- Data Binding
 
-The application is based on three core entities:
+### Implemented
+- Created Angular application.
+- Built initial TaskFlow UI.
+- Created Dashboard component.
 
-- User
-- Project
-- Task
+---
+## Day 7 – Components & Services
 
-Relationship:
+### Learning
+- Components
+- Services
+- Dependency Injection
 
-```text
-User
- │
- └── Projects
-        │
-        └── Tasks
-```
+### Implemented
+- Created TaskList component.
+- Created TaskCard component.
+- Rendered tasks dynamically using **@for**.
 
-### User
-A user can create and manage multiple projects.
+---
 
-### Project
-A project belongs to one user and contains multiple tasks.
+##  Day 8 – Signals & State Management
 
-### Task
-A task belongs to one project and stores information such as title, description, priority, status, and due date.
+### Learning
+- Angular Signals
+- signal()
+- update()
 
-## API
+### Implemented
+- Created Signal-based TaskService.
+- Implemented:
+  - Add Task
+  - Edit Task
+  - Delete Task
 
-REST APIs will be implemented for:
+---
 
+##  Day 9 – Routing
+
+### Learning
+- Angular Routing
+- routerLink
+- Route Parameters
+
+### Implemented
+- Login page
+- Dashboard
+- Task Details page
+- Navbar
+- 404 Not Found page
+
+---
+
+##  Day 10 – Reactive Forms
+
+### Learning
+- FormBuilder
+- Validators
+- Reactive Forms
+
+### Implemented
+- Built Add/Edit Task form.
+- Added form validations.
+- Displayed validation error messages.
+
+---
+
+# Phase 2 – Frontend Features
+
+##  Day 11 – HttpClient & Mock REST API
+
+### Learning
+- HttpClient
+- REST APIs
+- Typed Models
+
+### Implemented
+- Configured json-server.
+- Created Task interface.
+- Loaded tasks using HttpClient GET.
+- Connected Angular with db.json.
+
+---
+
+##  Day 12 – RxJS Search & Filtering
+
+### Learning
+- RxJS
+- valueChanges
+- debounceTime
+- distinctUntilChanged
+
+### Implemented
+- Task search.
+- Status filtering.
+- Signals with effect().
+- Started HTTP CRUD integration.
+
+---
+
+##  Day 13 – Custom Pipes & Directives
+
+### Learning
+- Custom Pipes
+- Custom Directives
+- @Input()
+- Renderer2
+- ElementRef
+- ngOnChanges()
+
+### Implemented
+- Created **dueSoon** custom pipe.
+- Created **StatusColorDirective**.
+- Displayed user-friendly due dates.
+- Added dynamic status colors to task cards.
+
+---
+
+## Day 14 – Authentication & Route Guards
+
+### Learning
 - Authentication
-- User Management
-- Project Management
-- Task Management
+- Authorization
+- AuthService
+- Functional Route Guards
+- localStorage
 
-## Future Enhancements
+### Implemented
+- Created AuthService.
+- Implemented Login functionality.
+- Implemented Logout functionality.
+- Stored authentication token in localStorage.
+- Protected Dashboard using Functional Route Guard.
+- Added Login/Logout navigation.
+- Restricted unauthorized access to protected routes.
 
-- JWT Authentication
-- Email Verification
-- File Attachments
-- Team Collaboration
-- Notifications
-- Dashboard Analytics
-- Dark Mode
-- Application Deployment
-
-## Installation
-
-Instructions will be added after the project setup is completed.
-
-## Usage
-
-Usage instructions will be added during development.
-
-## Contributing
-
-This project is currently under development as part of an internship training program.
-
-## License
-
-This project is intended for educational and learning purposes.
-
-## Author
-
-Manish Shriwas# Taskflow
-# Taskflow
-# Taskflow
+---

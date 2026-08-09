@@ -2,7 +2,11 @@
 
     <div class="card-header">
         <h3>{{ task.title }}</h3>
-        <span class="status">{{ task.status }}</span>
+        <span class="status" appStatusColor [status]="task.status">
+
+            {{ task.status }}
+
+        </span>
     </div>
 
     <p class="description">
@@ -12,13 +16,13 @@
     <div class="details">
 
         <p>
-            <strong>Priority:</strong>
+            <strong>Priority:</strong>t
             {{ task.priority }}
         </p>
 
         <p>
             <strong>Due Date:</strong>
-            {{ task.dueDate }}
+            {{ task.dueDate | dueSoon}}
         </p>
 
     </div>
@@ -26,13 +30,13 @@
     <div class="actions">
 
         <button class="edit-btn" (click)="edit.emit()">
-             Edit
+            Edit
         </button>
 
         <button class="delete-btn" (click)="delete.emit()">
-             Delete
+            Delete
         </button>
-        
+
         <a [routerLink]="['/task',task.id]">Details</a>
 
     </div>

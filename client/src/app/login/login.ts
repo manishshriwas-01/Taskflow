@@ -5,7 +5,8 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,10 @@ export class Login implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+    private authService:AuthService,
+     private router: Router
+  ) {}
 
   ngOnInit(): void {
 
@@ -43,20 +47,34 @@ export class Login implements OnInit {
     });
 
   }
+login() {
 
-  login() {
+  if (this.loginForm.invalid) {
 
-    if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
 
-      this.loginForm.markAllAsTouched();
-      return;
+  }
 
-    }
+  const { email, password } = this.loginForm.value;
 
-    console.log(this.loginForm.value);
+  const success = this.authService.login(
+    email,
+    password
+  );
+
+  if (success) {
+
+    this.router.navigate(['/dashboard']);
 
     this.loginForm.reset();
 
+  } else {
+
+    alert('Invalid Username or Password');
+
   }
+
+}
 
 }

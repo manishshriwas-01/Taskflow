@@ -6,7 +6,25 @@
 
         <a routerLink="/dashboard">Dashboard</a>
 
-        <a routerLink="/login">Login</a>
+        @if(!authService.loggedIn()){
+
+        <a routerLink="/login">
+
+            Login
+
+        </a>
+
+        }
+
+        @else{
+
+        <button (click)="logout()">
+
+            Logout
+
+        </button>
+
+        }
 
     </div>
 

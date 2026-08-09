@@ -9,12 +9,12 @@
       "dueDate": "2026-08-12"
     },
     {
-      "id": "3",
       "title": "Deploy Project",
       "description": "Upload to GitHub",
-      "status": "Done",
+      "status": "In Progress",
       "priority": "Low",
-      "dueDate": "2026-08-15"
+      "dueDate": "2026-08-15",
+      "id": "3"
     },
     {
       "title": "Learn Angular",
