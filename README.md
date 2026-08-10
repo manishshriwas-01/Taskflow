@@ -242,3 +242,26 @@ TaskFlow is a task management application developed as part of my MEAN Stack tra
 - Restricted unauthorized access to protected routes.
 
 ---
+
+
+
+### Day 15 – Angular Material & UI Polish
+Learning
+Angular Material
+Material UI Components
+Responsive UI Design
+Material Forms & Cards
+Material Buttons & Icons
+
+### Implemented
+
+Applied Angular Material mat-toolbar to the Navbar.
+Converted the Add/Edit Task form to Material form fields.
+Added Material inputs and dropdowns for task details.
+Converted Search and Status Filter to Material components.
+Converted TaskCard into a Material mat-card.
+Added Material buttons and icons for Edit, Delete, and Details.
+Improved the TaskFlow board layout and responsiveness.
+Integrated Task Details with GET /tasks/:id API.
+Preserved existing dueSoon pipe and StatusColorDirective.
+Completed the Frontend MVP with mock REST API.
