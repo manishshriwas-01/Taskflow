@@ -1,44 +1,77 @@
-<div class="card">
+<mat-card class="task-card">
 
-    <div class="card-header">
-        <h3>{{ task.title }}</h3>
-        <span class="status" appStatusColor [status]="task.status">
+  <mat-card-header>
 
-            {{ task.status }}
+    <mat-card-title>
+      {{ task.title }}
+    </mat-card-title>
 
-        </span>
-    </div>
+    <mat-card-subtitle>
+      {{ task.status }}
+    </mat-card-subtitle>
+
+  </mat-card-header>
+
+
+  <mat-card-content>
 
     <p class="description">
-        {{ task.description }}
+      {{ task.description }}
     </p>
 
     <div class="details">
 
-        <p>
-            <strong>Priority:</strong>t
-            {{ task.priority }}
-        </p>
+      <p>
+        <strong>Priority:</strong>
+        {{ task.priority }}
+      </p>
 
-        <p>
-            <strong>Due Date:</strong>
-            {{ task.dueDate | dueSoon}}
-        </p>
-
-    </div>
-
-    <div class="actions">
-
-        <button class="edit-btn" (click)="edit.emit()">
-            Edit
-        </button>
-
-        <button class="delete-btn" (click)="delete.emit()">
-            Delete
-        </button>
-
-        <a [routerLink]="['/task',task.id]">Details</a>
+      <p>
+        <strong>Due Date:</strong>
+        {{ task.dueDate | dueSoon }}
+      </p>
 
     </div>
 
-</div>
+  </mat-card-content>
+
+
+  <mat-card-actions>
+
+    <button
+      mat-raised-button
+      type="button"
+      class="edit-btn"
+      (click)="edit.emit()">
+
+      <mat-icon>edit</mat-icon>
+
+      Edit
+
+    </button>
+
+
+    <button
+      mat-raised-button
+      type="button"
+      class="delete-btn"
+      (click)="delete.emit()">
+
+      <mat-icon>delete</mat-icon>
+
+      Delete
+
+    </button>
+
+
+    <a
+      mat-button
+      [routerLink]="['/task', task.id]">
+
+      Details
+
+    </a>
+
+  </mat-card-actions>
+
+</mat-card>

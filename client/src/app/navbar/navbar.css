@@ -1,81 +1,93 @@
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #2563eb;
-    color: white;
-    padding: 15px 40px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+/* Main Navbar */
+mat-toolbar {
+  height: 64px;
+  padding: 0 32px;
+
+  display: flex;
+  align-items: center;
+
+  background: #1e3a8a;
+  color: white;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* Logo */
+/* TaskFlow Logo */
 .logo {
-    margin: 0;
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 1px;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
 }
 
-/* Right Side Links */
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+/* Push navigation to right */
+.spacer {
+  flex: 1;
 }
 
-/* Links */
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    transition: 0.3s;
+/* Navigation links */
+mat-toolbar a {
+  color: white !important;
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  margin-left: 8px;
+  border-radius: 8px;
+
+  transition: background 0.2s ease;
 }
 
-.nav-links a:hover {
-    color: #dbeafe;
+/* Login / Dashboard hover */
+mat-toolbar a:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* Logout Button */
-.nav-links button {
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s;
+/* Logout button */
+mat-toolbar button {
+  color: rgb(232, 145, 145) !important;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  margin-left: 8px;
+  border-radius: 8px;
+
+  transition: background 0.2s ease;
 }
 
-.nav-links button:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
+/* Logout hover */
+mat-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* Active Link */
-.nav-links a.active {
-    border-bottom: 2px solid white;
-    padding-bottom: 3px;
+/* Active route */
+mat-toolbar .active {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Mobile */
+@media (max-width: 600px) {
 
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-        padding: 20px;
-    }
+  mat-toolbar {
+    height: auto;
+    min-height: 60px;
+    padding: 8px 16px;
+  }
 
-    .nav-links {
-        flex-direction: column;
-        gap: 12px;
-    }
+  .logo {
+    font-size: 21px;
+  }
 
-    .nav-links button {
-        width: 100%;
-    }
+  mat-toolbar a,
+  mat-toolbar button {
+    font-size: 14px;
+    margin-left: 2px;
+  }
+
 }

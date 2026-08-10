@@ -1,142 +1,225 @@
-<form class="task-form"
-      [formGroup]="taskForm"
-      (ngSubmit)="addTask()">
+<form
+  class="task-form"
+  [formGroup]="taskForm"
+  (ngSubmit)="addTask()">
 
-  @if(isEditMode){
+  @if(isEditMode) {
 
     <h2>Edit Task</h2>
 
-  }@else{
+  } @else {
 
     <h2>Add New Task</h2>
 
   }
 
-  <input
+
+  <!-- Title -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Title</mat-label>
+
+    <input
+      matInput
       type="text"
-      placeholder="Title"
       formControlName="title">
 
+  </mat-form-field>
+
+
   @if(taskForm.get('title')?.touched &&
-      taskForm.get('title')?.hasError('required')){
+      taskForm.get('title')?.hasError('required')) {
 
-      <p class="error">
-
-          Title is required
-
-      </p>
+    <p class="error">
+      Title is required
+    </p>
 
   }
 
+
   @if(taskForm.get('title')?.touched &&
-      taskForm.get('title')?.hasError('minlength')){
+      taskForm.get('title')?.hasError('minlength')) {
 
-      <p class="error">
-
-          Minimum 3 characters required
-
-      </p>
+    <p class="error">
+      Minimum 3 characters required
+    </p>
 
   }
 
-  <textarea
-      placeholder="Description"
+
+  <!-- Description -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Description</mat-label>
+
+    <textarea
+      matInput
+      rows="4"
       formControlName="description">
-  </textarea>
+    </textarea>
 
-  <div class="row">
+  </mat-form-field>
 
-      <select formControlName="status">
 
-          <option>Todo</option>
+  <!-- Status + Priority -->
 
-          <option>In Progress</option>
+  <div class="form-row">
 
-          <option>Done</option>
+    <mat-form-field appearance="outline">
 
-      </select>
+      <mat-label>Status</mat-label>
 
-      <select formControlName="priority">
+      <mat-select formControlName="status">
 
-          <option>Low</option>
+        <mat-option value="Todo">
+          Todo
+        </mat-option>
 
-          <option>Medium</option>
+        <mat-option value="In Progress">
+          In Progress
+        </mat-option>
 
-          <option>High</option>
+        <mat-option value="Done">
+          Done
+        </mat-option>
 
-      </select>
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Priority</mat-label>
+
+      <mat-select formControlName="priority">
+
+        <mat-option value="Low">
+          Low
+        </mat-option>
+
+        <mat-option value="Medium">
+          Medium
+        </mat-option>
+
+        <mat-option value="High">
+          High
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
 
   </div>
 
-  <input
+
+  <!-- Due Date -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Due Date</mat-label>
+
+    <input
+      matInput
       type="date"
       formControlName="dueDate">
 
+  </mat-form-field>
+
+
   @if(taskForm.get('dueDate')?.touched &&
-      taskForm.get('dueDate')?.hasError('required')){
+      taskForm.get('dueDate')?.hasError('required')) {
 
-      <p class="error">
-
-          Due Date is required
-
-      </p>
+    <p class="error">
+      Due Date is required
+    </p>
 
   }
 
-  <button
-      type="submit"
-      [disabled]="taskForm.invalid">
 
-      {{isEditMode ? 'Update Task' : 'Add Task'}}
+  <!-- Submit -->
+
+  <button
+    mat-raised-button
+    type="submit"
+    [disabled]="taskForm.invalid">
+
+    {{ isEditMode ? 'Update Task' : 'Add Task' }}
 
   </button>
 
 </form>
 
-<hr>
 
-<div class="search-box">
+<!-- Search -->
+
+<!-- Search + Status Filter -->
+
+<div class="filters">
+
+  <!-- Search -->
+
+  <mat-form-field
+    appearance="outline"
+    class="search-field">
+
+    <mat-label>Search Tasks</mat-label>
 
     <input
+      matInput
+      type="text"
+      [formControl]="searchControl">
 
-        type="text"
+  </mat-form-field>
 
-        placeholder="Search Task..."
 
-        [formControl]="searchControl">
+  <!-- Status Filter -->
+
+  <mat-form-field
+    appearance="outline"
+    class="filter-field">
+
+    <mat-label>Status</mat-label>
+
+    <mat-select [formControl]="statusControl">
+
+      <mat-option value="All">
+        All
+      </mat-option>
+
+      <mat-option value="Todo">
+        Todo
+      </mat-option>
+
+      <mat-option value="In Progress">
+        In Progress
+      </mat-option>
+
+      <mat-option value="Done">
+        Done
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
 
 </div>
 
-<div class="filter-row">
 
-    <select [formControl]="statusControl">
-
-        <option value="All">All</option>
-
-        <option value="Todo">Todo</option>
-
-        <option value="In Progress">In Progress</option>
-
-        <option value="Done">Done</option>
-
-    </select>
-
-</div>
+<!-- Tasks -->
 
 <div class="task-container">
 
-@for(task of filteredTasks(); track task.id){
+  @for(task of filteredTasks(); track task.id) {
 
     <app-task-card
-
-        [task]="task"
-
-        (delete)="deleteTask(task.id)"
-
-        (edit)="editTask(task)">
-
+      [task]="task"
+      (delete)="deleteTask(task.id)"
+      (edit)="editTask(task)">
     </app-task-card>
 
-}
+  }
 
 </div>

@@ -62,8 +62,8 @@ export class Services {
 
   }
 
-  getTaskById(id: Number) {
-    return this.tasks().find(task => task.id === id);
-  }
+ getTaskById(id: number) {
+  return this.http.get<Task>(`http://localhost:3000/tasks/${id}`);
+}
 
 }

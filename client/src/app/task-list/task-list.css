@@ -1,303 +1,266 @@
-/* ===========================
-   Task Form
-=========================== */
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #f5f7fb;
+}
+
+
+/* =========================================
+   TASK FORM
+========================================= */
 
 .task-form {
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 25px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 850px;
+  margin: 20px auto 0;
+  padding: 30px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
 }
+
+
+/* Form Heading */
 
 .task-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2563eb;
+  margin: 0 0 25px;
+
+  font-size: 26px;
+  font-weight: 600;
+
+  color: #1f2937;
 }
+
+
+/* =========================================
+   MATERIAL FORM FIELDS
+========================================= */
+
+.task-form mat-form-field {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+
+/* Input */
 
 .task-form input,
-.task-form textarea,
-.task-form select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 15px;
-    box-sizing: border-box;
-    transition: all .3s ease;
-}
-
 .task-form textarea {
-    resize: vertical;
-    min-height: 100px;
+  font-size: 15px;
 }
 
-.task-form input:focus,
-.task-form textarea:focus,
-.task-form select:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 5px rgba(37, 99, 235, .3);
+
+/* =========================================
+   STATUS + PRIORITY
+========================================= */
+
+.form-row {
+  display: flex;
+  gap: 18px;
 }
 
-.row {
-    display: flex;
-    gap: 15px;
+.form-row mat-form-field {
+  flex: 1;
 }
 
-.row select {
-    flex: 1;
-}
 
-/* ===========================
-   Validation
-=========================== */
+/* =========================================
+   VALIDATION ERROR
+========================================= */
 
 .error {
-    color: #ef4444;
-    font-size: 13px;
-    margin-top: -10px;
-    margin-bottom: 12px;
+  margin: -4px 0 12px;
+
+  color: #d32f2f;
+
+  font-size: 13px;
+  font-weight: 500;
 }
 
-input.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
-    border: 2px solid #ef4444;
-}
 
-input.ng-valid.ng-touched,
-textarea.ng-valid.ng-touched,
-select.ng-valid.ng-touched {
-    border: 2px solid #22c55e;
-}
-
-/* ===========================
-   Submit Button
-=========================== */
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
 
 .task-form button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #2563eb;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: .3s;
+  min-width: 130px;
+  height: 42px;
+
+  margin-top: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.task-form button:hover:not(:disabled) {
-    background: #1d4ed8;
+
+/* =========================================
+   SEARCH + FILTER SECTION
+========================================= */
+
+.filters {
+  max-width: 850px;
+
+  margin: 25px auto 10px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 18px;
+
+  box-sizing: border-box;
 }
 
-.task-form button:disabled {
-    background: #d1d5db;
-    color: #6b7280;
-    cursor: not-allowed;
-    opacity: .8;
+
+/* Search */
+
+.search-field {
+  flex: 1;
+  min-width: 0;
 }
 
-/* ===========================
-   Task Container
-=========================== */
+.search-field input {
+  font-size: 15px;
+}
+
+
+/* Status Filter */
+
+.filter-field {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+
+/* Material fields */
+
+.filters mat-form-field {
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   TASK CONTAINER
+========================================= */
 
 .task-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+  max-width: 1200px;
+
+  margin: 25px auto;
+
+  padding: 0 20px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 22px;
+
+  box-sizing: border-box;
 }
 
-/* ===========================
-   Task Card
-=========================== */
 
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 4px 10px rgba(0,0,0,.1);
-    transition: .3s;
+/* =========================================
+   TASK CARD WRAPPER
+========================================= */
+
+.task-container app-task-card {
+  display: block;
+  min-width: 0;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,.15);
-}
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
 
-.card-header h3 {
-    margin: 0;
-    color: #2563eb;
-}
+@media (max-width: 700px) {
 
-.status {
-    background: #dbeafe;
-    color: #2563eb;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-}
+  /* Page */
 
-.description {
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 15px;
-}
-
-.details p {
-    margin: 8px 0;
-    color: #444;
-}
-
-/* ===========================
-   Card Buttons
-=========================== */
-
-.actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.actions button {
-    flex: 1;
+  :host {
     padding: 10px;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    font-size: 15px;
-    transition: .3s;
-}
+  }
 
-.edit-btn {
-    background: #f59e0b;
-}
 
-.edit-btn:hover {
-    background: #d97706;
-}
+  /* Form */
 
-.delete-btn {
-    background: #ef4444;
-}
+  .task-form {
+    margin: 15px 2px;
+    padding: 20px;
+  }
 
-.delete-btn:hover {
-    background: #dc2626;
-}
+  .task-form h2 {
+    font-size: 22px;
+  }
 
-/* Disabled Button */
 
-.actions button:disabled,
-.task-form button:disabled {
-    background: #d1d5db;
-    color: #6b7280;
-    cursor: not-allowed;
-    opacity: .7;
-    transform: none;
-    box-shadow: none;
-}
+  /* Status + Priority */
 
-.actions button:disabled:hover,
-.task-form button:disabled:hover {
-    background: #d1d5db;
-    transform: none;
-}
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
 
-/* ===========================
-   Responsive
-=========================== */
 
-@media (max-width: 600px) {
+  /* Search + Filter */
 
-    .task-form {
-        margin: 15px;
-        padding: 18px;
-    }
+  .filters {
+    flex-direction: column;
 
-    .row {
-        flex-direction: column;
-        gap: 0;
-    }
+    align-items: stretch;
 
-    .task-container {
-        grid-template-columns: 1fr;
-    }
-}
+    margin: 20px 2px 10px;
 
-/* Search Box */
+    gap: 0;
+  }
 
-.search-box {
-    margin: 20px 0 15px;
-}
-
-.search-box input {
+  .search-field,
+  .filter-field {
     width: 100%;
-    padding: 12px 15px;
-    font-size: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    outline: none;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    background: #fff;
-}
-
-.search-box input:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.25);
-}
+  }
 
 
-/* Filter Dropdown */
+  /* Task Cards */
 
-.filter-row {
-    margin-bottom: 20px;
-}
+  .task-container {
+    grid-template-columns: 1fr;
 
-.filter-row select {
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    outline: none;
-    cursor: pointer;
-    background: #fff;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
+    padding: 0 2px;
 
-.filter-row select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.25);
+    gap: 16px;
+  }
 }
 
 
-/* Responsive */
+/* =========================================
+   SMALL MOBILE
+========================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 400px) {
 
-    .search-box input,
-    .filter-row select {
+  :host {
+    padding: 6px;
+  }
 
-        font-size: 14px;
-        padding: 10px 12px;
+  .task-form {
+    padding: 16px;
+  }
 
-    }
+  .task-form h2 {
+    font-size: 20px;
+  }
 
+  .task-container {
+    padding: 0;
+  }
 }

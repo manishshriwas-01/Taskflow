@@ -1,4 +1,10 @@
 import { Component, OnInit, signal, effect } from '@angular/core';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+
 import {
   FormBuilder,
   FormControl,
@@ -15,7 +21,7 @@ import { Task } from '../models/task';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskCard, ReactiveFormsModule],
+  imports: [TaskCard, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatSelectModule,MatInputModule],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })

@@ -1,4 +1,4 @@
-<nav class="navbar">
+<!-- <nav class="navbar">
 
     <h2 class="logo">TaskFlow</h2>
 
@@ -28,4 +28,22 @@
 
     </div>
 
-</nav>
+</nav> -->
+
+
+<!-- //material ui -->
+<mat-toolbar>
+    <span class="logo">TaskFlow</span>
+    <span class="spacer"></span>
+
+    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard
+    </a>
+
+    @if(!authService.loggedIn()){
+        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+    }
+    @else{
+        <button mat-button type="button" (click)="logout()">Logout</button>
+    }
+
+</mat-toolbar>

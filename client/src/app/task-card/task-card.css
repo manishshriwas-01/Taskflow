@@ -1,78 +1,148 @@
-.card{
-    background:#fff;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 4px 10px rgba(0,0,0,.1);
-    transition:.3s;
+/* =========================
+   Task Card
+========================= */
+
+.task-card {
+  height: 100%;
+
+  border-radius: 14px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  box-sizing: border-box;
 }
 
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+/* Hover */
+
+.task-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-.card-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
+
+/* =========================
+   Title
+========================= */
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #2563eb;
 }
 
-.card-header h3{
-    margin:0;
-    color:#2563eb;
+
+/* =========================
+   Status
+========================= */
+
+.status {
+  display: inline-block;
+
+  margin: 12px 16px 0;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.status{
-    background:#dbeafe;
-    color:#2563eb;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:600;
+
+/* =========================
+   Description
+========================= */
+
+.description {
+  margin-top: 15px;
+
+  color: #555;
+
+  line-height: 1.5;
 }
 
-.description{
-    color:#555;
-    line-height:1.5;
-    margin-bottom:15px;
+
+/* =========================
+   Details
+========================= */
+
+.details {
+  margin-top: 15px;
 }
 
-.details p{
-    margin:8px 0;
-    color:#444;
+.details p {
+  margin: 8px 0;
+
+  color: #444;
 }
 
-.actions{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    margin-top:18px;
+
+/* =========================
+   Actions
+========================= */
+
+mat-card-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 16px;
 }
 
-.actions button{
-    flex:1;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    color:white;
-    cursor:pointer;
-    font-size:15px;
-    transition:.3s;
+mat-card-actions button,
+mat-card-actions a {
+  border-radius: 8px;
 }
 
-.edit-btn{
-    background:#f59e0b;
+
+/* Edit */
+
+.edit-btn {
+  background: #f59e0b !important;
+  color: white !important;
 }
 
-.edit-btn:hover{
-    background:#d97706;
+
+/* Delete */
+
+.delete-btn {
+  background: #ef4444 !important;
+  color: white !important;
 }
 
-.delete-btn{
-    background:#ef4444;
+
+/* Icons */
+
+mat-icon {
+  font-size: 18px;
+
+  width: 18px;
+  height: 18px;
+
+  vertical-align: middle;
 }
 
-.delete-btn:hover{
-    background:#dc2626;
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+
+  mat-card-actions {
+    flex-wrap: wrap;
+  }
+
+  mat-card-actions button,
+  mat-card-actions a {
+    flex: 1;
+  }
+
 }
