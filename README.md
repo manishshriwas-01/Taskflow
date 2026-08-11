@@ -265,3 +265,27 @@ Improved the TaskFlow board layout and responsiveness.
 Integrated Task Details with GET /tasks/:id API.
 Preserved existing dueSoon pipe and StatusColorDirective.
 Completed the Frontend MVP with mock REST API.
+
+
+## Day 16 – Express Server Setup
+
+### Learning
+
+- Express.js fundamentals
+- Express application and server setup
+- Middleware
+- Request and Response objects
+- HTTP GET routes
+- Request logging
+- `next()` middleware function
+
+### Implemented
+
+- Scaffolded an Express server inside the `server/` folder.
+- Initialized the Node.js backend using `npm init`.
+- Installed and configured Express.js.
+- Created a basic Express application running on port 3000.
+- Added a `/health` GET route for server health checking.
+- Added JSON parsing middleware using `express.json()`.
+- Implemented a request logger middleware to log HTTP method and URL.
+- Understood how middleware processes requests using `req`, `res`, and `next()`.
