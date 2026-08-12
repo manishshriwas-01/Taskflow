@@ -9,24 +9,29 @@ export class Services {
 
   tasks = signal<Task[]>([]);
 
+  private apiUrl = 'http://localhost:3000/api/tasks';
+
   constructor(private http: HttpClient) { }
+
+
+  // GET /api/tasks
 
   loadTasks(): void {
 
-    this.http.get<Task[]>('http://localhost:3000/tasks')
+    this.http.get<Task[]>(this.apiUrl)
       .subscribe({
 
         next: (data) => {
 
           this.tasks.set(data);
 
-          console.log("Tasks Loaded", data);
+          console.log('Tasks Loaded', data);
 
         },
 
         error: (err) => {
 
-          console.log(err);
+          console.error('Error loading tasks:', err);
 
         }
 
@@ -34,36 +39,50 @@ export class Services {
 
   }
 
-  addTask(newTask: Task) {
+
+  // POST /api/tasks
+
+  addTask(newTask: Omit<Task, 'id'>) {
 
     return this.http.post<Task>(
-      'http://localhost:3000/tasks',
+      this.apiUrl,
       newTask
     );
 
   }
 
 
+  // DELETE /api/tasks/:id
+
   deleteTask(id: number) {
 
     return this.http.delete(
-      `http://localhost:3000/tasks/${id}`
+      `${this.apiUrl}/${id}`
     );
 
   }
 
 
+  // PUT /api/tasks/:id
+
   updateTask(updatedTask: Task) {
 
     return this.http.put<Task>(
-      `http://localhost:3000/tasks/${updatedTask.id}`,
+      `${this.apiUrl}/${updatedTask.id}`,
       updatedTask
     );
 
   }
 
- getTaskById(id: number) {
-  return this.http.get<Task>(`http://localhost:3000/tasks/${id}`);
-}
+
+  // GET /api/tasks/:id
+
+  getTaskById(id: number) {
+
+    return this.http.get<Task>(
+      `${this.apiUrl}/${id}`
+    );
+
+  }
 
 }

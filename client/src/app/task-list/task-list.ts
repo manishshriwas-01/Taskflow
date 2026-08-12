@@ -4,6 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import {
   FormBuilder,
@@ -21,7 +23,7 @@ import { Task } from '../models/task';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskCard, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatSelectModule,MatInputModule],
+  imports: [TaskCard, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatSelectModule,MatInputModule,MatDatepickerModule,MatNativeDateModule],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })

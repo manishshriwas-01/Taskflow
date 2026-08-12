@@ -115,29 +115,36 @@
   </div>
 
 
-  <!-- Due Date -->
+<!-- Due Date -->
 
-  <mat-form-field appearance="outline">
+<mat-form-field appearance="outline">
 
-    <mat-label>Due Date</mat-label>
+  <mat-label>Due Date</mat-label>
 
-    <input
-      matInput
-      type="date"
-      formControlName="dueDate">
+  <input
+    matInput
+    [matDatepicker]="picker"
+    formControlName="dueDate"
+    readonly>
 
-  </mat-form-field>
+  <mat-datepicker-toggle
+    matIconSuffix
+    [for]="picker">
+  </mat-datepicker-toggle>
+
+  <mat-datepicker #picker></mat-datepicker>
+
+</mat-form-field>
 
 
-  @if(taskForm.get('dueDate')?.touched &&
-      taskForm.get('dueDate')?.hasError('required')) {
+@if(taskForm.get('dueDate')?.touched &&
+    taskForm.get('dueDate')?.hasError('required')) {
 
-    <p class="error">
-      Due Date is required
-    </p>
+  <p class="error">
+    Due Date is required
+  </p>
 
-  }
-
+}
 
   <!-- Submit -->
 

@@ -289,3 +289,30 @@ Completed the Frontend MVP with mock REST API.
 - Added JSON parsing middleware using `express.json()`.
 - Implemented a request logger middleware to log HTTP method and URL.
 - Understood how middleware processes requests using `req`, `res`, and `next()`.
+
+
+## Day 17 – Tasks CRUD API
+
+### Learning
+
+- Express REST APIs
+- CRUD operations
+- HTTP methods and status codes
+- Route parameters
+- Request body handling
+- API validation and error handling
+
+### Implemented
+
+- Created an in-memory tasks array in the Express server.
+- Implemented `GET /api/tasks` to fetch all tasks.
+- Implemented `POST /api/tasks` to create new tasks.
+- Implemented `PUT /api/tasks/:id` to update existing tasks.
+- Implemented `DELETE /api/tasks/:id` to delete tasks.
+- Implemented `GET /api/tasks/:id` for individual task details.
+- Added request validation and proper `400` and `404` error responses.
+- Used appropriate HTTP status codes: `200`, `201`, and `204`.
+- Tested all CRUD APIs using Postman.
+- Updated the Angular `Services` to use the Express API instead of `json-server`.
+- Successfully connected the TaskFlow Angular frontend with the Express backend.
+- Verified task loading and task details through the Express API.
