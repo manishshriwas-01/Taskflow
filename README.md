@@ -316,3 +316,23 @@ Completed the Frontend MVP with mock REST API.
 - Updated the Angular `Services` to use the Express API instead of `json-server`.
 - Successfully connected the TaskFlow Angular frontend with the Express backend.
 - Verified task loading and task details through the Express API.
+
+----
+
+# Day 18 – Project & Task APIs
+Learning
+Express Routes & Controllers
+API response consistency
+CRUD API architecture
+Request validation
+Route parameters
+Implemented
+Created separate routes/ and controllers/ structure.
+Implemented complete Projects CRUD API.
+Organized Tasks CRUD API using routes and controllers.
+Added validation and proper HTTP status codes (200, 201, 204, 400, 404).
+Added consistent API response format using success and data.
+Connected Angular frontend with the updated Task API response structure.
+Deliverable
+
+Organized Projects & Tasks CRUD APIs with validation and consistent response shapes.

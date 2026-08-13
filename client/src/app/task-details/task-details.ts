@@ -28,9 +28,9 @@ export class TaskDetails implements OnInit {
 
     this.taskService.getTaskById(id).subscribe({
 
-      next: (task) => {
+      next: (response) => {
 
-        this.task.set(task);
+        this.task.set(response.data);
 
       },
 

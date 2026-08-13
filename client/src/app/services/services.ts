@@ -18,14 +18,14 @@ export class Services {
 
   loadTasks(): void {
 
-    this.http.get<Task[]>(this.apiUrl)
+    this.http.get<{ success: boolean; data: Task[] }>(this.apiUrl)
       .subscribe({
 
-        next: (data) => {
+        next: (response) => {
 
-          this.tasks.set(data);
+          this.tasks.set(response.data);
 
-          console.log('Tasks Loaded', data);
+          console.log('Tasks Loaded', response.data);
 
         },
 
@@ -44,7 +44,7 @@ export class Services {
 
   addTask(newTask: Omit<Task, 'id'>) {
 
-    return this.http.post<Task>(
+    return this.http.post<{ success: boolean; data: Task }>(
       this.apiUrl,
       newTask
     );
@@ -67,7 +67,7 @@ export class Services {
 
   updateTask(updatedTask: Task) {
 
-    return this.http.put<Task>(
+    return this.http.put<{ success: boolean; data: Task }>(
       `${this.apiUrl}/${updatedTask.id}`,
       updatedTask
     );
@@ -79,7 +79,7 @@ export class Services {
 
   getTaskById(id: number) {
 
-    return this.http.get<Task>(
+    return this.http.get<{ success: boolean; data: Task }>(
       `${this.apiUrl}/${id}`
     );
 
