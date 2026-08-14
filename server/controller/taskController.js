@@ -57,36 +57,9 @@ export const createTask = (req, res) => {
     } = req.body;
 
 
-    if (!title || !status || !priority || !dueDate) {
+    
 
-        return res.status(400).json({
-            success: false,
-            message: 'Title, status, priority and dueDate are required'
-        });
-
-    }
-
-
-    if (typeof title !== 'string') {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Title must be a string'
-        });
-
-    }
-
-
-    if (title.trim().length < 3) {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Title must be at least 3 characters'
-        });
-
-    }
-
-
+    
     const newId =
         tasks.length > 0
             ? Math.max(...tasks.map(task => task.id)) + 1
@@ -162,34 +135,6 @@ export const updateTask = (req, res) => {
     } = req.body;
 
 
-    if (!title || !status || !priority || !dueDate) {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Title, status, priority and dueDate are required'
-        });
-
-    }
-
-
-    if (typeof title !== 'string') {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Title must be a string'
-        });
-
-    }
-
-
-    if (title.trim().length < 3) {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Title must be at least 3 characters'
-        });
-
-    }
 
 
     tasks[taskIndex] = {

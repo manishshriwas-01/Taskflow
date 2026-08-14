@@ -336,3 +336,25 @@ Connected Angular frontend with the updated Task API response structure.
 Deliverable
 
 Organized Projects & Tasks CRUD APIs with validation and consistent response shapes.
+
+---
+
+# Day 19 – Validation, Error Handling & Configuration
+Learning
+express-validator
+Validation middleware
+Central error-handling middleware
+CORS configuration
+Environment variables using dotenv
+Implemented
+Added express-validator for Task API input validation.
+Created separate validators for Task creation and update.
+Added validation middleware using validationResult().
+Implemented centralized error-handling middleware.
+Configured CORS to allow the Angular frontend.
+Added dotenv configuration for environment variables.
+Moved the server port configuration to .env.
+Updated the backend structure to keep validation and error handling separate from controllers.
+Deliverable
+
+Validated and structured Express APIs with centralized error handling, CORS, and environment-based configuration.
