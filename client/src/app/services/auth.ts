@@ -1,4 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+
+interface AuthResponse {
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+    user: {
+      id: number;
+      name: string;
+      email: string;
+    };
+  };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -7,45 +21,75 @@ export class AuthService {
 
   private tokenKey = 'token';
 
+  private apiUrl = 'http://localhost:3000/api/auth';
+
   loggedIn = signal(false);
 
-  constructor() {
-    this.loggedIn.set(
-      this.isLoggedIn()
+  constructor(private http: HttpClient) {
+    this.loggedIn.set(this.isLoggedIn());
+  }
+
+  login(email: string, password: string) {
+
+    return this.http.post<AuthResponse>(
+      `${this.apiUrl}/login`,
+      {
+        email,
+        password
+      }
     );
-  }
-
-  login(username: string, password: string): boolean {
-
-    if (username === 'admin@gmail.com' && password === '12345678') {
-
-      localStorage.setItem(this.tokenKey, 'taskflow-token');
-      this.loggedIn.set(true);
-
-      return true;
-
-    }
-
-    return false;
 
   }
 
-  logout() {
+  register(
+    name: string,
+    email: string,
+    password: string
+  ) {
+
+    return this.http.post(
+      `${this.apiUrl}/register`,
+      {
+        name,
+        email,
+        password
+      }
+    );
+
+  }
+
+  saveToken(token: string): void {
+
+    localStorage.setItem(
+      this.tokenKey,
+      token
+    );
+
+    this.loggedIn.set(true);
+
+  }
+
+  logout(): void {
 
     localStorage.removeItem(this.tokenKey);
+
     this.loggedIn.set(false);
 
   }
 
   isLoggedIn(): boolean {
 
-    return !!localStorage.getItem(this.tokenKey);
+    return !!localStorage.getItem(
+      this.tokenKey
+    );
 
   }
 
-  getToken() {
+  getToken(): string | null {
 
-    return localStorage.getItem(this.tokenKey);
+    return localStorage.getItem(
+      this.tokenKey
+    );
 
   }
 

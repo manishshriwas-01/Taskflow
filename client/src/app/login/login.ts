@@ -19,9 +19,10 @@ export class Login implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder,
-    private authService:AuthService,
-     private router: Router
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,34 +48,51 @@ export class Login implements OnInit {
     });
 
   }
-login() {
 
-  if (this.loginForm.invalid) {
+  login(): void {
 
-    this.loginForm.markAllAsTouched();
-    return;
+    if (this.loginForm.invalid) {
+
+      this.loginForm.markAllAsTouched();
+
+      return;
+
+    }
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(
+      email,
+      password
+    ).subscribe({
+
+      next: (response) => {
+
+        console.log('Login successful:', response);
+
+        this.authService.saveToken(
+          response.data.token
+        );
+
+        this.router.navigate(['/dashboard']);
+
+        this.loginForm.reset();
+
+      },
+
+      error: (error) => {
+
+        console.error('Login failed:', error);
+
+        alert(
+          error.error?.message ||
+          'Invalid email or password'
+        );
+
+      }
+
+    });
 
   }
-
-  const { email, password } = this.loginForm.value;
-
-  const success = this.authService.login(
-    email,
-    password
-  );
-
-  if (success) {
-
-    this.router.navigate(['/dashboard']);
-
-    this.loginForm.reset();
-
-  } else {
-
-    alert('Invalid Username or Password');
-
-  }
-
-}
 
 }

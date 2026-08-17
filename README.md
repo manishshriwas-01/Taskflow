@@ -358,3 +358,28 @@ Updated the backend structure to keep validation and error handling separate fro
 Deliverable
 
 Validated and structured Express APIs with centralized error handling, CORS, and environment-based configuration.
+
+
+---
+ # Day 20 — Authentication & JWT Integration
+
+- Connected Angular frontend authentication with the Express.js backend.
+- Implemented user registration with password hashing using bcrypt.
+- Implemented login API with bcrypt password verification and JWT generation.
+- Stored the JWT token in browser localStorage after successful login.
+- Protected the dashboard using Angular AuthGuard.
+- Implemented an Angular HTTP Interceptor to automatically attach the JWT token to API request headers.
+- Implemented backend authentication middleware to verify JWT tokens and protect task/project APIs.
+- Tested protected APIs using Postman with Bearer Token authentication.
+
+## Authentication Flow
+
+Register:
+Angular → Auth API → bcrypt hash → User created
+
+Login:
+Angular → Auth API → bcrypt verify → JWT generated → localStorage
+
+Protected API:
+Angular → HTTP Interceptor → Authorization: Bearer JWT
+→ Express Auth Middleware → JWT verification → Controller → Response

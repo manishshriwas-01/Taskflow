@@ -5,6 +5,8 @@ import cors from 'cors';
 import projectRoutes from './routes/projectRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/authRoutes.js'
+import { authMiddleware } from './middleware/authMiddleware.js';
 
 dotenv.config();
 const app = express();
@@ -30,7 +32,9 @@ app.get('/health', (req, res) => {
 
 app.use('/api/projects', projectRoutes);
 
-app.use('/api/tasks', taskRoutes);
+app.use('/api/tasks',authMiddleware, taskRoutes);
+
+app.use('/api/auth',authRoutes);
 
 app.use(errorHandler);
 
