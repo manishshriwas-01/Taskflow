@@ -383,3 +383,15 @@ Angular → Auth API → bcrypt verify → JWT generated → localStorage
 Protected API:
 Angular → HTTP Interceptor → Authorization: Bearer JWT
 → Express Auth Middleware → JWT verification → Controller → Response
+
+----
+
+# Day 21 — MongoDB Setup & Connection
+Set up MongoDB Atlas and created the taskflow database.
+Configured MongoDB user and network access.
+Added MongoDB connection string to .env and kept it gitignored.
+Installed Mongoose and connected the Express backend to MongoDB Atlas.
+Connected MongoDB Compass to the TaskFlow database.
+Deliverable
+
+MongoDB Atlas + Compass setup completed and Express backend successfully connected to the taskflow database.

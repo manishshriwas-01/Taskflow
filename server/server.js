@@ -8,6 +8,8 @@ import { errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/authRoutes.js'
 import { authMiddleware } from './middleware/authMiddleware.js';
 
+import { connectDB } from './config/db.js';
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +40,7 @@ app.use('/api/auth',authRoutes);
 
 app.use(errorHandler);
 
+connectDB();
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
