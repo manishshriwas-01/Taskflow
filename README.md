@@ -395,3 +395,14 @@ Connected MongoDB Compass to the TaskFlow database.
 Deliverable
 
 MongoDB Atlas + Compass setup completed and Express backend successfully connected to the taskflow database.
+
+---
+# Day 22 — Mongoose Models
+Created Mongoose models for User, Project, and Task.
+Added schema validation, timestamps, and MongoDB ObjectId references.
+Defined User → Project and Project → Task relationships.
+Added status and priority validation for tasks.
+Structured the models according to the TaskFlow entities and relationships.
+Deliverable
+
+Defined complete Mongoose schemas/models for Users, Projects, and Tasks with validation, timestamps, and references.
