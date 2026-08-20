@@ -1,0 +1,212 @@
+.project-tasks-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.page-header p {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+
+/* =========================================
+   FORM SECTION
+========================================= */
+
+.task-form-section {
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.section-title p {
+  margin: 6px 0 0;
+  color: #6b7280;
+}
+
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+
+.error {
+  margin: -5px 0 8px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   FILTERS
+========================================= */
+
+.filter-section {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.search-field,
+.status-filter {
+  width: 100%;
+}
+
+
+/* =========================================
+   TASK SECTION
+========================================= */
+
+.tasks-section {
+  margin-top: 20px;
+}
+
+.tasks-header {
+  margin-bottom: 20px;
+}
+
+.tasks-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.tasks-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+}
+
+
+/* =========================================
+   TASK GRID
+========================================= */
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
+  border: 1px dashed #d1d5db;
+}
+
+.empty-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .task-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .project-tasks-page {
+    padding: 20px 15px 40px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-section {
+    grid-template-columns: 1fr;
+  }
+
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-form-section {
+    padding: 20px;
+  }
+
+}

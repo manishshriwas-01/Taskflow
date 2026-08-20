@@ -406,3 +406,18 @@ Structured the models according to the TaskFlow entities and relationships.
 Deliverable
 
 Defined complete Mongoose schemas/models for Users, Projects, and Tasks with validation, timestamps, and references.
+
+---
+# Day 23 — MongoDB Integration & Error Handling
+
+Replaced the in-memory store with MongoDB across the API routes.
+
+Updated task and project CRUD operations to use Mongoose and MongoDB.
+
+Added proper not-found handling and database error handling.
+
+Verified the API flow with the Angular frontend.
+
+Deliverable
+
+Persistent MongoDB-backed API with proper not-found and error handling.

@@ -12,12 +12,157 @@
 
 
 /* =========================================
+   PROJECT FORM
+========================================= */
+
+.project-form {
+  max-width: 850px;
+  margin: 20px auto 0;
+  padding: 30px;
+
+  background: #ffffff;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+}
+
+
+/* Project Heading */
+
+.project-form h2 {
+  margin: 0 0 25px;
+
+  font-size: 26px;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+
+/* Project Material Fields */
+
+.project-form mat-form-field {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+
+/* Project Input */
+
+.project-form input,
+.project-form textarea {
+  font-size: 15px;
+}
+
+
+/* Project Button */
+
+.project-form button {
+  min-width: 140px;
+  height: 42px;
+
+  margin-top: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   PROJECT LIST
+========================================= */
+
+.project-list {
+  max-width: 850px;
+
+  margin: 25px auto;
+
+  box-sizing: border-box;
+}
+
+
+/* Project List Heading */
+
+.project-list h2 {
+  margin: 0 0 15px;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+
+/* =========================================
+   PROJECT CARD
+========================================= */
+
+.project-card {
+  padding: 18px 20px;
+
+  margin-bottom: 12px;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+
+  box-sizing: border-box;
+}
+
+
+.project-card h3 {
+  margin: 0 0 6px;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  color: #1f2937;
+}
+
+
+.project-card p {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: #6b7280;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   NO PROJECT MESSAGE
+========================================= */
+
+.project-list > p {
+  padding: 18px;
+
+  margin: 0;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  color: #6b7280;
+
+  text-align: center;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================
    TASK FORM
 ========================================= */
 
 .task-form {
   max-width: 850px;
-  margin: 20px auto 0;
+  margin: 30px auto 0;
   padding: 30px;
 
   background: #ffffff;
@@ -192,7 +337,26 @@
   }
 
 
-  /* Form */
+  /* Project Form */
+
+  .project-form {
+    margin: 15px 2px;
+    padding: 20px;
+  }
+
+  .project-form h2 {
+    font-size: 22px;
+  }
+
+
+  /* Project List */
+
+  .project-list {
+    margin: 20px 2px;
+  }
+
+
+  /* Task Form */
 
   .task-form {
     margin: 15px 2px;
@@ -252,6 +416,20 @@
     padding: 6px;
   }
 
+
+  /* Project */
+
+  .project-form {
+    padding: 16px;
+  }
+
+  .project-form h2 {
+    font-size: 20px;
+  }
+
+
+  /* Task */
+
   .task-form {
     padding: 16px;
   }
@@ -259,6 +437,16 @@
   .task-form h2 {
     font-size: 20px;
   }
+
+
+  /* Project List */
+
+  .project-list {
+    margin: 15px 0;
+  }
+
+
+  /* Task Container */
 
   .task-container {
     padding: 0;

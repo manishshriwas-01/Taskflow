@@ -1,15 +1,21 @@
-export interface Task{
+export interface Task {
 
-    id:number;
+  _id: string;
 
-    title:string;
+  title: string;
 
-    description:string;
+  description: string;
 
-    status:string;
+  status: 'Todo' | 'In Progress' | 'Done';
 
-    priority:string;
+  priority: 'Low' | 'Medium' | 'High';
 
-    dueDate:string;
+  dueDate: string;
+
+  projectId: string;
+
+  createdAt?: string;
+
+  updatedAt?: string;
 
 }

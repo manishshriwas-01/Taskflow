@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
-import users from '../data/users.js';
+import User from '../models/User.js';
 
 
 export const register = async (req, res, next) => {
@@ -10,38 +10,36 @@ export const register = async (req, res, next) => {
             email,
             password
         } = req.body;
-        const existingUSer = users.find(
-            user => user.email === email
-        );
-        if (existingUSer) {
-            const error = new Error("Email alredy registered");
+
+   
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            const error = new Error("Email already registered");
             error.statusCode = 409;
             return next(error);
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newId = users.length > 0
-            ? Math.max(...users.map(user => user.id)) + 1
-            : 1;
 
-        const newUser = {
-            id: newId,
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+
+        const newUser = await User.create({
             name,
             email,
             password: hashedPassword
-        };
-        users.push(newUser);
+        });
 
         res.status(201).json({
             success: true,
             message: "User registered successfully",
 
             data: {
-                id: newUser.id,
+                id: newUser._id,
                 name: newUser.name,
                 email: newUser.email
             }
-        })
-        console.log(users)
+        });
 
     } catch (error) {
         next(error);
@@ -56,8 +54,8 @@ export const login = async (req, res, next) => {
             password
         } = req.body;
 
-        const user = users.find(
-            user => user.email === email
+        const user =await User.findOne(
+            {email}
         );
 
         if (!user) {

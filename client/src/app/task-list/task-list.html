@@ -1,9 +1,119 @@
+<!-- ================================= -->
+<!-- CREATE PROJECT -->
+<!-- ================================= -->
+
+<form
+  class="project-form"
+  [formGroup]="projectForm"
+  (ngSubmit)="createProject()">
+
+  <h2>Create Project</h2>
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Project Name</mat-label>
+
+    <input
+      matInput
+      type="text"
+      formControlName="name">
+
+  </mat-form-field>
+
+  @if (
+    projectForm.get('name')?.touched &&
+    projectForm.get('name')?.hasError('required')
+  ) {
+    <p class="error">
+      Project name is required
+    </p>
+  }
+
+  @if (
+    projectForm.get('name')?.touched &&
+    projectForm.get('name')?.hasError('minlength')
+  ) {
+    <p class="error">
+      Minimum 3 characters required
+    </p>
+  }
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Description</mat-label>
+
+    <textarea
+      matInput
+      rows="3"
+      formControlName="description">
+    </textarea>
+
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    type="submit"
+    [disabled]="projectForm.invalid">
+
+    Create Project
+
+  </button>
+
+</form>
+
+
+<!-- ================================= -->
+<!-- PROJECT LIST -->
+<!-- ================================= -->
+
+<div class="project-list">
+
+  <h2>Your Projects</h2>
+
+  @if (taskService.projects().length === 0) {
+
+    <p>
+      No projects found. Create your first project.
+    </p>
+
+  }
+
+  @for (
+    project of taskService.projects();
+    track project._id
+  ) {
+
+    <div class="project-card">
+
+      <h3>
+        {{ project.name }}
+      </h3>
+
+      @if (project.description) {
+
+        <p>
+          {{ project.description }}
+        </p>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+
+<!-- ================================= -->
+<!-- TASK FORM -->
+<!-- ================================= -->
+
 <form
   class="task-form"
   [formGroup]="taskForm"
   (ngSubmit)="addTask()">
 
-  @if(isEditMode) {
+  @if (isEditMode) {
 
     <h2>Edit Task</h2>
 
@@ -14,7 +124,7 @@
   }
 
 
-  <!-- Title -->
+  <!-- TITLE -->
 
   <mat-form-field appearance="outline">
 
@@ -27,9 +137,10 @@
 
   </mat-form-field>
 
-
-  @if(taskForm.get('title')?.touched &&
-      taskForm.get('title')?.hasError('required')) {
+  @if (
+    taskForm.get('title')?.touched &&
+    taskForm.get('title')?.hasError('required')
+  ) {
 
     <p class="error">
       Title is required
@@ -37,9 +148,10 @@
 
   }
 
-
-  @if(taskForm.get('title')?.touched &&
-      taskForm.get('title')?.hasError('minlength')) {
+  @if (
+    taskForm.get('title')?.touched &&
+    taskForm.get('title')?.hasError('minlength')
+  ) {
 
     <p class="error">
       Minimum 3 characters required
@@ -48,7 +160,7 @@
   }
 
 
-  <!-- Description -->
+  <!-- DESCRIPTION -->
 
   <mat-form-field appearance="outline">
 
@@ -63,9 +175,48 @@
   </mat-form-field>
 
 
-  <!-- Status + Priority -->
+  <!-- PROJECT -->
+
+  <mat-form-field appearance="outline">
+
+    <mat-label>Project</mat-label>
+
+    <mat-select formControlName="projectId">
+
+      @for (
+        project of taskService.projects();
+        track project._id
+      ) {
+
+        <mat-option [value]="project._id">
+
+          {{ project.name }}
+
+        </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field>
+
+  @if (
+    taskForm.get('projectId')?.touched &&
+    taskForm.get('projectId')?.hasError('required')
+  ) {
+
+    <p class="error">
+      Please select a project
+    </p>
+
+  }
+
+
+  <!-- STATUS + PRIORITY -->
 
   <div class="form-row">
+
+    <!-- STATUS -->
 
     <mat-form-field appearance="outline">
 
@@ -73,22 +224,24 @@
 
       <mat-select formControlName="status">
 
-        <mat-option value="Todo">
-          Todo
+        <mat-option value="Pending">
+          Pending
         </mat-option>
 
         <mat-option value="In Progress">
           In Progress
         </mat-option>
 
-        <mat-option value="Done">
-          Done
+        <mat-option value="Completed">
+          Completed
         </mat-option>
 
       </mat-select>
 
     </mat-form-field>
 
+
+    <!-- PRIORITY -->
 
     <mat-form-field appearance="outline">
 
@@ -115,38 +268,41 @@
   </div>
 
 
-<!-- Due Date -->
+  <!-- DUE DATE -->
 
-<mat-form-field appearance="outline">
+  <mat-form-field appearance="outline">
 
-  <mat-label>Due Date</mat-label>
+    <mat-label>Due Date</mat-label>
 
-  <input
-    matInput
-    [matDatepicker]="picker"
-    formControlName="dueDate"
-    readonly>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="dueDate"
+      readonly>
 
-  <mat-datepicker-toggle
-    matIconSuffix
-    [for]="picker">
-  </mat-datepicker-toggle>
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="picker">
+    </mat-datepicker-toggle>
 
-  <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker #picker>
+    </mat-datepicker>
 
-</mat-form-field>
+  </mat-form-field>
+
+  @if (
+    taskForm.get('dueDate')?.touched &&
+    taskForm.get('dueDate')?.hasError('required')
+  ) {
+
+    <p class="error">
+      Due Date is required
+    </p>
+
+  }
 
 
-@if(taskForm.get('dueDate')?.touched &&
-    taskForm.get('dueDate')?.hasError('required')) {
-
-  <p class="error">
-    Due Date is required
-  </p>
-
-}
-
-  <!-- Submit -->
+  <!-- SUBMIT -->
 
   <button
     mat-raised-button
@@ -160,13 +316,11 @@
 </form>
 
 
-<!-- Search -->
-
-<!-- Search + Status Filter -->
+<!-- ================================= -->
+<!-- SEARCH + FILTER -->
+<!-- ================================= -->
 
 <div class="filters">
-
-  <!-- Search -->
 
   <mat-form-field
     appearance="outline"
@@ -182,8 +336,6 @@
   </mat-form-field>
 
 
-  <!-- Status Filter -->
-
   <mat-form-field
     appearance="outline"
     class="filter-field">
@@ -196,16 +348,16 @@
         All
       </mat-option>
 
-      <mat-option value="Todo">
-        Todo
+      <mat-option value="Pending">
+        Pending
       </mat-option>
 
       <mat-option value="In Progress">
         In Progress
       </mat-option>
 
-      <mat-option value="Done">
-        Done
+      <mat-option value="Completed">
+        Completed
       </mat-option>
 
     </mat-select>
@@ -215,15 +367,20 @@
 </div>
 
 
-<!-- Tasks -->
+<!-- ================================= -->
+<!-- TASKS -->
+<!-- ================================= -->
 
 <div class="task-container">
 
-  @for(task of filteredTasks(); track task.id) {
+  @for (
+    task of filteredTasks();
+    track task._id
+  ) {
 
     <app-task-card
       [task]="task"
-      (delete)="deleteTask(task.id)"
+      (delete)="deleteTask(task._id)"
       (edit)="editTask(task)">
     </app-task-card>
 

@@ -22,27 +22,44 @@ export class TaskDetails implements OnInit {
 
   ngOnInit(): void {
 
-    const id = Number(
-      this.route.snapshot.paramMap.get('id')
-    );
+    // MongoDB _id is a string
+    const id =
+      this.route.snapshot.paramMap.get('id');
 
-    this.taskService.getTaskById(id).subscribe({
+    if (!id) {
 
-      next: (response) => {
+      console.error('Task ID not found');
 
-        this.task.set(response.data);
+      this.task.set(null);
 
-      },
+      return;
+    }
 
-      error: (error) => {
 
-        console.error('Task not found:', error);
+    // GET /api/tasks/:id
 
-        this.task.set(null);
+    this.taskService
+      .getTaskById(id)
+      .subscribe({
 
-      }
+        next: (response) => {
 
-    });
+          this.task.set(response.data);
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Task not found:',
+            error
+          );
+
+          this.task.set(null);
+
+        }
+
+      });
 
   }
 

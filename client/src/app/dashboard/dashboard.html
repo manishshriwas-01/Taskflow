@@ -1,0 +1,333 @@
+<div class="dashboard">
+
+
+  <!-- ================================= -->
+  <!-- HEADER -->
+  <!-- ================================= -->
+
+  <div class="dashboard-header">
+
+    <div>
+
+      <h1>
+        Dashboard
+      </h1>
+
+      <p>
+        Manage your projects and tasks
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================= -->
+  <!-- PROJECT FORM -->
+  <!-- ================================= -->
+
+  <form
+    class="project-form"
+    [formGroup]="projectForm"
+    (ngSubmit)="createProject()"
+  >
+
+    <h2>
+
+      @if(isEditMode) {
+
+        Edit Project
+
+      } @else {
+
+        Create New Project
+
+      }
+
+    </h2>
+
+
+    <!-- ================================= -->
+    <!-- PROJECT NAME -->
+    <!-- ================================= -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>
+        Project Name
+      </mat-label>
+
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+      >
+
+    </mat-form-field>
+
+
+    <!-- Required Error -->
+
+    @if(
+      projectForm.get('name')?.touched &&
+      projectForm.get('name')?.hasError('required')
+    ) {
+
+      <p class="error">
+        Project name is required
+      </p>
+
+    }
+
+
+    <!-- Minimum Length Error -->
+
+    @if(
+      projectForm.get('name')?.touched &&
+      projectForm.get('name')?.hasError('minlength')
+    ) {
+
+      <p class="error">
+        Minimum 3 characters required
+      </p>
+
+    }
+
+
+    <!-- ================================= -->
+    <!-- DESCRIPTION -->
+    <!-- ================================= -->
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>
+        Description
+      </mat-label>
+
+      <textarea
+        matInput
+        rows="3"
+        formControlName="description"
+      ></textarea>
+
+    </mat-form-field>
+
+
+    <!-- ================================= -->
+    <!-- FORM BUTTONS -->
+    <!-- ================================= -->
+
+    <div class="form-actions">
+
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="projectForm.invalid"
+      >
+
+        @if(isEditMode) {
+
+          Update Project
+
+        } @else {
+
+          Create Project
+
+        }
+
+      </button>
+
+
+      <!-- Cancel only in edit mode -->
+
+      @if(isEditMode) {
+
+        <button
+          mat-button
+          type="button"
+          (click)="resetForm()"
+        >
+
+          Cancel
+
+        </button>
+
+      }
+
+    </div>
+
+  </form>
+
+
+  <!-- ================================= -->
+  <!-- PROJECT SECTION -->
+  <!-- ================================= -->
+
+  <section class="projects-section">
+
+
+    <!-- Section Header -->
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Your Projects
+        </h2>
+
+        <p>
+          Select a project to view its tasks
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================= -->
+    <!-- NO PROJECTS -->
+    <!-- ================================= -->
+
+    @if(taskService.projects().length === 0) {
+
+      <div class="empty-state">
+
+        <h3>
+          No projects yet
+        </h3>
+
+        <p>
+          Create your first project to get started.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- ================================= -->
+    <!-- PROJECT GRID -->
+    <!-- ================================= -->
+
+    @if(taskService.projects().length > 0) {
+
+      <div class="project-grid">
+
+
+        @for(
+          project of taskService.projects();
+          track project._id
+        ) {
+
+
+          <!-- ================================= -->
+          <!-- PROJECT CARD -->
+          <!-- ================================= -->
+
+          <div class="project-card">
+
+
+            <!-- ================================= -->
+            <!-- PROJECT CONTENT -->
+            <!-- ================================= -->
+
+            <div
+              class="project-content"
+              (click)="openProject(project._id)"
+            >
+
+
+              <!-- Icon -->
+
+              <div class="project-icon">
+
+                📁
+
+              </div>
+
+
+              <!-- Project Name -->
+
+              <h3>
+                {{ project.name }}
+              </h3>
+
+
+              <!-- Description -->
+
+              @if(project.description) {
+
+                <p>
+                  {{ project.description }}
+                </p>
+
+              } @else {
+
+                <p class="no-description">
+                  No description
+                </p>
+
+              }
+
+
+              <!-- View Tasks -->
+
+              <span class="view-tasks">
+
+                View Tasks →
+
+              </span>
+
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- PROJECT ACTIONS -->
+            <!-- ================================= -->
+
+            <div class="project-actions">
+
+
+              <!-- Edit -->
+
+              <button
+                mat-button
+                type="button"
+                (click)="editProject(project); $event.stopPropagation()"
+              >
+
+                Edit
+
+              </button>
+
+
+              <!-- Delete -->
+
+              <button
+                mat-button
+                type="button"
+                class="delete-button"
+                (click)="deleteProject(project._id); $event.stopPropagation()"
+              >
+
+                Delete
+
+              </button>
+
+
+            </div>
+
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+</div>

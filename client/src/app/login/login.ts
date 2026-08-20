@@ -70,9 +70,7 @@ export class Login implements OnInit {
 
         console.log('Login successful:', response);
 
-        this.authService.saveToken(
-          response.data.token
-        );
+        this.authService.saveToken( response.data.token);
 
         this.router.navigate(['/dashboard']);
 

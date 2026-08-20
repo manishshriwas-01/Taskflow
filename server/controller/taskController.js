@@ -1,201 +1,464 @@
-import tasks from '../data/tasks.js';
+import Task from "../models/Task.js";
 
-export const getTasks = (req, res) => {
 
-    res.status(200).json({
-        success: true,
-        data: tasks
-    });
+// =========================================
+// GET ALL TASKS
+// GET /api/tasks
+// =========================================
 
-};
+export const getTasks = async (req, res, next) => {
 
-export const getTaskById = (req, res) => {
+    try {
 
-    const id = Number(req.params.id);
-
-    if (Number.isNaN(id)) {
-
-        return res.status(400).json({
-            success: false,
-            message: 'Invalid task ID'
+        const tasks = await Task.find({
+            userId: req.user.id
+        })
+        .populate(
+            'projectId',
+            'name description'
+        )
+        .sort({
+            createdAt: -1
         });
 
-    }
 
-    const task = tasks.find(
-        task => task.id === id
-    );
+        res.status(200).json({
 
-    if (!task) {
+            success: true,
 
-        return res.status(404).json({
-            success: false,
-            message: 'Task not found'
+            data: tasks
+
         });
 
-    }
+    } catch (error) {
 
-    res.status(200).json({
-        success: true,
-        data: task
-    });
+        next(error);
+
+    }
 
 };
 
 
 
+// =========================================
+// GET TASKS BY PROJECT
+// GET /api/tasks/project/:projectId
+// =========================================
+
+export const getTasksByProject = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const {
+            projectId
+        } = req.params;
 
 
-export const createTask = (req, res) => {
-
-    const {
-        title,
-        description,
-        status,
-        priority,
-        dueDate
-    } = req.body;
+        console.log(
+            'Loading tasks for project:',
+            projectId
+        );
 
 
-    
+        const tasks = await Task.find({
 
-    
-    const newId =
-        tasks.length > 0
-            ? Math.max(...tasks.map(task => task.id)) + 1
-            : 1;
+            projectId: projectId,
 
+            userId: req.user.id
 
-    const newTask = {
-
-        id: newId,
-
-        title: title.trim(),
-
-        description: description
-            ? description.trim()
-            : '',
-
-        status,
-
-        priority,
-
-        dueDate
-
-    };
+        })
+        .populate(
+            'projectId',
+            'name description'
+        )
+        .sort({
+            createdAt: -1
+        });
 
 
-    tasks.push(newTask);
+        console.log(
+            'Project tasks found:',
+            tasks.length
+        );
 
 
-    res.status(201).json({
+        res.status(200).json({
 
-        success: true,
+            success: true,
 
-        data: newTask
+            data: tasks
 
-    });
+        });
+
+    } catch (error) {
+
+        next(error);
+
+    }
 
 };
 
 
 
-export const updateTask = (req, res) => {
+// =========================================
+// GET TASK BY ID
+// GET /api/tasks/:id
+// =========================================
 
-    const id = Number(req.params.id);
+export const getTaskById = async (
+    req,
+    res,
+    next
+) => {
 
-    if (Number.isNaN(id)) {
+    try {
 
-        return res.status(400).json({
-            success: false,
-            message: 'Invalid task ID'
+        const task = await Task.findOne({
+
+            _id: req.params.id,
+
+            userId: req.user.id
+
+        })
+        .populate(
+            'projectId',
+            'name description'
+        );
+
+
+        if (!task) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: 'Task not found'
+
+            });
+
+        }
+
+
+        res.status(200).json({
+
+            success: true,
+
+            data: task
+
         });
 
-    }
+    } catch (error) {
 
-    const taskIndex = tasks.findIndex(
-        task => task.id === id
-    );
-
-    if (taskIndex === -1) {
-
-        return res.status(404).json({
-            success: false,
-            message: 'Task not found'
-        });
+        next(error);
 
     }
-
-    const {
-        title,
-        description,
-        status,
-        priority,
-        dueDate
-    } = req.body;
-
-
-
-
-    tasks[taskIndex] = {
-
-        id,
-
-        title: title.trim(),
-
-        description: description
-            ? description.trim()
-            : '',
-
-        status,
-
-        priority,
-
-        dueDate
-
-    };
-
-
-    res.status(200).json({
-
-        success: true,
-
-        data: tasks[taskIndex]
-
-    });
 
 };
 
 
 
-export const deleteTask = (req, res) => {
+// =========================================
+// CREATE TASK
+// POST /api/tasks
+// =========================================
 
-    const id = Number(req.params.id);
+export const createTask = async (
+    req,
+    res,
+    next
+) => {
 
-    if (Number.isNaN(id)) {
+    try {
 
-        return res.status(400).json({
-            success: false,
-            message: 'Invalid task ID'
+        const {
+
+            title,
+
+            description,
+
+            status,
+
+            priority,
+
+            dueDate,
+
+            projectId
+
+        } = req.body;
+
+
+        const task = await Task.create({
+
+            title,
+
+            description,
+
+            status,
+
+            priority,
+
+            dueDate,
+
+            projectId,
+
+            userId: req.user.id
+
         });
+
+
+        const populatedTask =
+            await Task.findById(task._id)
+                .populate(
+                    'projectId',
+                    'name description'
+                );
+
+
+        res.status(201).json({
+
+            success: true,
+
+            message: 'Task created successfully',
+
+            data: populatedTask
+
+        });
+
+    } catch (error) {
+
+        next(error);
 
     }
 
-    const taskIndex = tasks.findIndex(
-        task => task.id === id
-    );
+};
 
-    if (taskIndex === -1) {
 
-        return res.status(404).json({
-            success: false,
-            message: 'Task not found'
+
+// =========================================
+// UPDATE TASK
+// PUT /api/tasks/:id
+// =========================================
+
+export const updateTask = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const {
+
+            title,
+
+            description,
+
+            status,
+
+            priority,
+
+            dueDate,
+
+            projectId
+
+        } = req.body;
+
+
+        // =====================================
+        // TITLE VALIDATION
+        // =====================================
+
+        if (!title) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: 'Task title is required'
+
+            });
+
+        }
+
+
+        if (typeof title !== 'string') {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message: 'Task title must be a string'
+
+            });
+
+        }
+
+
+        const trimmedTitle =
+            title.trim();
+
+
+        if (trimmedTitle.length < 3) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'Task title must be at least 3 characters'
+
+            });
+
+        }
+
+
+        // =====================================
+        // FIND TASK
+        // =====================================
+
+        const task = await Task.findOne({
+
+            _id: req.params.id,
+
+            userId: req.user.id
+
         });
+
+
+        if (!task) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: 'Task not found'
+
+            });
+
+        }
+
+
+        // =====================================
+        // UPDATE
+        // =====================================
+
+        task.title =
+            trimmedTitle;
+
+
+        task.description =
+            description
+                ? description.trim()
+                : '';
+
+
+        if (status !== undefined) {
+
+            task.status = status;
+
+        }
+
+
+        if (priority !== undefined) {
+
+            task.priority = priority;
+
+        }
+
+
+        if (dueDate !== undefined) {
+
+            task.dueDate = dueDate;
+
+        }
+
+
+        if (projectId !== undefined) {
+
+            task.projectId = projectId;
+
+        }
+
+
+        await task.save();
+
+
+        const updatedTask =
+            await Task.findById(task._id)
+                .populate(
+                    'projectId',
+                    'name description'
+                );
+
+
+        res.status(200).json({
+
+            success: true,
+
+            message: 'Task updated successfully',
+
+            data: updatedTask
+
+        });
+
+    } catch (error) {
+
+        next(error);
 
     }
 
-    tasks.splice(taskIndex, 1);
+};
 
-    res.status(204).send();
+
+
+// =========================================
+// DELETE TASK
+// DELETE /api/tasks/:id
+// =========================================
+
+export const deleteTask = async (
+    req,
+    res,
+    next
+) => {
+
+    try {
+
+        const task = await Task.findOne({
+
+            _id: req.params.id,
+
+            userId: req.user.id
+
+        });
+
+
+        if (!task) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: 'Task not found'
+
+            });
+
+        }
+
+
+        await task.deleteOne();
+
+
+        res.status(204).send();
+
+    } catch (error) {
+
+        next(error);
+
+    }
 
 };

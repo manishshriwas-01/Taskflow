@@ -14,61 +14,174 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+
+import {
+  debounceTime,
+  distinctUntilChanged
+} from 'rxjs';
 
 import { TaskCard } from '../task-card/task-card';
 import { Services } from '../services/services';
 import { Task } from '../models/task';
 
+
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TaskCard, ReactiveFormsModule,MatButtonModule,MatFormFieldModule,MatSelectModule,MatInputModule,MatDatepickerModule,MatNativeDateModule],
+
+  imports: [
+    TaskCard,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
 export class TaskList implements OnInit {
 
+  // =========================================
+  // SEARCH + FILTER
+  // =========================================
+
   searchControl = new FormControl('');
+
   statusControl = new FormControl('All');
 
   filteredTasks = signal<Task[]>([]);
 
+
+  // =========================================
+  // FORMS
+  // =========================================
+
   taskForm!: FormGroup;
 
+  projectForm!: FormGroup;
+
+
+  // =========================================
+  // EDIT STATE
+  // =========================================
+
   isEditMode = false;
-  editTaskId = 0;
+
+  editTaskId = '';
+
+
+  // =========================================
+  // CONSTRUCTOR
+  // =========================================
 
   constructor(
     public taskService: Services,
     private fb: FormBuilder
   ) {
 
+    /*
+      Whenever tasks signal changes,
+      update filteredTasks.
+    */
 
     effect(() => {
 
-      this.filteredTasks.set(this.taskService.tasks());
+      this.filteredTasks.set(
+        this.taskService.tasks()
+      );
 
     });
 
   }
+
+
+  // =========================================
+  // INITIALIZATION
+  // =========================================
+
   ngOnInit(): void {
 
+    // Load existing tasks
     this.taskService.loadTasks();
+
+    // Load existing projects
+    this.taskService.loadProjects();
+
+
+    // =========================================
+    // TASK FORM
+    // =========================================
 
     this.taskForm = this.fb.group({
 
-      title: ['', [Validators.required, Validators.minLength(3)]],
+      title: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
 
       description: [''],
 
-      status: ['Todo', Validators.required],
+      /*
+        IMPORTANT:
+        These values must match backend enum.
+      */
 
-      priority: ['Medium'],
+      status: [
+        'Pending',
+        Validators.required
+      ],
 
-      dueDate: ['', Validators.required]
+      priority: [
+        'Medium',
+        Validators.required
+      ],
+
+      dueDate: [
+        '',
+        Validators.required
+      ],
+
+      /*
+        Project is required for every task.
+      */
+
+      projectId: [
+        '',
+        Validators.required
+      ]
 
     });
+
+
+    // =========================================
+    // PROJECT FORM
+    // =========================================
+
+    this.projectForm = this.fb.group({
+
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
+
+      description: ['']
+
+    });
+
+
+    // =========================================
+    // SEARCH
+    // =========================================
 
     this.searchControl.valueChanges
       .pipe(
@@ -81,80 +194,270 @@ export class TaskList implements OnInit {
 
       });
 
-    this.statusControl.valueChanges.subscribe(() => {
 
-      this.applyFilters();
+    // =========================================
+    // STATUS FILTER
+    // =========================================
 
-    });
+    this.statusControl.valueChanges
+      .subscribe(() => {
+
+        this.applyFilters();
+
+      });
 
   }
 
-  addTask() {
 
-    if (this.taskForm.invalid) {
+  // =========================================
+  // CREATE PROJECT
+  // =========================================
 
-      this.taskForm.markAllAsTouched();
+  createProject(): void {
+
+    if (this.projectForm.invalid) {
+
+      this.projectForm.markAllAsTouched();
+
       return;
 
     }
 
-    const taskData = this.taskForm.value;
 
-    if (this.isEditMode) {
+    const projectData =
+      this.projectForm.value;
 
-      this.taskService.updateTask({
 
-        ...taskData,
+    this.taskService
+      .createProject(
+        projectData.name,
+        projectData.description
+      )
+      .subscribe({
 
-        id: this.editTaskId
+        next: (response) => {
 
-      }).subscribe(() => {
+          console.log(
+            'Project Created:',
+            response.data
+          );
 
-        this.taskService.loadTasks();
 
-        this.isEditMode = false;
+          // Reload projects
+          this.taskService.loadProjects();
 
-        this.applyFilters();
 
-        this.resetForm();
+          // Reset project form
+          this.projectForm.reset({
+
+            name: '',
+
+            description: ''
+
+          });
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error creating project:',
+            err
+          );
+
+        }
 
       });
 
-    } else {
+  }
 
-      const tasks = this.taskService.tasks();
 
-      const newId =
-        tasks.length > 0
-          ? Math.max(...tasks.map(task => task.id)) + 1
-          : 1;
+  // =========================================
+  // CREATE / UPDATE TASK
+  // =========================================
 
-      this.taskService.addTask({
+  addTask(): void {
 
-        ...taskData,
+    if (this.taskForm.invalid) {
 
-        id: newId
+      this.taskForm.markAllAsTouched();
 
-      }).subscribe(() => {
-
-        this.taskService.loadTasks();
-
-        this.applyFilters();
-
-        this.resetForm();
-
-      });
+      return;
 
     }
 
+
+    const taskData =
+      this.taskForm.value;
+
+
+    // =========================================
+    // UPDATE EXISTING TASK
+    // =========================================
+
+    if (this.isEditMode) {
+
+      const updatedTask: Task = {
+
+        _id: this.editTaskId,
+
+        title: taskData.title,
+
+        description: taskData.description,
+
+        status: taskData.status,
+
+        priority: taskData.priority,
+
+        dueDate: taskData.dueDate,
+
+        projectId: taskData.projectId
+
+      };
+
+
+      console.log(
+        'Updating Task:',
+        updatedTask
+      );
+
+
+      this.taskService
+        .updateTask(updatedTask)
+        .subscribe({
+
+          next: (response) => {
+
+            console.log(
+              'Task Updated:',
+              response.data
+            );
+
+
+            // Reload tasks
+            this.taskService.loadTasks();
+
+
+            // Exit edit mode
+            this.isEditMode = false;
+
+            this.editTaskId = '';
+
+
+            // Reset form
+            this.resetForm();
+
+          },
+
+          error: (err) => {
+
+            console.error(
+              'Error updating task:',
+              err
+            );
+
+          }
+
+        });
+
+
+      return;
+
+    }
+
+
+    // =========================================
+    // CREATE NEW TASK
+    // =========================================
+
+    this.taskService
+      .addTask({
+
+        title: taskData.title,
+
+        description: taskData.description,
+
+        status: taskData.status,
+
+        priority: taskData.priority,
+
+        dueDate: taskData.dueDate,
+
+        projectId: taskData.projectId
+
+      })
+      .subscribe({
+
+        next: (response) => {
+
+          console.log(
+            'Task Created:',
+            response.data
+          );
+
+
+          // Reload tasks
+          this.taskService.loadTasks();
+
+
+          // Reset form
+          this.resetForm();
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error creating task:',
+            err
+          );
+
+        }
+
+      });
+
   }
-  editTask(task: Task) {
+
+
+  // =========================================
+  // EDIT TASK
+  // =========================================
+
+  editTask(task: Task): void {
+
+    console.log(
+      'Editing Task:',
+      task
+    );
+
+
+    /*
+      Save task MongoDB _id
+      so PUT request knows which task
+      needs to be updated.
+    */
+
+    this.editTaskId = task._id;
+
+
+    /*
+      IMPORTANT PART:
+
+      projectId is patched here.
+
+      Because projectId is already present
+      in the task, Angular Material will
+      automatically show that project
+      as selected in the dropdown.
+    */
 
     this.taskForm.patchValue({
 
       title: task.title,
 
       description: task.description,
+
+      projectId: task.projectId,
 
       status: task.status,
 
@@ -164,53 +467,111 @@ export class TaskList implements OnInit {
 
     });
 
-    this.editTaskId = task.id;
 
+    // Switch form into edit mode
     this.isEditMode = true;
+
+
+    // Scroll to task form
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
 
   }
 
-  deleteTask(id: number) {
 
-    this.taskService.deleteTask(id)
+  // =========================================
+  // DELETE TASK
+  // =========================================
 
-      .subscribe(() => {
+  deleteTask(id: string): void {
 
-        this.taskService.loadTasks();
+    this.taskService
+      .deleteTask(id)
+      .subscribe({
 
-        this.applyFilters();
+        next: () => {
+
+          console.log(
+            'Task Deleted'
+          );
+
+
+          // Reload tasks
+          this.taskService.loadTasks();
+
+        },
+
+        error: (err) => {
+
+          console.error(
+            'Error deleting task:',
+            err
+          );
+
+        }
 
       });
 
   }
 
-  applyFilters() {
 
-    const search = this.searchControl.value?.toLowerCase() || '';
+  // =========================================
+  // SEARCH + FILTER
+  // =========================================
 
-    const status = this.statusControl.value;
+  applyFilters(): void {
 
-    const filtered = this.taskService.tasks().filter(task => {
+    const search =
+      this.searchControl.value
+        ?.toLowerCase()
+        .trim() || '';
 
-      const matchSearch =
 
-        task.title.toLowerCase().includes(search);
+    const status =
+      this.statusControl.value;
 
-      const matchStatus =
 
-        status === 'All' ||
+    const filtered =
+      this.taskService
+        .tasks()
+        .filter(task => {
 
-        task.status === status;
 
-      return matchSearch && matchStatus;
+          // Search by title
+          const matchSearch =
+            task.title
+              .toLowerCase()
+              .includes(search);
 
-    });
 
-    this.filteredTasks.set(filtered);
+          // Status filter
+          const matchStatus =
+            status === 'All' ||
+            task.status === status;
+
+
+          return (
+            matchSearch &&
+            matchStatus
+          );
+
+        });
+
+
+    this.filteredTasks.set(
+      filtered
+    );
 
   }
 
-  resetForm() {
+
+  // =========================================
+  // RESET TASK FORM
+  // =========================================
+
+  resetForm(): void {
 
     this.taskForm.reset({
 
@@ -218,11 +579,13 @@ export class TaskList implements OnInit {
 
       description: '',
 
-      status: 'Todo',
+      status: 'Pending',
 
       priority: 'Medium',
 
-      dueDate: ''
+      dueDate: '',
+
+      projectId: ''
 
     });
 

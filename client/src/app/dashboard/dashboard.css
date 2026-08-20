@@ -1,0 +1,340 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+
+.dashboard {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 24px 50px;
+  box-sizing: border-box;
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+.dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.dashboard-header p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+  font-size: 15px;
+}
+
+
+/* =================================
+   PROJECT FORM
+================================= */
+
+.project-form {
+  max-width: 750px;
+
+  margin-bottom: 40px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.07);
+
+  box-sizing: border-box;
+}
+
+.project-form h2 {
+  margin: 0 0 22px;
+
+  font-size: 22px;
+
+  color: #1f2937;
+}
+
+.project-form mat-form-field {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+
+.error {
+  margin: -2px 0 12px;
+
+  color: #d32f2f;
+
+  font-size: 13px;
+}
+
+
+.form-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+
+/* =================================
+   PROJECT SECTION
+================================= */
+
+.projects-section {
+  margin-top: 20px;
+}
+
+
+.section-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+
+  color: #1f2937;
+}
+
+.section-header p {
+  margin: 5px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+.project-count {
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #e8eefc;
+
+  color: #2563eb;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =================================
+   PROJECT GRID
+================================= */
+
+.project-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 20px;
+}
+
+
+/* =================================
+   PROJECT CARD
+================================= */
+
+.project-card {
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =================================
+   PROJECT CONTENT
+================================= */
+
+.project-content {
+  padding: 24px;
+
+  cursor: pointer;
+}
+
+.project-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 15px;
+
+  border-radius: 12px;
+
+  background: #eef2ff;
+
+  font-size: 22px;
+}
+
+
+.project-content h3 {
+  margin: 0 0 8px;
+
+  font-size: 20px;
+
+  color: #1f2937;
+}
+
+
+.project-content p {
+  margin: 0 0 15px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  min-height: 42px;
+}
+
+
+.project-content .no-description {
+  color: #9ca3af;
+}
+
+
+.view-tasks {
+  color: #2563eb;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =================================
+   PROJECT ACTIONS
+================================= */
+
+.project-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 5px;
+
+  padding: 10px 16px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+
+.delete-button {
+  color: #dc2626 !important;
+}
+
+
+/* =================================
+   EMPTY STATE
+================================= */
+
+.empty-state {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  border: 1px dashed #d1d5db;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+
+  color: #374151;
+}
+
+.empty-state p {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media (max-width: 700px) {
+
+  .dashboard {
+    padding: 20px 12px 40px;
+  }
+
+
+  .dashboard-header h1 {
+    font-size: 27px;
+  }
+
+
+  .project-form {
+    padding: 20px;
+  }
+
+
+  .section-header {
+    align-items: flex-start;
+
+    gap: 15px;
+
+    flex-direction: column;
+  }
+
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
