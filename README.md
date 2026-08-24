@@ -439,3 +439,22 @@ Fixed issues found during testing and verified the APIs with passing test cases.
 ### Deliverable
 
 Implemented Jest + Supertest API tests for Auth and Tasks with happy and error paths.
+
+
+---
+
+# Day 25 — API Deployment
+
+Cleaned the backend repository and deployed the TaskFlow API to Render with MongoDB Atlas.
+
+Configured production environment variables and verified the live health and authentication endpoints.
+
+Verified the deployed API is successfully connected to MongoDB Atlas.
+
+### Live API
+
+https://taskflow-5uoj.onrender.com/health
+
+### Deliverable
+
+Deployed and verified the live TaskFlow API on Render with MongoDB Atlas.
