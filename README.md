@@ -421,3 +421,21 @@ Verified the API flow with the Angular frontend.
 Deliverable
 
 Persistent MongoDB-backed API with proper not-found and error handling.
+
+---
+
+# Day 24 — API Testing
+
+Implemented API testing for TaskFlow using Jest and Supertest.
+
+Added tests for authentication and task APIs covering both successful and error scenarios.
+
+Tested user registration, duplicate email, invalid data, login, wrong password, and non-existing user cases.
+
+Tested task fetching and task creation with authenticated requests.
+
+Fixed issues found during testing and verified the APIs with passing test cases.
+
+### Deliverable
+
+Implemented Jest + Supertest API tests for Auth and Tasks with happy and error paths.

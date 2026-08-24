@@ -40,7 +40,22 @@ app.use('/api/auth',authRoutes);
 
 app.use(errorHandler);
 
-connectDB();
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+
+export default app;
+if (process.env.NODE_ENV !== 'test') {
+
+    connectDB();
+
+    app.listen(PORT, () => {
+
+        console.log(
+            `Server running on http://localhost:${PORT}`
+        );
+
+    });
+
+}
+// connectDB();
+// app.listen(PORT, () => {
+//     console.log(`Server running on http://localhost:${PORT}`);
+// });
