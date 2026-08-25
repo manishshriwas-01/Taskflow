@@ -458,3 +458,19 @@ https://taskflow-5uoj.onrender.com/health
 ### Deliverable
 
 Deployed and verified the live TaskFlow API on Render with MongoDB Atlas.
+
+
+
+---
+
+# Day 26 — Angular API Integration & Authentication
+
+Connected the Angular frontend with the deployed TaskFlow API on Render.
+
+Implemented JWT token storage and configured an HTTP interceptor to attach the JWT token to protected API requests.
+
+Verified frontend-to-backend communication using the live API.
+
+### Deliverable
+
+Angular frontend connected to the live API with JWT-based authentication

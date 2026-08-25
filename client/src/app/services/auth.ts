@@ -21,7 +21,7 @@ export class AuthService {
 
   private tokenKey = 'token';
 
-  private apiUrl = 'http://localhost:3000/api/auth';
+  private apiUrl = 'https://taskflow-5uoj.onrender.com/api/auth';
 
   loggedIn = signal(false);
 

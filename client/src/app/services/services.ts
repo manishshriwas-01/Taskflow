@@ -29,8 +29,8 @@ export class Services {
   // API URLS
   // =========================================
 
-  private apiUrl = 'http://localhost:3000/api/tasks';
-  private projectApiUrl = 'http://localhost:3000/api/projects';
+  private apiUrl = 'https://taskflow-5uoj.onrender.com/api/tasks';
+  private projectApiUrl = 'https://taskflow-5uoj.onrender.com/api/projects';
 
   constructor(private http: HttpClient) {}
 
