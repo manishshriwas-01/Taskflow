@@ -1,49 +1,38 @@
-<!-- <nav class="navbar">
-
-    <h2 class="logo">TaskFlow</h2>
-
-    <div class="nav-links">
-
-        <a routerLink="/dashboard">Dashboard</a>
-
-        @if(!authService.loggedIn()){
-
-        <a routerLink="/login">
-
-            Login
-
-        </a>
-
-        }
-
-        @else{
-
-        <button (click)="logout()">
-
-            Logout
-
-        </button>
-
-        }
-
-    </div>
-
-</nav> -->
-
-
-<!-- //material ui -->
 <mat-toolbar>
+
     <span class="logo">TaskFlow</span>
+
     <span class="spacer"></span>
 
-    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard
-    </a>
+    @if (!authService.loggedIn()) {
 
-    @if(!authService.loggedIn()){
-        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+        <a
+            mat-button
+            routerLink="/login"
+            routerLinkActive="active"
+        >
+            Login
+        </a>
+
     }
-    @else{
-        <button mat-button type="button" (click)="logout()">Logout</button>
+    @else {
+
+        <a
+            mat-button
+            routerLink="/dashboard"
+            routerLinkActive="active"
+        >
+            Dashboard
+        </a>
+
+        <button
+            mat-button
+            type="button"
+            (click)="logout()"
+        >
+            Logout
+        </button>
+
     }
 
 </mat-toolbar>
