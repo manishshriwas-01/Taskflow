@@ -474,3 +474,21 @@ Verified frontend-to-backend communication using the live API.
 ### Deliverable
 
 Angular frontend connected to the live API with JWT-based authentication
+
+
+---
+
+# Day 27 — Live Task CRUD & Frontend Deployment
+
+- Connected Angular task operations with the deployed TaskFlow API.
+- Implemented and verified task CRUD operations using the live backend.
+- Added proper project name display in task cards.
+- Fixed `projectId` type handling for string and populated project objects.
+- Deployed the Angular frontend on Render.
+- Verified the live frontend with the deployed backend API.
+
+## Live Project
+
+Frontend: https://taskflow-1-0-bknj.onrender.com/
+
+Backend API: https://taskflow-5uoj.onrender.com/health
