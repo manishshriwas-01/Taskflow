@@ -14,8 +14,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = [
+    'http://localhost:4200',
+    'https://taskflow-1-0-bknj.onrender.com'
+];
+
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: allowedOrigins
 }));
 
 app.use(express.json());
