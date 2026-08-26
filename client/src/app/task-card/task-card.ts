@@ -40,18 +40,26 @@ export class TaskCard {
   @Output()
   delete = new EventEmitter<string>();
 
+  getProjectName(
+    projectId: Task['projectId']
+  ): string {
+
+    if (!projectId) {
+      return 'No Project';
+    }
+
+    if (typeof projectId === 'string') {
+      return projectId;
+    }
+
+    return projectId.name;
+  }
 
   onEdit(): void {
-
     this.edit.emit(this.task);
-
   }
-
 
   onDelete(): void {
-
     this.delete.emit(this.task._id);
-
   }
-
 }

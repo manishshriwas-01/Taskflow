@@ -12,7 +12,10 @@ export interface Task {
 
   dueDate: string;
 
-  projectId: string;
+   projectId: string | {
+    _id: string;
+    name: string;
+  } | null;
 
   createdAt?: string;
 
