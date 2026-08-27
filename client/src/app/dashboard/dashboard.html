@@ -28,7 +28,9 @@
       </p>
 
 
-      <!-- Project Form -->
+      <!-- ============================= -->
+      <!-- PROJECT FORM -->
+      <!-- ============================= -->
 
       <form
         class="project-form"
@@ -39,29 +41,35 @@
         <div class="form-heading">
 
           <div class="form-icon">
+
             @if(isEditMode) {
               ✎
             } @else {
               +
             }
+
           </div>
 
           <div>
 
             <h2>
+
               @if(isEditMode) {
                 Edit Project
               } @else {
                 New Project
               }
+
             </h2>
 
             <p>
+
               @if(isEditMode) {
                 Update your project details
               } @else {
                 Start a new project
               }
+
             </p>
 
           </div>
@@ -69,7 +77,7 @@
         </div>
 
 
-        <!-- Project Name -->
+        <!-- PROJECT NAME -->
 
         <mat-form-field appearance="outline">
 
@@ -87,6 +95,8 @@
         </mat-form-field>
 
 
+        <!-- REQUIRED ERROR -->
+
         @if(
           projectForm.get('name')?.touched &&
           projectForm.get('name')?.hasError('required')
@@ -98,6 +108,8 @@
 
         }
 
+
+        <!-- MIN LENGTH ERROR -->
 
         @if(
           projectForm.get('name')?.touched &&
@@ -111,7 +123,7 @@
         }
 
 
-        <!-- Description -->
+        <!-- DESCRIPTION -->
 
         <mat-form-field appearance="outline">
 
@@ -129,7 +141,7 @@
         </mat-form-field>
 
 
-        <!-- Buttons -->
+        <!-- FORM BUTTONS -->
 
         <div class="form-actions">
 
@@ -157,7 +169,9 @@
               class="cancel-button"
               (click)="resetForm()"
             >
+
               Cancel
+
             </button>
 
           }
@@ -176,6 +190,11 @@
   <!-- ============================= -->
 
   <main class="dashboard-content">
+
+
+    <!-- ============================= -->
+    <!-- CONTENT HEADER -->
+    <!-- ============================= -->
 
     <div class="content-header">
 
@@ -196,7 +215,7 @@
       </div>
 
 
-      <!-- Project Count -->
+      <!-- PROJECT COUNT -->
 
       <div class="project-count">
 
@@ -211,26 +230,6 @@
       </div>
 
     </div>
-
-
-    <!-- ============================= -->
-<!-- PROJECT SEARCH -->
-<!-- ============================= -->
-
-<div class="project-search">
-
-  <span class="search-icon">
-    🔍
-  </span>
-
-  <input
-    type="text"
-    placeholder="Search projects..."
-    [value]="projectSearch()"
-    (input)="onProjectSearch($event)"
-  />
-
-</div>
 
 
     <!-- ============================= -->
@@ -263,19 +262,23 @@
     <!-- PROJECT GRID -->
     <!-- ============================= -->
 
-    @if(filteredProjects().length > 0) {
+    @if(taskService.projects().length > 0) {
 
       <div class="project-grid">
 
         @for(
-          project of  filteredProjects();
+          project of paginatedProjects;
           track project._id
         ) {
+
+          <!-- ============================= -->
+          <!-- PROJECT CARD -->
+          <!-- ============================= -->
 
           <article class="project-card">
 
 
-            <!-- Card Top -->
+            <!-- CARD TOP -->
 
             <div class="card-top">
 
@@ -302,6 +305,7 @@
 
               </div>
 
+
               <span class="arrow">
                 ↗
               </span>
@@ -309,7 +313,9 @@
             </div>
 
 
-            <!-- Description -->
+            <!-- ============================= -->
+            <!-- DESCRIPTION -->
+            <!-- ============================= -->
 
             <div
               class="project-description"
@@ -333,9 +339,14 @@
             </div>
 
 
-            <!-- Card Bottom -->
+            <!-- ============================= -->
+            <!-- CARD FOOTER -->
+            <!-- ============================= -->
 
             <div class="card-footer">
+
+
+              <!-- VIEW TASKS -->
 
               <button
                 mat-button
@@ -343,10 +354,17 @@
                 class="view-button"
                 (click)="openProject(project._id)"
               >
+
                 View Tasks
-                <span>→</span>
+
+                <span>
+                  →
+                </span>
+
               </button>
 
+
+              <!-- PROJECT ACTIONS -->
 
               <div class="project-actions">
 
@@ -355,8 +373,11 @@
                   type="button"
                   (click)="editProject(project)"
                 >
+
                   Edit
+
                 </button>
+
 
                 <button
                   mat-button
@@ -364,7 +385,9 @@
                   class="delete-button"
                   (click)="deleteProject(project._id)"
                 >
+
                   Delete
+
                 </button>
 
               </div>
@@ -376,6 +399,72 @@
         }
 
       </div>
+
+
+      <!-- ============================= -->
+      <!-- PAGINATION -->
+      <!-- ============================= -->
+
+      @if(totalPages > 1) {
+
+        <div class="pagination">
+
+
+          <!-- PREVIOUS BUTTON -->
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+          >
+
+            ← Previous
+
+          </button>
+
+
+          <!-- PAGE NUMBERS -->
+
+          <div class="page-numbers">
+
+            @for(
+              page of pageNumbers;
+              track page
+            ) {
+
+              <button
+                type="button"
+                class="page-number"
+                [class.active]="currentPage === page"
+                (click)="goToPage(page)"
+              >
+
+                {{ page }}
+
+              </button>
+
+            }
+
+          </div>
+
+
+          <!-- NEXT BUTTON -->
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+          >
+
+            Next →
+
+          </button>
+
+        </div>
+
+      }
 
     }
 

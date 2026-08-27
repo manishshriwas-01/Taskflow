@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { signal ,computed} from '@angular/core';
+import { signal, computed } from '@angular/core';
 
 import {
   FormBuilder,
@@ -44,30 +44,30 @@ export class Dashboard implements OnInit {
 
   onProjectSearch(event: Event): void {
 
-  const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;
 
-  this.projectSearch.set(input.value);
+    this.projectSearch.set(input.value);
 
-} 
-filteredProjects = computed(() => {
-
-  const search = this.projectSearch()
-    .toLowerCase()
-    .trim();
-
-  const projects = this.taskService.projects();
-
-  if (!search) {
-    return projects;
   }
+  filteredProjects = computed(() => {
 
-  return projects.filter(project =>
-    project.name
+    const search = this.projectSearch()
       .toLowerCase()
-      .includes(search)
-  );
+      .trim();
 
-});
+    const projects = this.taskService.projects();
+
+    if (!search) {
+      return projects;
+    }
+
+    return projects.filter(project =>
+      project.name
+        .toLowerCase()
+        .includes(search)
+    );
+
+  });
 
 
   // =========================
@@ -87,7 +87,7 @@ filteredProjects = computed(() => {
     public taskService: Services,
     private fb: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
 
   // =========================
@@ -344,6 +344,99 @@ filteredProjects = computed(() => {
     this.isEditMode = false;
 
     this.editingProjectId = null;
+
+  }
+
+
+  // =========================================
+  // PAGINATION
+  // =========================================
+
+  currentPage = 1;
+
+  itemsPerPage = 6;
+
+
+  // =========================================
+  // TOTAL PAGES
+  // =========================================
+
+  get totalPages(): number {
+    return Math.ceil(
+      this.taskService.projects().length / this.itemsPerPage
+    );
+  }
+
+
+  // =========================================
+  // CURRENT PAGE PROJECTS
+  // =========================================
+
+  get paginatedProjects() {
+    const projects = this.taskService.projects();
+
+    const startIndex =
+      (this.currentPage - 1) * this.itemsPerPage;
+
+    const endIndex =
+      startIndex + this.itemsPerPage;
+
+    return projects.slice(startIndex, endIndex);
+  }
+
+
+  // =========================================
+  // PAGE NUMBERS
+  // =========================================
+
+  get pageNumbers(): number[] {
+    return Array.from(
+      { length: this.totalPages },
+      (_, index) => index + 1
+    );
+  }
+
+
+  // =========================================
+  // GO TO PAGE
+  // =========================================
+
+  goToPage(page: number): void {
+
+    if (
+      page < 1 ||
+      page > this.totalPages
+    ) {
+      return;
+    }
+
+    this.currentPage = page;
+
+  }
+
+
+  // =========================================
+  // NEXT PAGE
+  // =========================================
+
+  nextPage(): void {
+
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+
+  }
+
+
+  // =========================================
+  // PREVIOUS PAGE
+  // =========================================
+
+  previousPage(): void {
+
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
 
   }
 

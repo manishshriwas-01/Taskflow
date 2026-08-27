@@ -108,7 +108,7 @@ export class ProjectTasks implements OnInit {
     public taskService: Services,
 
     private fb: FormBuilder
-  ) {}
+  ) { }
 
 
   // =========================================
@@ -629,4 +629,45 @@ export class ProjectTasks implements OnInit {
 
   }
 
+
+  // pagination
+
+  currentPage = 1;
+  pageSize = 6;
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredTasks().length / this.pageSize);
+  }
+
+  get paginatedTasks(): Task[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+
+    return this.filteredTasks().slice(
+      start,
+      start + this.pageSize
+    );
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from(
+      { length: this.totalPages },
+      (_, index) => index + 1
+    );
+  }
+
+  goToPage(page: number): void {
+    this.currentPage = page;
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
 }

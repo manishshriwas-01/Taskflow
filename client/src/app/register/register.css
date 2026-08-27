@@ -348,3 +348,155 @@ button:disabled {
   }
 
 }
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 28px;
+  padding-top: 20px;
+
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* Previous / Next */
+
+.pagination-arrow {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #334155;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+.pagination-arrow:hover:not(:disabled) {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+
+.pagination-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* Page numbers */
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+.page-number {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #475569;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+.page-number:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+
+/* Active page */
+
+.page-number.active {
+  background: #2563eb;
+  border-color: #2563eb;
+
+  color: #ffffff;
+
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================
+   MOBILE PAGINATION
+========================================= */
+
+@media (max-width: 600px) {
+
+  .pagination {
+    gap: 5px;
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+
+
+  .pagination-arrow,
+  .page-number {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 8px;
+  }
+
+
+  .page-number {
+    font-size: 12px;
+  }
+
+}
+
+
+@media (max-width: 400px) {
+
+  .pagination {
+    gap: 3px;
+  }
+
+
+  .pagination-arrow,
+  .page-number {
+    width: 31px;
+    height: 31px;
+
+    font-size: 11px;
+  }
+
+}

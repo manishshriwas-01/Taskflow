@@ -1,6 +1,9 @@
 <div class="project-tasks-page">
 
+  <!-- ========================================= -->
   <!-- HEADER -->
+  <!-- ========================================= -->
+
   <header class="page-header">
 
     <div class="header-left">
@@ -16,15 +19,29 @@
         </div>
 
         <div>
+
           @if(project()) {
-            <h1>{{ project()?.name }}</h1>
+
+            <h1>
+              {{ project()?.name }}
+            </h1>
 
             @if(project()?.description) {
-              <p>{{ project()?.description }}</p>
+
+              <p>
+                {{ project()?.description }}
+              </p>
+
             }
+
           } @else {
-            <h1>Project Tasks</h1>
+
+            <h1>
+              Project Tasks
+            </h1>
+
           }
+
         </div>
 
       </div>
@@ -39,35 +56,50 @@
   </header>
 
 
-  <!-- MAIN -->
+
+  <!-- ========================================= -->
+  <!-- MAIN WORKSPACE -->
+  <!-- ========================================= -->
+
   <div class="workspace">
 
-    <!-- LEFT -->
+
+    <!-- ========================================= -->
+    <!-- LEFT PANEL -->
+    <!-- ========================================= -->
+
     <aside class="left-panel">
 
-      <!-- CREATE TASK -->
       <section class="form-card">
 
         <div class="form-card-header">
 
           <div>
-            <span class="section-label">TASK MANAGEMENT</span>
+
+            <span class="section-label">
+              TASK MANAGEMENT
+            </span>
 
             <h2>
+
               @if(isEditMode) {
                 Edit Task
               } @else {
                 Create Task
               }
+
             </h2>
 
             <p>
+
               @if(isEditMode) {
                 Update your task details
               } @else {
                 Add a new task to this project
               }
+
             </p>
+
           </div>
 
           <div class="form-icon">
@@ -77,19 +109,32 @@
         </div>
 
 
+        <!-- TASK FORM -->
+
         <form
           [formGroup]="taskForm"
           (ngSubmit)="addTask()"
-          class="task-form">
+          class="task-form"
+        >
 
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Task Title</mat-label>
+          <!-- TITLE -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Task Title
+            </mat-label>
 
             <input
               matInput
               type="text"
               formControlName="title"
-              placeholder="Enter task title">
+              placeholder="Enter task title"
+            >
+
           </mat-form-field>
 
 
@@ -97,9 +142,11 @@
             taskForm.get('title')?.touched &&
             taskForm.get('title')?.hasError('required')
           ) {
+
             <p class="error">
               Task title is required
             </p>
+
           }
 
 
@@ -107,31 +154,44 @@
             taskForm.get('title')?.touched &&
             taskForm.get('title')?.hasError('minlength')
           ) {
+
             <p class="error">
               Minimum 3 characters required
             </p>
+
           }
 
 
-          <mat-form-field appearance="outline" class="full-width">
+          <!-- DESCRIPTION -->
 
-            <mat-label>Description</mat-label>
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Description
+            </mat-label>
 
             <textarea
               matInput
               rows="4"
               formControlName="description"
-              placeholder="Enter task description">
-            </textarea>
+              placeholder="Enter task description"
+            ></textarea>
 
           </mat-form-field>
 
+
+          <!-- STATUS + PRIORITY -->
 
           <div class="form-row">
 
             <mat-form-field appearance="outline">
 
-              <mat-label>Status</mat-label>
+              <mat-label>
+                Status
+              </mat-label>
 
               <mat-select formControlName="status">
 
@@ -154,7 +214,9 @@
 
             <mat-form-field appearance="outline">
 
-              <mat-label>Priority</mat-label>
+              <mat-label>
+                Priority
+              </mat-label>
 
               <mat-select formControlName="priority">
 
@@ -177,25 +239,39 @@
           </div>
 
 
-          <mat-form-field appearance="outline" class="full-width">
+          <!-- DUE DATE -->
 
-            <mat-label>Due Date</mat-label>
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Due Date
+            </mat-label>
 
             <input
               matInput
               [matDatepicker]="picker"
               formControlName="dueDate"
-              readonly>
+              readonly
+            >
 
             <mat-datepicker-toggle
               matIconSuffix
-              [for]="picker">
+              [for]="picker"
+            >
             </mat-datepicker-toggle>
 
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker
+              #picker
+            >
+            </mat-datepicker>
 
           </mat-form-field>
 
+
+          <!-- BUTTONS -->
 
           <div class="form-actions">
 
@@ -203,7 +279,8 @@
               mat-raised-button
               type="submit"
               class="primary-button"
-              [disabled]="taskForm.invalid">
+              [disabled]="taskForm.invalid"
+            >
 
               @if(isEditMode) {
                 Update Task
@@ -220,10 +297,9 @@
                 mat-button
                 type="button"
                 class="cancel-button"
-                (click)="resetForm()">
-
+                (click)="resetForm()"
+              >
                 Cancel
-
               </button>
 
             }
@@ -237,20 +313,34 @@
     </aside>
 
 
-    <!-- RIGHT -->
+
+    <!-- ========================================= -->
+    <!-- RIGHT PANEL -->
+    <!-- ========================================= -->
+
     <main class="right-panel">
+
+
+      <!-- TASK HEADER -->
 
       <div class="tasks-header">
 
         <div>
-          <span class="section-label">PROJECT WORKSPACE</span>
 
-          <h2>Project Tasks</h2>
+          <span class="section-label">
+            PROJECT WORKSPACE
+          </span>
+
+          <h2>
+            Project Tasks
+          </h2>
 
           <p>
             Manage and track your project tasks
           </p>
+
         </div>
+
 
         <div class="task-total">
 
@@ -258,26 +348,35 @@
             {{ filteredTasks().length }}
           </strong>
 
-          <span>Tasks</span>
+          <span>
+            Tasks
+          </span>
 
         </div>
 
       </div>
 
 
-      <!-- FILTER -->
+
+      <!-- ========================================= -->
+      <!-- SEARCH + FILTER -->
+      <!-- ========================================= -->
+
       <div class="filter-bar">
 
         <div class="search-box">
 
           <mat-form-field appearance="outline">
 
-            <mat-label>Search Tasks</mat-label>
+            <mat-label>
+              Search Tasks
+            </mat-label>
 
             <input
               matInput
               [formControl]="searchControl"
-              placeholder="Search by title">
+              placeholder="Search by title"
+            >
 
           </mat-form-field>
 
@@ -286,9 +385,13 @@
 
         <mat-form-field appearance="outline">
 
-          <mat-label>Status</mat-label>
+          <mat-label>
+            Status
+          </mat-label>
 
-          <mat-select [formControl]="statusControl">
+          <mat-select
+            [formControl]="statusControl"
+          >
 
             <mat-option value="All">
               All
@@ -313,18 +416,28 @@
       </div>
 
 
-      <!-- TASKS -->
+
+      <!-- ========================================= -->
+      <!-- TASK SECTION -->
+      <!-- ========================================= -->
+
       <section class="tasks-section">
+
 
         <div class="tasks-section-header">
 
           <div>
-            <h3>Tasks</h3>
+
+            <h3>
+              Tasks
+            </h3>
 
             <p>
               {{ filteredTasks().length }} task(s) available
             </p>
+
           </div>
+
 
           <span class="view-label">
             LIST VIEW
@@ -332,6 +445,11 @@
 
         </div>
 
+
+
+        <!-- ======================================= -->
+        <!-- EMPTY STATE -->
+        <!-- ======================================= -->
 
         @if(filteredTasks().length === 0) {
 
@@ -341,7 +459,9 @@
               📋
             </div>
 
-            <h3>No tasks found</h3>
+            <h3>
+              No tasks found
+            </h3>
 
             <p>
               Create your first task to get started.
@@ -352,24 +472,100 @@
         }
 
 
+
+        <!-- ======================================= -->
+        <!-- TASK CARDS -->
+        <!-- ======================================= -->
+
         @if(filteredTasks().length > 0) {
 
           <div class="task-grid">
 
             @for(
-              task of filteredTasks();
+              task of paginatedTasks;
               track task._id
             ) {
 
               <app-task-card
                 [task]="task"
                 (edit)="editTask(task)"
-                (delete)="deleteTask(task._id)">
+                (delete)="deleteTask(task._id)"
+              >
               </app-task-card>
 
             }
 
           </div>
+
+
+
+          <!-- ===================================== -->
+          <!-- PAGINATION -->
+          <!-- ===================================== -->
+
+          @if(totalPages > 1) {
+
+            <div class="pagination">
+
+
+              <!-- PREVIOUS -->
+
+              <button
+                type="button"
+                class="pagination-button previous-button"
+                [disabled]="currentPage === 1"
+                (click)="previousPage()"
+              >
+
+                ← Previous
+
+              </button>
+
+
+
+              <!-- PAGE NUMBERS -->
+
+              <div class="page-numbers">
+
+                @for(
+                  page of [].constructor(totalPages);
+                  let i = $index;
+                  track i
+                ) {
+
+                  <button
+                    type="button"
+                    class="page-number"
+                    [class.active]="currentPage === i + 1"
+                    (click)="currentPage = i + 1"
+                  >
+
+                    {{ i + 1 }}
+
+                  </button>
+
+                }
+
+              </div>
+
+
+
+              <!-- NEXT -->
+
+              <button
+                type="button"
+                class="pagination-button next-button"
+                [disabled]="currentPage === totalPages"
+                (click)="nextPage()"
+              >
+
+                Next →
+
+              </button>
+
+            </div>
+
+          }
 
         }
 
