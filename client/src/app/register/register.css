@@ -1,82 +1,350 @@
-.register-form{
-    width:400px;
-    margin:40px auto;
-    padding:25px;
-    background:#fff;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+/* =========================================
+   REGISTER PAGE
+========================================= */
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: #f5f7fb;
 }
 
-.register-form h2{
-    text-align:center;
-    margin-bottom:20px;
-    color:#2563eb;
+
+/* =========================================
+   REGISTER FORM
+========================================= */
+
+.register-form {
+  width: min(400px, 100%);
+
+  margin: 0;
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+
+  animation: registerAppear 0.35s ease;
 }
 
-.register-form label{
-    display:block;
-    margin-top:15px;
-    margin-bottom:6px;
-    font-weight:600;
+
+/* =========================================
+   HEADING
+========================================= */
+
+.register-form h2 {
+  margin: 0 0 28px;
+
+  text-align: center;
+
+  color: #172033;
+
+  font-size: 26px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
 }
 
-.register-form input{
-    width:100%;
-    padding:10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-    font-size:15px;
-    transition:.3s;
-    box-sizing:border-box;
+
+.register-form h2::after {
+  content: "";
+
+  display: block;
+
+  width: 42px;
+  height: 3px;
+
+  margin: 10px auto 0;
+
+  border-radius: 10px;
+
+  background: #2563eb;
 }
 
-.register-form input:focus{
-    outline:none;
-    border-color:#2563eb;
+
+/* =========================================
+   LABEL
+========================================= */
+
+.register-form label {
+  display: block;
+
+  margin-top: 16px;
+  margin-bottom: 7px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 600;
 }
 
-.error{
-    color:#ef4444;
-    font-size:13px;
-    margin:5px 0 10px;
+
+/* =========================================
+   INPUT
+========================================= */
+
+.register-form input {
+  width: 100%;
+
+  height: 44px;
+
+  padding: 0 13px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-input.ng-invalid.ng-touched{
-    border:2px solid #ef4444;
+
+.register-form input::placeholder {
+  color: #94a3b8;
 }
 
-input.ng-valid.ng-touched{
-    border:2px solid #22c55e;
+
+.register-form input:hover {
+  border-color: #94a3b8;
 }
 
-button{
-    width:100%;
-    margin-top:20px;
-    padding:12px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:6px;
-    font-size:16px;
-    cursor:pointer;
-    transition:.3s;
+
+.register-form input:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
-button:hover:not(:disabled){
-    background:#1d4ed8;
+
+/* =========================================
+   VALIDATION
+========================================= */
+
+.error {
+  margin: 6px 0 8px;
+
+  color: #dc2626;
+
+  font-size: 12px;
+
+  line-height: 1.4;
 }
 
-button:disabled{
-    background:#cbd5e1;
-    cursor:not-allowed;
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #ef4444;
+
+  box-shadow:
+    0 0 0 3px rgba(239, 68, 68, 0.08);
 }
 
-.login-link{
-    text-align:center;
-    margin-top:15px;
+
+input.ng-valid.ng-touched {
+  border: 1px solid #22c55e;
+
+  box-shadow:
+    0 0 0 3px rgba(34, 197, 94, 0.08);
 }
 
-.login-link a{
-    color:#2563eb;
-    text-decoration:none;
+
+/* =========================================
+   REGISTER BUTTON
+========================================= */
+
+button {
+  width: 100%;
+
+  min-height: 44px;
+
+  margin-top: 22px;
+
+  padding: 0 16px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 6px 15px rgba(37, 99, 235, 0.22);
+}
+
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+button:disabled {
+  background: #cbd5e1;
+
+  color: #64748b;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================================
+   LOGIN LINK
+========================================= */
+
+.login-link {
+  margin: 20px 0 0;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+.login-link a {
+  margin-left: 4px;
+
+  color: #2563eb;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: color 0.2s ease;
+}
+
+
+.login-link a:hover {
+  color: #1d4ed8;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes registerAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 600px) {
+
+  :host {
+    padding: 16px;
+  }
+
+  .register-form {
+    padding: 27px 23px;
+
+    border-radius: 14px;
+  }
+
+  .register-form h2 {
+    font-size: 23px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  :host {
+    padding: 12px;
+  }
+
+  .register-form {
+    padding: 23px 18px;
+
+    border-radius: 13px;
+  }
+
+  .register-form h2 {
+    font-size: 21px;
+
+    margin-bottom: 23px;
+  }
+
+  .register-form input {
+    height: 42px;
+
+    font-size: 13px;
+  }
+
+  button {
+    min-height: 42px;
+
+    font-size: 13px;
+  }
+
 }

@@ -68,7 +68,7 @@ export class Login implements OnInit {
 
       next: (response) => {
 
-        console.log('Login successful:', response);
+        // console.log('Login successful:', response);
 
         this.authService.saveToken( response.data.token);
 

@@ -1,4 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
+
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import {
@@ -25,8 +26,10 @@ import { Services, Project } from '../services/services';
 import { Task } from '../models/task';
 import { TaskCard } from '../task-card/task-card';
 
+
 @Component({
   selector: 'app-project-tasks',
+
   standalone: true,
 
   imports: [
@@ -44,9 +47,13 @@ import { TaskCard } from '../task-card/task-card';
   ],
 
   templateUrl: './project-tasks.html',
+
   styleUrl: './project-tasks.css'
 })
+
+
 export class ProjectTasks implements OnInit {
+
 
   // =========================================
   // PROJECT
@@ -91,9 +98,15 @@ export class ProjectTasks implements OnInit {
   statusControl = new FormControl('All');
 
 
+  // =========================================
+  // CONSTRUCTOR
+  // =========================================
+
   constructor(
     private route: ActivatedRoute,
+
     public taskService: Services,
+
     private fb: FormBuilder
   ) {}
 
@@ -104,19 +117,8 @@ export class ProjectTasks implements OnInit {
 
   ngOnInit(): void {
 
-    // IMPORTANT:
-    // Route is:
-    // /project/:id
-    //
-    // So we MUST get "id", not "projectId".
-
     this.projectId =
       this.route.snapshot.paramMap.get('id') || '';
-
-    console.log(
-      'Current Project ID:',
-      this.projectId
-    );
 
 
     // =========================================
@@ -225,11 +227,6 @@ export class ProjectTasks implements OnInit {
 
         next: (response) => {
 
-          console.log(
-            'Project Loaded:',
-            response.data
-          );
-
           this.project.set(
             response.data
           );
@@ -267,31 +264,14 @@ export class ProjectTasks implements OnInit {
     }
 
 
-    console.log(
-      'Loading tasks for project:',
-      this.projectId
-    );
-
-
     this.taskService
       .loadTasksByProject(this.projectId)
       .subscribe({
 
         next: (response) => {
 
-          console.log(
-            'Project Tasks API Response:',
-            response
-          );
-
           const projectTasks =
             response.data || [];
-
-
-          console.log(
-            'Tasks inside current project:',
-            projectTasks
-          );
 
 
           this.tasks.set(
@@ -350,7 +330,8 @@ export class ProjectTasks implements OnInit {
 
         _id: this.editTaskId,
 
-        title: formValue.title,
+        title:
+          formValue.title,
 
         description:
           formValue.description || '',
@@ -370,23 +351,11 @@ export class ProjectTasks implements OnInit {
       };
 
 
-      console.log(
-        'Updating Task:',
-        updatedTask
-      );
-
-
       this.taskService
         .updateTask(updatedTask)
         .subscribe({
 
-          next: (response) => {
-
-            console.log(
-              'Task Updated:',
-              response
-            );
-
+          next: () => {
 
             this.loadProjectTasks();
 
@@ -438,27 +407,13 @@ export class ProjectTasks implements OnInit {
     };
 
 
-    console.log(
-      'Creating Task:',
-      newTask
-    );
-
-
     this.taskService
       .addTask(newTask)
       .subscribe({
 
-        next: (response) => {
+        next: () => {
 
-          console.log(
-            'Task Created:',
-            response.data
-          );
-
-
-          // Reload tasks of THIS project
           this.loadProjectTasks();
-
 
           this.resetForm();
 
@@ -483,12 +438,6 @@ export class ProjectTasks implements OnInit {
   // =========================================
 
   editTask(task: Task): void {
-
-    console.log(
-      'Editing Task:',
-      task
-    );
-
 
     this.isEditMode = true;
 
@@ -555,15 +504,8 @@ export class ProjectTasks implements OnInit {
       .deleteTask(id)
       .subscribe({
 
-        next: (response) => {
+        next: () => {
 
-          console.log(
-            'Task Deleted:',
-            response
-          );
-
-
-          // Reload current project's tasks
           this.loadProjectTasks();
 
         },
@@ -624,12 +566,6 @@ export class ProjectTasks implements OnInit {
 
 
     this.filteredTasks.set(
-      filtered
-    );
-
-
-    console.log(
-      'Filtered Tasks:',
       filtered
     );
 

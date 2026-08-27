@@ -199,10 +199,10 @@ filteredProjects = computed(() => {
 
         next: (response) => {
 
-          console.log(
-            'Project created:',
-            response.data
-          );
+          // console.log(
+          //   'Project created:',
+          //   response.data
+          // );
 
           // Reload projects
           this.taskService.loadProjects();

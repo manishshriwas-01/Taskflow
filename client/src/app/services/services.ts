@@ -29,8 +29,11 @@ export class Services {
   // API URLS
   // =========================================
 
-  private apiUrl = 'https://taskflow-5uoj.onrender.com/api/tasks';
-  private projectApiUrl = 'https://taskflow-5uoj.onrender.com/api/projects';
+  private apiUrl =
+    'https://taskflow-5uoj.onrender.com/api/tasks';
+
+  private projectApiUrl =
+    'https://taskflow-5uoj.onrender.com/api/projects';
 
   constructor(private http: HttpClient) {}
 
@@ -38,33 +41,23 @@ export class Services {
   // TASK APIs
   // =========================================
 
-  // =========================================
-  // GET ALL TASKS
-  // =========================================
-
   // GET /api/tasks
 
   loadTasks(): void {
+
     this.http
-      .get<{ success: boolean; data: Task[] }>(this.apiUrl)
+      .get<{
+        success: boolean;
+        data: Task[];
+      }>(this.apiUrl)
       .subscribe({
         next: (response) => {
           this.tasks.set(response.data);
-
-          console.log(
-            'All Tasks Loaded:',
-            response.data
-          );
-        },
-
-        error: (error) => {
-          console.error(
-            'Error loading all tasks:',
-            error
-          );
         }
       });
+
   }
+
 
   // =========================================
   // GET TASKS BY PROJECT
@@ -72,15 +65,22 @@ export class Services {
 
   // GET /api/tasks/project/:projectId
 
-  loadTasksByProject(projectId: string): Observable<{
+  loadTasksByProject(
+    projectId: string
+  ): Observable<{
     success: boolean;
     data: Task[];
   }> {
+
     return this.http.get<{
       success: boolean;
       data: Task[];
-    }>(`${this.apiUrl}/project/${projectId}`);
+    }>(
+      `${this.apiUrl}/project/${projectId}`
+    );
+
   }
+
 
   // =========================================
   // CREATE TASK
@@ -88,17 +88,25 @@ export class Services {
 
   // POST /api/tasks
 
-  addTask(newTask: Omit<Task, '_id'>): Observable<{
+  addTask(
+    newTask: Omit<Task, '_id'>
+  ): Observable<{
     success: boolean;
     message: string;
     data: Task;
   }> {
+
     return this.http.post<{
       success: boolean;
       message: string;
       data: Task;
-    }>(this.apiUrl, newTask);
+    }>(
+      this.apiUrl,
+      newTask
+    );
+
   }
+
 
   // =========================================
   // UPDATE TASK
@@ -106,11 +114,14 @@ export class Services {
 
   // PUT /api/tasks/:id
 
-  updateTask(updatedTask: Task): Observable<{
+  updateTask(
+    updatedTask: Task
+  ): Observable<{
     success: boolean;
     message: string;
     data: Task;
   }> {
+
     return this.http.put<{
       success: boolean;
       message: string;
@@ -119,7 +130,9 @@ export class Services {
       `${this.apiUrl}/${updatedTask._id}`,
       updatedTask
     );
+
   }
+
 
   // =========================================
   // DELETE TASK
@@ -127,17 +140,22 @@ export class Services {
 
   // DELETE /api/tasks/:id
 
-  deleteTask(id: string): Observable<{
+  deleteTask(
+    id: string
+  ): Observable<{
     success: boolean;
     message: string;
   }> {
+
     return this.http.delete<{
       success: boolean;
       message: string;
     }>(
       `${this.apiUrl}/${id}`
     );
+
   }
+
 
   // =========================================
   // GET TASK BY ID
@@ -145,17 +163,22 @@ export class Services {
 
   // GET /api/tasks/:id
 
-  getTaskById(id: string): Observable<{
+  getTaskById(
+    id: string
+  ): Observable<{
     success: boolean;
     data: Task;
   }> {
+
     return this.http.get<{
       success: boolean;
       data: Task;
     }>(
       `${this.apiUrl}/${id}`
     );
+
   }
+
 
   // =========================================
   // PROJECT APIs
@@ -168,6 +191,7 @@ export class Services {
   // GET /api/projects
 
   loadProjects(): void {
+
     this.http
       .get<{
         success: boolean;
@@ -176,21 +200,11 @@ export class Services {
       .subscribe({
         next: (response) => {
           this.projects.set(response.data);
-
-          console.log(
-            'All Projects Loaded:',
-            response.data
-          );
-        },
-
-        error: (error) => {
-          console.error(
-            'Error loading projects:',
-            error
-          );
         }
       });
+
   }
+
 
   // =========================================
   // GET PROJECT BY ID
@@ -198,17 +212,22 @@ export class Services {
 
   // GET /api/projects/:id
 
-  getProjectById(id: string): Observable<{
+  getProjectById(
+    id: string
+  ): Observable<{
     success: boolean;
     data: Project;
   }> {
+
     return this.http.get<{
       success: boolean;
       data: Project;
     }>(
       `${this.projectApiUrl}/${id}`
     );
+
   }
+
 
   // =========================================
   // CREATE PROJECT
@@ -216,11 +235,15 @@ export class Services {
 
   // POST /api/projects
 
-  createProject(name: string, description: string): Observable<{
+  createProject(
+    name: string,
+    description: string
+  ): Observable<{
     success: boolean;
     message: string;
     data: Project;
   }> {
+
     return this.http.post<{
       success: boolean;
       message: string;
@@ -232,7 +255,9 @@ export class Services {
         description
       }
     );
+
   }
+
 
   // =========================================
   // UPDATE PROJECT
@@ -240,11 +265,16 @@ export class Services {
 
   // PUT /api/projects/:id
 
-  updateProject(id: string, name: string, description: string): Observable<{
+  updateProject(
+    id: string,
+    name: string,
+    description: string
+  ): Observable<{
     success: boolean;
     message: string;
     data: Project;
   }> {
+
     return this.http.put<{
       success: boolean;
       message: string;
@@ -256,7 +286,9 @@ export class Services {
         description
       }
     );
+
   }
+
 
   // =========================================
   // DELETE PROJECT
@@ -264,16 +296,20 @@ export class Services {
 
   // DELETE /api/projects/:id
 
-  deleteProject(id: string): Observable<{
+  deleteProject(
+    id: string
+  ): Observable<{
     success: boolean;
     message: string;
   }> {
+
     return this.http.delete<{
       success: boolean;
       message: string;
     }>(
       `${this.projectApiUrl}/${id}`
     );
+
   }
 
 }
