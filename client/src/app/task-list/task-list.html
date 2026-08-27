@@ -1,389 +1,659 @@
-<!-- ================================= -->
-<!-- CREATE PROJECT -->
-<!-- ================================= -->
+<div class="project-tasks-page">
 
-<form
-  class="project-form"
-  [formGroup]="projectForm"
-  (ngSubmit)="createProject()">
+  <!-- ================================================= -->
+  <!-- LEFT SIDE : PROJECTS -->
+  <!-- ================================================= -->
 
-  <h2>Create Project</h2>
+  <section class="projects-panel">
 
-  <mat-form-field appearance="outline">
+    <!-- PANEL HEADER -->
 
-    <mat-label>Project Name</mat-label>
+    <div class="panel-header">
 
-    <input
-      matInput
-      type="text"
-      formControlName="name">
+      <div class="header-icon">
+        folder
+      </div>
 
-  </mat-form-field>
+      <div>
+        <span>WORKSPACE</span>
 
-  @if (
-    projectForm.get('name')?.touched &&
-    projectForm.get('name')?.hasError('required')
-  ) {
-    <p class="error">
-      Project name is required
-    </p>
-  }
-
-  @if (
-    projectForm.get('name')?.touched &&
-    projectForm.get('name')?.hasError('minlength')
-  ) {
-    <p class="error">
-      Minimum 3 characters required
-    </p>
-  }
-
-  <mat-form-field appearance="outline">
-
-    <mat-label>Description</mat-label>
-
-    <textarea
-      matInput
-      rows="3"
-      formControlName="description">
-    </textarea>
-
-  </mat-form-field>
-
-  <button
-    mat-raised-button
-    type="submit"
-    [disabled]="projectForm.invalid">
-
-    Create Project
-
-  </button>
-
-</form>
-
-
-<!-- ================================= -->
-<!-- PROJECT LIST -->
-<!-- ================================= -->
-
-<div class="project-list">
-
-  <h2>Your Projects</h2>
-
-  @if (taskService.projects().length === 0) {
-
-    <p>
-      No projects found. Create your first project.
-    </p>
-
-  }
-
-  @for (
-    project of taskService.projects();
-    track project._id
-  ) {
-
-    <div class="project-card">
-
-      <h3>
-        {{ project.name }}
-      </h3>
-
-      @if (project.description) {
+        <h1>
+          Projects
+        </h1>
 
         <p>
-          {{ project.description }}
+          Organize your work and manage your projects.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CREATE PROJECT -->
+    <!-- ================================================= -->
+
+    <form
+      class="project-form"
+      [formGroup]="projectForm"
+      (ngSubmit)="createProject()"
+    >
+
+      <div class="form-title">
+
+        <div class="small-icon">
+          +
+        </div>
+
+        <div>
+          <h2>
+            Create Project
+          </h2>
+
+          <p>
+            Start a new project
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- PROJECT NAME -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>
+          Project Name
+        </mat-label>
+
+        <input
+          matInput
+          type="text"
+          formControlName="name"
+        >
+
+      </mat-form-field>
+
+
+      @if (
+        projectForm.get('name')?.touched &&
+        projectForm.get('name')?.hasError('required')
+      ) {
+
+        <p class="error">
+          Project name is required
         </p>
 
       }
 
-    </div>
 
-  }
+      @if (
+        projectForm.get('name')?.touched &&
+        projectForm.get('name')?.hasError('minlength')
+      ) {
 
-</div>
+        <p class="error">
+          Minimum 3 characters required
+        </p>
 
-
-<!-- ================================= -->
-<!-- TASK FORM -->
-<!-- ================================= -->
-
-<form
-  class="task-form"
-  [formGroup]="taskForm"
-  (ngSubmit)="addTask()">
-
-  @if (isEditMode) {
-
-    <h2>Edit Task</h2>
-
-  } @else {
-
-    <h2>Add New Task</h2>
-
-  }
+      }
 
 
-  <!-- TITLE -->
+      <!-- DESCRIPTION -->
 
-  <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline">
 
-    <mat-label>Title</mat-label>
+        <mat-label>
+          Description
+        </mat-label>
 
-    <input
-      matInput
-      type="text"
-      formControlName="title">
+        <textarea
+          matInput
+          rows="3"
+          formControlName="description"
+        ></textarea>
 
-  </mat-form-field>
-
-  @if (
-    taskForm.get('title')?.touched &&
-    taskForm.get('title')?.hasError('required')
-  ) {
-
-    <p class="error">
-      Title is required
-    </p>
-
-  }
-
-  @if (
-    taskForm.get('title')?.touched &&
-    taskForm.get('title')?.hasError('minlength')
-  ) {
-
-    <p class="error">
-      Minimum 3 characters required
-    </p>
-
-  }
+      </mat-form-field>
 
 
-  <!-- DESCRIPTION -->
+      <!-- BUTTON -->
 
-  <mat-form-field appearance="outline">
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="projectForm.invalid"
+      >
 
-    <mat-label>Description</mat-label>
+        <mat-icon>
+          add
+        </mat-icon>
 
-    <textarea
-      matInput
-      rows="4"
-      formControlName="description">
-    </textarea>
+        Create Project
 
-  </mat-form-field>
+      </button>
+
+    </form>
 
 
-  <!-- PROJECT -->
+    <!-- ================================================= -->
+    <!-- PROJECT LIST -->
+    <!-- ================================================= -->
 
-  <mat-form-field appearance="outline">
+    <div class="projects-list">
 
-    <mat-label>Project</mat-label>
+      <div class="section-title">
 
-    <mat-select formControlName="projectId">
+        <div>
+
+          <h2>
+            Your Projects
+          </h2>
+
+          <p>
+            Select a project to manage its tasks
+          </p>
+
+        </div>
+
+        <span class="project-count">
+          {{ taskService.projects().length }}
+        </span>
+
+      </div>
+
+
+      <!-- NO PROJECTS -->
+
+      @if (taskService.projects().length === 0) {
+
+        <div class="empty-projects">
+
+          <mat-icon>
+            folder_open
+          </mat-icon>
+
+          <h3>
+            No projects yet
+          </h3>
+
+          <p>
+            Create your first project to get started.
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- PROJECTS -->
 
       @for (
         project of taskService.projects();
         track project._id
       ) {
 
-        <mat-option [value]="project._id">
+        <div
+          class="project-card"
+          (click)="openProject(project._id)"
+        >
 
-          {{ project.name }}
+          <div class="project-card-icon">
 
-        </mat-option>
+            <mat-icon>
+              folder
+            </mat-icon>
+
+          </div>
+
+
+          <div class="project-card-content">
+
+            <h3>
+              {{ project.name }}
+            </h3>
+
+            @if (project.description) {
+
+              <p>
+                {{ project.description }}
+              </p>
+
+            } @else {
+
+              <p class="no-description">
+                No description
+              </p>
+
+            }
+
+            <span>
+              View Tasks →
+            </span>
+
+          </div>
+
+        </div>
 
       }
 
-    </mat-select>
+    </div>
 
-  </mat-form-field>
+  </section>
 
-  @if (
-    taskForm.get('projectId')?.touched &&
-    taskForm.get('projectId')?.hasError('required')
-  ) {
 
-    <p class="error">
-      Please select a project
-    </p>
+  <!-- ================================================= -->
+  <!-- RIGHT SIDE : TASKS -->
+  <!-- ================================================= -->
 
-  }
+  <section class="tasks-panel">
 
+    <!-- PANEL HEADER -->
 
-  <!-- STATUS + PRIORITY -->
+    <div class="panel-header task-header">
 
-  <div class="form-row">
+      <div class="header-icon">
+        check
+      </div>
 
-    <!-- STATUS -->
+      <div>
 
-    <mat-form-field appearance="outline">
+        <span>WORK MANAGEMENT</span>
 
-      <mat-label>Status</mat-label>
+        <h1>
+          Tasks
+        </h1>
 
-      <mat-select formControlName="status">
+        <p>
+          Create, track and manage your tasks.
+        </p>
 
-        <mat-option value="Pending">
-          Pending
-        </mat-option>
+      </div>
 
-        <mat-option value="In Progress">
-          In Progress
-        </mat-option>
+    </div>
 
-        <mat-option value="Completed">
-          Completed
-        </mat-option>
 
-      </mat-select>
+    <!-- ================================================= -->
+    <!-- TASK FORM -->
+    <!-- ================================================= -->
 
-    </mat-form-field>
+    <form
+      class="task-form"
+      [formGroup]="taskForm"
+      (ngSubmit)="addTask()"
+    >
 
+      <div class="form-title">
 
-    <!-- PRIORITY -->
+        <div class="small-icon">
+          <mat-icon>
+            edit
+          </mat-icon>
+        </div>
 
-    <mat-form-field appearance="outline">
+        <div>
 
-      <mat-label>Priority</mat-label>
+          @if (isEditMode) {
 
-      <mat-select formControlName="priority">
+            <h2>
+              Edit Task
+            </h2>
 
-        <mat-option value="Low">
-          Low
-        </mat-option>
+            <p>
+              Update task information
+            </p>
 
-        <mat-option value="Medium">
-          Medium
-        </mat-option>
+          } @else {
 
-        <mat-option value="High">
-          High
-        </mat-option>
+            <h2>
+              Add New Task
+            </h2>
 
-      </mat-select>
+            <p>
+              Create a task for your project
+            </p>
 
-    </mat-form-field>
+          }
 
-  </div>
+        </div>
 
+      </div>
 
-  <!-- DUE DATE -->
 
-  <mat-form-field appearance="outline">
+      <!-- ================================================= -->
+      <!-- TITLE -->
+      <!-- ================================================= -->
 
-    <mat-label>Due Date</mat-label>
+      <mat-form-field appearance="outline">
 
-    <input
-      matInput
-      [matDatepicker]="picker"
-      formControlName="dueDate"
-      readonly>
+        <mat-label>
+          Task Title
+        </mat-label>
 
-    <mat-datepicker-toggle
-      matIconSuffix
-      [for]="picker">
-    </mat-datepicker-toggle>
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+        >
 
-    <mat-datepicker #picker>
-    </mat-datepicker>
+      </mat-form-field>
 
-  </mat-form-field>
 
-  @if (
-    taskForm.get('dueDate')?.touched &&
-    taskForm.get('dueDate')?.hasError('required')
-  ) {
+      @if (
+        taskForm.get('title')?.touched &&
+        taskForm.get('title')?.hasError('required')
+      ) {
 
-    <p class="error">
-      Due Date is required
-    </p>
+        <p class="error">
+          Title is required
+        </p>
 
-  }
+      }
 
 
-  <!-- SUBMIT -->
+      @if (
+        taskForm.get('title')?.touched &&
+        taskForm.get('title')?.hasError('minlength')
+      ) {
 
-  <button
-    mat-raised-button
-    type="submit"
-    [disabled]="taskForm.invalid">
+        <p class="error">
+          Minimum 3 characters required
+        </p>
 
-    {{ isEditMode ? 'Update Task' : 'Add Task' }}
+      }
 
-  </button>
 
-</form>
+      <!-- ================================================= -->
+      <!-- DESCRIPTION -->
+      <!-- ================================================= -->
 
+      <mat-form-field appearance="outline">
 
-<!-- ================================= -->
-<!-- SEARCH + FILTER -->
-<!-- ================================= -->
+        <mat-label>
+          Description
+        </mat-label>
 
-<div class="filters">
+        <textarea
+          matInput
+          rows="3"
+          formControlName="description"
+        ></textarea>
 
-  <mat-form-field
-    appearance="outline"
-    class="search-field">
+      </mat-form-field>
 
-    <mat-label>Search Tasks</mat-label>
 
-    <input
-      matInput
-      type="text"
-      [formControl]="searchControl">
+      <!-- ================================================= -->
+      <!-- PROJECT -->
+      <!-- ================================================= -->
 
-  </mat-form-field>
+      <mat-form-field appearance="outline">
 
+        <mat-label>
+          Project
+        </mat-label>
 
-  <mat-form-field
-    appearance="outline"
-    class="filter-field">
+        <mat-select formControlName="projectId">
 
-    <mat-label>Status</mat-label>
+          @for (
+            project of taskService.projects();
+            track project._id
+          ) {
 
-    <mat-select [formControl]="statusControl">
+            <mat-option [value]="project._id">
 
-      <mat-option value="All">
-        All
-      </mat-option>
+              {{ project.name }}
 
-      <mat-option value="Pending">
-        Pending
-      </mat-option>
+            </mat-option>
 
-      <mat-option value="In Progress">
-        In Progress
-      </mat-option>
+          }
 
-      <mat-option value="Completed">
-        Completed
-      </mat-option>
+        </mat-select>
 
-    </mat-select>
+      </mat-form-field>
 
-  </mat-form-field>
 
-</div>
+      @if (
+        taskForm.get('projectId')?.touched &&
+        taskForm.get('projectId')?.hasError('required')
+      ) {
 
+        <p class="error">
+          Please select a project
+        </p>
 
-<!-- ================================= -->
-<!-- TASKS -->
-<!-- ================================= -->
+      }
 
-<div class="task-container">
 
-  @for (
-    task of filteredTasks();
-    track task._id
-  ) {
+      <!-- ================================================= -->
+      <!-- STATUS + PRIORITY -->
+      <!-- ================================================= -->
 
-    <app-task-card
-      [task]="task"
-      (delete)="deleteTask(task._id)"
-      (edit)="editTask(task)">
-    </app-task-card>
+      <div class="form-row">
 
-  }
+        <!-- STATUS -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Status
+          </mat-label>
+
+          <mat-select formControlName="status">
+
+            <mat-option value="Pending">
+              Pending
+            </mat-option>
+
+            <mat-option value="In Progress">
+              In Progress
+            </mat-option>
+
+            <mat-option value="Completed">
+              Completed
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+
+        <!-- PRIORITY -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Priority
+          </mat-label>
+
+          <mat-select formControlName="priority">
+
+            <mat-option value="Low">
+              Low
+            </mat-option>
+
+            <mat-option value="Medium">
+              Medium
+            </mat-option>
+
+            <mat-option value="High">
+              High
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- DUE DATE -->
+      <!-- ================================================= -->
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>
+          Due Date
+        </mat-label>
+
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dueDate"
+          readonly
+        >
+
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        >
+        </mat-datepicker-toggle>
+
+        <mat-datepicker #picker>
+        </mat-datepicker>
+
+      </mat-form-field>
+
+
+      @if (
+        taskForm.get('dueDate')?.touched &&
+        taskForm.get('dueDate')?.hasError('required')
+      ) {
+
+        <p class="error">
+          Due Date is required
+        </p>
+
+      }
+
+
+      <!-- ================================================= -->
+      <!-- SUBMIT -->
+      <!-- ================================================= -->
+
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="taskForm.invalid"
+      >
+
+        <mat-icon>
+          {{ isEditMode ? 'save' : 'add_task' }}
+        </mat-icon>
+
+        {{ isEditMode ? 'Update Task' : 'Add Task' }}
+
+      </button>
+
+    </form>
+
+
+    <!-- ================================================= -->
+    <!-- SEARCH + FILTER -->
+    <!-- ================================================= -->
+
+    <div class="filters">
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field"
+      >
+
+        <mat-label>
+          Search Tasks
+        </mat-label>
+
+        <mat-icon matIconPrefix>
+          search
+        </mat-icon>
+
+        <input
+          matInput
+          type="text"
+          [formControl]="searchControl"
+        >
+
+      </mat-form-field>
+
+
+      <mat-form-field
+        appearance="outline"
+        class="filter-field"
+      >
+
+        <mat-label>
+          Filter by Status
+        </mat-label>
+
+        <mat-select
+          [formControl]="statusControl"
+        >
+
+          <mat-option value="All">
+            All Tasks
+          </mat-option>
+
+          <mat-option value="Pending">
+            Pending
+          </mat-option>
+
+          <mat-option value="In Progress">
+            In Progress
+          </mat-option>
+
+          <mat-option value="Completed">
+            Completed
+          </mat-option>
+
+        </mat-select>
+
+      </mat-form-field>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- TASK LIST -->
+    <!-- ================================================= -->
+
+    <div class="task-section-header">
+
+      <div>
+
+        <h2>
+          Your Tasks
+        </h2>
+
+        <p>
+          Manage your current work
+        </p>
+
+      </div>
+
+      <span>
+        {{ filteredTasks().length }} Tasks
+      </span>
+
+    </div>
+
+
+    <div class="task-container">
+
+      @for (
+        task of filteredTasks();
+        track task._id
+      ) {
+
+        <app-task-card
+          [task]="task"
+          (delete)="deleteTask(task._id)"
+          (edit)="editTask(task)"
+        >
+        </app-task-card>
+
+      }
+
+    </div>
+
+  </section>
 
 </div>

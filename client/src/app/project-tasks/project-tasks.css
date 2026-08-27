@@ -1,74 +1,355 @@
-.project-tasks-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 24px 60px;
+/* =========================================================
+   PROJECT TASKS PAGE
+   Dashboard style: Navy + Blue + White
+========================================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #172033;
 }
 
 
-/* =========================================
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.project-tasks-page {
+  min-height: calc(100vh - 64px);
+  padding: 32px 34px 60px;
+  box-sizing: border-box;
+  background: #f5f7fb;
+}
+
+
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 .page-header {
-  margin-bottom: 30px;
-}
+  max-width: 1450px;
+  margin: 0 auto 28px;
 
-.back-button {
-  display: inline-block;
-  margin-bottom: 15px;
-  color: #2563eb;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.back-button:hover {
-  text-decoration: underline;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.page-header p {
-  margin-top: 8px;
-  color: #6b7280;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
 }
 
 
-/* =========================================
-   FORM SECTION
-========================================= */
-
-.task-form-section {
-  background: white;
-  padding: 28px;
-  border-radius: 16px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-}
-
-.section-title {
-  margin-bottom: 20px;
-}
-
-.section-title h2 {
-  margin: 0;
-  font-size: 22px;
-}
-
-.section-title p {
-  margin: 6px 0 0;
-  color: #6b7280;
-}
-
-
-.task-form {
+.header-left {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
 }
+
+
+.back-button {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+
+.back-button:hover {
+  color: #2563eb;
+  background: #eaf2ff;
+}
+
+
+/* =========================================================
+   PROJECT TITLE
+========================================================= */
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+.title-icon {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 13px;
+
+  background: #eaf2ff;
+  border: 1px solid #d5e5ff;
+
+  font-size: 22px;
+
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+
+.page-title h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 27px;
+  line-height: 1.15;
+
+  font-weight: 800;
+
+  letter-spacing: -0.7px;
+}
+
+
+.page-title p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   HEADER BADGE
+========================================================= */
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  border: 1px solid #dce5f0;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  color: #526176;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+}
+
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow: 0 0 0 3px #dcfce7;
+}
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+  max-width: 1450px;
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 315px minmax(0, 1fr);
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   LEFT PANEL
+========================================================= */
+
+.left-panel {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   CREATE TASK CARD
+========================================================= */
+
+.form-card {
+  position: relative;
+
+  padding: 22px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #101a36 0%,
+      #16264d 55%,
+      #1d3b78 100%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+
+  box-shadow:
+    0 15px 35px rgba(15, 23, 42, 0.18);
+
+  overflow: hidden;
+}
+
+
+/* blue top line */
+
+.form-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #60a5fa
+  );
+}
+
+
+/* subtle glow */
+
+.form-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 140px;
+  height: 140px;
+
+  right: -70px;
+  top: -70px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.16);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.form-card-header {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+}
+
+
+.section-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #72a5ff;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+}
+
+
+.form-card-header h2 {
+  margin: 0 0 5px;
+
+  color: #ffffff;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
+}
+
+
+.form-card-header p {
+  margin: 0;
+
+  color: #aebbd3;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+.form-icon {
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 23px;
+  font-weight: 500;
+
+  box-shadow:
+    0 7px 16px rgba(37, 99, 235, 0.35);
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.task-form {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
 
 .full-width {
   width: 100%;
@@ -77,136 +358,707 @@
 
 .form-row {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+
+  gap: 9px;
 }
 
 
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-
-.error {
-  margin: -5px 0 8px;
-  color: #dc2626;
-  font-size: 13px;
-}
-
-
-/* =========================================
-   FILTERS
-========================================= */
-
-.filter-section {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 16px;
-  margin-bottom: 25px;
-}
-
-.search-field,
-.status-filter {
+.form-row mat-form-field {
   width: 100%;
 }
 
 
-/* =========================================
-   TASK SECTION
-========================================= */
+.error {
+  margin: -2px 0 8px 2px;
 
-.tasks-section {
-  margin-top: 20px;
+  color: #fca5a5;
+
+  font-size: 10px;
+  font-weight: 600;
 }
+
+
+/* =========================================================
+   MATERIAL INPUTS - DARK LEFT CARD
+========================================================= */
+
+.form-card ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+
+  font-size: 11px;
+}
+
+
+.form-card ::ng-deep .mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.07) !important;
+
+  border-radius: 8px !important;
+}
+
+
+.form-card ::ng-deep .mdc-notched-outline__leading,
+.form-card ::ng-deep .mdc-notched-outline__notch,
+.form-card ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+
+.form-card ::ng-deep .mat-mdc-form-field:hover
+.mdc-notched-outline__leading,
+.form-card ::ng-deep .mat-mdc-form-field:hover
+.mdc-notched-outline__notch,
+.form-card ::ng-deep .mat-mdc-form-field:hover
+.mdc-notched-outline__trailing {
+  border-color: #60a5fa !important;
+}
+
+
+.form-card ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+.form-card ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+.form-card ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #60a5fa !important;
+  border-width: 2px !important;
+}
+
+
+.form-card ::ng-deep .mat-mdc-floating-label {
+  color: #aebbd3 !important;
+}
+
+
+.form-card ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mat-mdc-floating-label {
+  color: #7db2ff !important;
+}
+
+
+.form-card ::ng-deep input,
+.form-card ::ng-deep textarea {
+  color: #ffffff !important;
+
+  caret-color: #60a5fa !important;
+}
+
+
+.form-card ::ng-deep input::placeholder,
+.form-card ::ng-deep textarea::placeholder {
+  color: #8fa0bd !important;
+}
+
+
+.form-card ::ng-deep .mat-mdc-select-value {
+  color: #ffffff !important;
+}
+
+
+.form-card ::ng-deep .mat-mdc-select-arrow {
+  color: #aebbd3 !important;
+}
+
+
+.form-card ::ng-deep .mat-datepicker-toggle {
+  color: #aebbd3 !important;
+}
+
+
+.form-card ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.form-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 8px;
+}
+
+
+.primary-button {
+  min-height: 40px;
+
+  padding: 0 18px;
+
+  border-radius: 8px !important;
+
+  background: #2563eb !important;
+
+  color: #ffffff !important;
+
+  font-size: 11px !important;
+  font-weight: 750 !important;
+
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.28) !important;
+
+  transition: all 0.2s ease !important;
+}
+
+
+.primary-button:hover:not(:disabled) {
+  background: #1d4ed8 !important;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 9px 18px rgba(37, 99, 235, 0.35) !important;
+}
+
+
+.primary-button:disabled {
+  background: #789cf0 !important;
+
+  color: #eaf0ff !important;
+
+  opacity: 0.7;
+}
+
+
+.cancel-button {
+  min-height: 40px;
+
+  color: #d7e2f4 !important;
+
+  font-size: 11px !important;
+}
+
+
+/* =========================================================
+   RIGHT PANEL
+========================================================= */
+
+.right-panel {
+  min-width: 0;
+
+  padding: 26px;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #dce5f0;
+
+  box-shadow:
+    0 8px 28px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   TASK HEADER
+========================================================= */
 
 .tasks-header {
-  margin-bottom: 20px;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #e7edf5;
 }
+
 
 .tasks-header h2 {
-  margin: 0;
-  font-size: 24px;
+  margin: 0 0 5px;
+
+  color: #111827;
+
+  font-size: 23px;
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
 }
+
 
 .tasks-header p {
-  margin: 5px 0 0;
-  color: #6b7280;
+  margin: 0;
+
+  color: #7b8799;
+
+  font-size: 11px;
 }
 
 
-/* =========================================
+.task-total {
+  min-width: 68px;
+
+  padding: 10px 13px;
+
+  border-radius: 11px;
+
+  background: #eff6ff;
+
+  border: 1px solid #d7e7ff;
+
+  text-align: center;
+}
+
+
+.task-total strong {
+  display: block;
+
+  color: #2563eb;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.task-total span {
+  color: #718096;
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.filter-bar {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 150px;
+
+  gap: 11px;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid #e7edf5;
+}
+
+
+.search-box {
+  min-width: 0;
+}
+
+
+.search-box mat-form-field {
+  width: 100%;
+}
+
+
+.filter-bar > mat-form-field {
+  width: 100%;
+}
+
+
+/* =========================================================
+   RIGHT MATERIAL FIELDS
+========================================================= */
+
+.right-panel ::ng-deep .mat-mdc-form-field {
+  font-size: 11px;
+}
+
+
+.right-panel ::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 8px !important;
+}
+
+
+.right-panel ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+
+.right-panel ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__leading,
+.right-panel ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__notch,
+.right-panel ::ng-deep
+.mat-mdc-form-field.mat-focused
+.mdc-notched-outline__trailing {
+  border-color: #2563eb !important;
+}
+
+
+/* =========================================================
+   TASK SECTION
+========================================================= */
+
+.tasks-section {
+  padding-top: 21px;
+}
+
+
+.tasks-section-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+
+.tasks-section-header h3 {
+  margin: 0 0 4px;
+
+  color: #263247;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+.tasks-section-header p {
+  margin: 0;
+
+  color: #8a96a8;
+
+  font-size: 10px;
+}
+
+
+.view-label {
+  padding: 6px 9px;
+
+  border-radius: 6px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+}
+
+
+/* =========================================================
    TASK GRID
-========================================= */
+========================================================= */
 
 .task-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 15px;
 }
 
 
-/* =========================================
+/* =========================================================
    EMPTY STATE
-========================================= */
+========================================================= */
 
 .empty-state {
+  min-height: 270px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 14px;
+
+  background: #f8fafc;
+
   text-align: center;
-  padding: 60px 20px;
-  background: white;
-  border-radius: 16px;
-  border: 1px dashed #d1d5db;
 }
+
 
 .empty-icon {
-  font-size: 42px;
-  margin-bottom: 10px;
+  width: 55px;
+  height: 55px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 12px;
+
+  border-radius: 15px;
+
+  background: #eff6ff;
+
+  font-size: 25px;
 }
+
 
 .empty-state h3 {
-  margin: 0;
-  font-size: 20px;
+  margin: 0 0 6px;
+
+  color: #334155;
+
+  font-size: 15px;
+  font-weight: 750;
 }
+
 
 .empty-state p {
-  color: #6b7280;
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
 }
 
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* =========================================================
+   MATERIAL BUTTON RESET
+========================================================= */
 
-@media (max-width: 900px) {
+::ng-deep .mat-mdc-raised-button {
+  letter-spacing: 0 !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .project-tasks-page {
+    padding: 28px 24px 50px;
+  }
+
+  .workspace {
+    grid-template-columns: 285px minmax(0, 1fr);
+
+    gap: 18px;
+  }
+
+  .right-panel {
+    padding: 21px;
+  }
 
   .task-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
 }
 
+
+/* =========================================================
+   RESPONSIVE - 850px
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .project-tasks-page {
+    padding: 24px 20px 45px;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .left-panel {
+    width: 100%;
+  }
+
+  .form-card {
+    max-width: none;
+  }
+
+  .right-panel {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
 
 @media (max-width: 650px) {
 
   .project-tasks-page {
-    padding: 20px 15px 40px;
+    padding: 18px 14px 35px;
   }
+
+
+  .page-header {
+    margin-bottom: 22px;
+
+    align-items: flex-start;
+  }
+
+
+  .header-badge {
+    display: none;
+  }
+
+
+  .header-left {
+    gap: 15px;
+  }
+
+
+  .page-title {
+    gap: 11px;
+  }
+
+
+  .title-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+
+    font-size: 19px;
+  }
+
+
+  .page-title h1 {
+    font-size: 21px;
+  }
+
+
+  .page-title p {
+    font-size: 10px;
+  }
+
+
+  .form-card {
+    padding: 19px;
+  }
+
+
+  .right-panel {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+
+  .tasks-header {
+    align-items: flex-start;
+  }
+
+
+  .tasks-header h2 {
+    font-size: 20px;
+  }
+
+
+  .task-total {
+    min-width: 55px;
+    padding: 8px 10px;
+  }
+
+
+  .task-total strong {
+    font-size: 17px;
+  }
+
+
+  .filter-bar {
+    grid-template-columns: 1fr;
+  }
+
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 2px;
   }
 
-  .filter-section {
-    grid-template-columns: 1fr;
-  }
 
   .task-grid {
     grid-template-columns: 1fr;
   }
 
-  .task-form-section {
-    padding: 20px;
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .project-tasks-page {
+    padding: 15px 11px 30px;
+  }
+
+
+  .page-title h1 {
+    font-size: 19px;
+  }
+
+
+  .back-button {
+    font-size: 11px;
+  }
+
+
+  .form-card {
+    padding: 16px;
+  }
+
+
+  .form-card-header h2 {
+    font-size: 18px;
+  }
+
+
+  .right-panel {
+    padding: 15px;
+  }
+
+
+  .tasks-header h2 {
+    font-size: 19px;
+  }
+
+
+  .tasks-header p {
+    font-size: 10px;
+  }
+
+
+  .tasks-section-header {
+    align-items: flex-start;
+  }
+
+
+  .view-label {
+    display: none;
+  }
+
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+
+  .primary-button,
+  .cancel-button {
+    width: 100%;
   }
 
 }

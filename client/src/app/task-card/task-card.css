@@ -1,37 +1,50 @@
 /* =========================================
    TASK CARD
+   Professional TaskFlow Style
 ========================================= */
-
+.project-tasks-page {
+  background: red !important;
+  min-height: 100vh !important;
+}
 .task-card {
-  height: 100%;
-  min-height: 300px;
+  width: 100%;
+  min-height: 310px;
 
   display: flex;
   flex-direction: column;
 
-  border-radius: 16px;
+  padding: 0;
 
   box-sizing: border-box;
 
   overflow: hidden;
 
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+
   background: #ffffff;
+
+  box-shadow:
+    0 4px 15px rgba(15, 23, 42, 0.05);
 
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 
 /* =========================================
-   HOVER
+   CARD HOVER
 ========================================= */
 
 .task-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+
+  border-color: #bfdbfe;
 
   box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.12);
+    0 14px 30px rgba(15, 23, 42, 0.10);
 }
 
 
@@ -39,43 +52,51 @@
    HEADER
 ========================================= */
 
-mat-card-header {
-  padding: 20px 20px 10px;
-}
+.task-card mat-card-header {
+  padding: 22px 22px 12px;
 
-
-mat-card-title {
-  font-size: 19px;
-  font-weight: 600;
-
-  color: #1f2937;
-
-  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
 }
 
 
 /* =========================================
-   STATUS
+   TITLE
+========================================= */
+
+.task-card mat-card-title {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  letter-spacing: -0.2px;
+}
+
+
+/* =========================================
+   STATUS BADGE
 ========================================= */
 
 .status {
-  display: inline-block;
-
   width: fit-content;
 
-  margin: 8px 20px 12px;
-
-  padding: 5px 12px;
+  margin: 4px 22px 16px;
+  padding: 5px 11px;
 
   border-radius: 20px;
 
-  background: #e0e7ff;
+  background: #eff6ff;
+  color: #2563eb;
 
-  color: #3730a3;
+  font-size: 11px;
+  font-weight: 700;
 
-  font-size: 12px;
-
-  font-weight: 600;
+  border: 1px solid #dbeafe;
 }
 
 
@@ -83,10 +104,10 @@ mat-card-title {
    CONTENT
 ========================================= */
 
-mat-card-content {
+.task-card mat-card-content {
   flex: 1;
 
-  padding: 0 20px;
+  padding: 0 22px 18px;
 }
 
 
@@ -95,13 +116,19 @@ mat-card-content {
 ========================================= */
 
 .description {
-  margin: 4px 0 18px;
+  margin: 0 0 20px;
 
-  color: #6b7280;
+  color: #64748b;
 
-  font-size: 14px;
+  font-size: 13px;
 
-  line-height: 1.6;
+  line-height: 1.65;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
 }
 
 
@@ -110,62 +137,59 @@ mat-card-content {
 ========================================= */
 
 .details {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 
-  padding-top: 10px;
+  gap: 10px;
 
-  border-top: 1px solid #e5e7eb;
+  padding: 15px;
+
+  border-radius: 12px;
+
+  background: #f8fafc;
+
+  border: 1px solid #f1f5f9;
 }
 
 
+/* =========================================
+   DETAIL ITEM
+========================================= */
+
 .detail-item {
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
+  justify-content: space-between;
 
   gap: 15px;
 
-  margin: 12px 0;
+  margin: 0;
 
-  font-size: 14px;
-
-  color: #4b5563;
+  font-size: 12px;
 }
 
 
 .detail-item strong {
-  color: #374151;
+  color: #64748b;
 
   font-weight: 600;
 }
 
 
 .detail-item span {
+  color: #0f172a;
+
+  font-weight: 600;
+
   text-align: right;
 
-  color: #6b7280;
-}
+  max-width: 60%;
 
+  overflow: hidden;
 
-/* =========================================
-   PROJECT NAME
-========================================= */
+  text-overflow: ellipsis;
 
-.detail-item:first-child span {
-  color: #2563eb;
-
-  font-weight: 600;
-}
-
-
-/* =========================================
-   PRIORITY
-========================================= */
-
-.detail-item:nth-child(2) span {
-  font-weight: 600;
+  white-space: nowrap;
 }
 
 
@@ -174,21 +198,23 @@ mat-card-content {
 ========================================= */
 
 .due-soon {
-  display: inline-block;
+  width: fit-content;
 
-  margin-top: 4px;
+  margin: 2px 0 0;
 
-  padding: 5px 10px;
+  padding: 4px 9px;
 
   border-radius: 6px;
 
-  background: #fef3c7;
+  background: #fff7ed;
 
-  color: #92400e;
+  color: #c2410c;
 
-  font-size: 12px;
+  font-size: 10px;
 
-  font-weight: 600;
+  font-weight: 700;
+
+  border: 1px solid #fed7aa;
 }
 
 
@@ -196,30 +222,39 @@ mat-card-content {
    ACTIONS
 ========================================= */
 
-mat-card-actions {
+.task-card mat-card-actions {
   display: flex;
-
   align-items: center;
 
   gap: 8px;
 
-  padding: 16px 20px 20px;
+  padding: 14px 22px 18px;
+
+  margin: 0;
+
+  border-top: 1px solid #f1f5f9;
+
+  background: #ffffff;
 }
 
 
 /* =========================================
-   ACTION BUTTONS
+   ALL BUTTONS
 ========================================= */
 
-mat-card-actions button,
-mat-card-actions a {
-  min-height: 38px;
+.task-card mat-card-actions button,
+.task-card mat-card-actions a {
+  min-height: 36px;
 
-  border-radius: 8px;
+  padding: 0 13px;
 
-  font-size: 13px;
+  border-radius: 8px !important;
 
-  font-weight: 500;
+  font-size: 12px;
+
+  font-weight: 700;
+
+  box-shadow: none !important;
 }
 
 
@@ -227,8 +262,15 @@ mat-card-actions a {
    VIEW BUTTON
 ========================================= */
 
-mat-card-actions a {
-  color: #2563eb;
+.task-card mat-card-actions a {
+  background: #2563eb !important;
+
+  color: #ffffff !important;
+}
+
+
+.task-card mat-card-actions a:hover {
+  background: #1d4ed8 !important;
 }
 
 
@@ -237,9 +279,20 @@ mat-card-actions a {
 ========================================= */
 
 .edit-btn {
-  background: #f59e0b !important;
+  background: #f8fafc !important;
 
-  color: #ffffff !important;
+  color: #475569 !important;
+
+  border: 1px solid #e2e8f0 !important;
+}
+
+
+.edit-btn:hover {
+  background: #eff6ff !important;
+
+  color: #2563eb !important;
+
+  border-color: #bfdbfe !important;
 }
 
 
@@ -248,9 +301,18 @@ mat-card-actions a {
 ========================================= */
 
 .delete-btn {
-  background: #ef4444 !important;
+  background: #ffffff !important;
 
-  color: #ffffff !important;
+  color: #dc2626 !important;
+
+  border: 1px solid #fecaca !important;
+}
+
+
+.delete-btn:hover {
+  background: #fef2f2 !important;
+
+  border-color: #fca5a5 !important;
 }
 
 
@@ -258,61 +320,57 @@ mat-card-actions a {
    ICONS
 ========================================= */
 
-mat-icon {
-  font-size: 18px;
+.task-card mat-icon {
+  width: 17px;
+  height: 17px;
 
-  width: 18px;
-
-  height: 18px;
+  font-size: 17px;
 
   vertical-align: middle;
+
+  margin-right: 4px;
 }
 
 
 /* =========================================
-   MOBILE
+   RESPONSIVE
 ========================================= */
 
 @media (max-width: 600px) {
 
-  .task-card {
-    min-height: auto;
+  .task-card mat-card-header {
+    padding: 18px 18px 10px;
   }
 
 
-  mat-card-header {
-    padding: 16px 16px 8px;
-  }
-
-
-  mat-card-content {
-    padding: 0 16px;
+  .task-card mat-card-content {
+    padding: 0 18px 16px;
   }
 
 
   .status {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+
+
+  .task-card mat-card-actions {
+    padding: 12px 18px 16px;
+
+    flex-wrap: wrap;
+  }
+
+
+  .task-card mat-card-actions button,
+  .task-card mat-card-actions a {
+    flex: 1;
+
+    justify-content: center;
   }
 
 
   .detail-item {
-    align-items: flex-start;
-  }
-
-
-  mat-card-actions {
-    flex-wrap: wrap;
-
-    padding: 14px 16px 16px;
-  }
-
-
-  mat-card-actions button,
-  mat-card-actions a {
-    flex: 1;
-
-    min-width: 90px;
+    font-size: 11px;
   }
 
 }
@@ -324,28 +382,15 @@ mat-icon {
 
 @media (max-width: 400px) {
 
-  .detail-item {
-    flex-direction: column;
+  .task-card mat-card-actions {
+    display: grid;
 
-    align-items: flex-start;
-
-    gap: 3px;
+    grid-template-columns: 1fr 1fr;
   }
 
 
-  .detail-item span {
-    text-align: left;
-  }
-
-
-  mat-card-actions {
-    flex-direction: column;
-  }
-
-
-  mat-card-actions button,
-  mat-card-actions a {
-    width: 100%;
+  .task-card mat-card-actions a {
+    grid-column: span 2;
   }
 
 }

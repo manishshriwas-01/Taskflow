@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, effect } from '@angular/core';
+import { Component, OnInit, signal, effect, inject } from '@angular/core';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -6,13 +6,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators
+  Validators,
+  
 } from '@angular/forms';
 
 import {
@@ -23,7 +25,7 @@ import {
 import { TaskCard } from '../task-card/task-card';
 import { Services } from '../services/services';
 import { Task } from '../models/task';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -37,13 +39,16 @@ import { Task } from '../models/task';
     MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+     MatIconModule
   ],
 
   templateUrl: './task-list.html',
   styleUrl: './task-list.css'
 })
 export class TaskList implements OnInit {
+
+  private router=inject(Router);
 
   // =========================================
   // SEARCH + FILTER
@@ -589,6 +594,11 @@ export class TaskList implements OnInit {
 
     });
 
+  }
+  
+
+  openProject(projectId: string): void {
+    this.router.navigate(['/project', projectId]);
   }
 
 }
