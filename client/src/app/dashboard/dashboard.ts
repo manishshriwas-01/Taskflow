@@ -1,6 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { signal, computed } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  computed
+} from '@angular/core';
+
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import {
   FormBuilder,
@@ -13,7 +21,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { Services, Project } from '../services/services';
+import {
+  Services,
+  Project
+} from '../services/services';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -32,35 +44,61 @@ import { Services, Project } from '../services/services';
 })
 export class Dashboard implements OnInit {
 
-  // =========================
+  // =========================================
   // PROJECT FORM
-  // =========================
+  // =========================================
 
   projectForm!: FormGroup;
+
+
+  // =========================================
+  // SEARCH
+  // =========================================
 
   projectSearch = signal('');
 
 
+  // =========================================
+  // SEARCH HANDLER
+  // =========================================
 
   onProjectSearch(event: Event): void {
 
-    const input = event.target as HTMLInputElement;
+    const input =
+      event.target as HTMLInputElement;
 
     this.projectSearch.set(input.value);
 
+    // Search karte hi first page par jao
+    this.currentPage = 1;
+
   }
+
+
+  // =========================================
+  // FILTERED PROJECTS
+  // =========================================
+
   filteredProjects = computed(() => {
 
-    const search = this.projectSearch()
-      .toLowerCase()
-      .trim();
+    const search =
+      this.projectSearch()
+        .toLowerCase()
+        .trim();
 
-    const projects = this.taskService.projects();
+    const projects =
+      this.taskService.projects();
 
+
+    // Search empty hai
     if (!search) {
+
       return projects;
+
     }
 
+
+    // Project name se search
     return projects.filter(project =>
       project.name
         .toLowerCase()
@@ -70,60 +108,68 @@ export class Dashboard implements OnInit {
   });
 
 
-  // =========================
+  // =========================================
   // EDIT STATE
-  // =========================
+  // =========================================
 
   isEditMode = false;
 
   editingProjectId: string | null = null;
 
 
-  // =========================
+  // =========================================
+  // PAGINATION
+  // =========================================
+
+  currentPage = 1;
+
+  itemsPerPage = 6;
+
+
+  // =========================================
   // CONSTRUCTOR
-  // =========================
+  // =========================================
 
   constructor(
     public taskService: Services,
     private fb: FormBuilder,
     private router: Router
-  ) { }
+  ) {}
 
 
-  // =========================
+  // =========================================
   // INITIALIZATION
-  // =========================
+  // =========================================
 
   ngOnInit(): void {
 
-    this.projectForm = this.fb.group({
+    this.projectForm =
+      this.fb.group({
 
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3)
-        ]
-      ],
+        name: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3)
+          ]
+        ],
 
-      description: ['']
+        description: ['']
 
-    });
+      });
 
 
-    // Load projects after dashboard opens
     this.taskService.loadProjects();
 
   }
 
 
-  // =========================
+  // =========================================
   // CREATE / UPDATE PROJECT
-  // =========================
+  // =========================================
 
   createProject(): void {
 
-    // Check validation
     if (this.projectForm.invalid) {
 
       this.projectForm.markAllAsTouched();
@@ -140,9 +186,9 @@ export class Dashboard implements OnInit {
       this.projectForm.get('description')?.value;
 
 
-    // =========================
-    // UPDATE PROJECT
-    // =========================
+    // =========================================
+    // UPDATE
+    // =========================================
 
     if (
       this.isEditMode &&
@@ -159,36 +205,28 @@ export class Dashboard implements OnInit {
 
           next: () => {
 
-            console.log(
-              'Project updated successfully'
-            );
-
-            // Reload projects
             this.taskService.loadProjects();
 
-            // Clear form
             this.resetForm();
 
           },
 
-          error: (error) => {
+          error: () => {
 
-            console.error(
-              'Error updating project:',
-              error
-            );
+            // Handle error if needed
 
           }
 
         });
 
       return;
+
     }
 
 
-    // =========================
-    // CREATE PROJECT
-    // =========================
+    // =========================================
+    // CREATE
+    // =========================================
 
     this.taskService
       .createProject(
@@ -197,27 +235,17 @@ export class Dashboard implements OnInit {
       )
       .subscribe({
 
-        next: (response) => {
+        next: () => {
 
-          // console.log(
-          //   'Project created:',
-          //   response.data
-          // );
-
-          // Reload projects
           this.taskService.loadProjects();
 
-          // Clear form
           this.resetForm();
 
         },
 
-        error: (error) => {
+        error: () => {
 
-          console.error(
-            'Error creating project:',
-            error
-          );
+          // Handle error if needed
 
         }
 
@@ -226,9 +254,9 @@ export class Dashboard implements OnInit {
   }
 
 
-  // =========================
+  // =========================================
   // EDIT PROJECT
-  // =========================
+  // =========================================
 
   editProject(project: Project): void {
 
@@ -237,9 +265,6 @@ export class Dashboard implements OnInit {
     this.editingProjectId =
       project._id;
 
-
-    // Put existing project data
-    // inside form
 
     this.projectForm.patchValue({
 
@@ -250,8 +275,6 @@ export class Dashboard implements OnInit {
 
     });
 
-
-    // Scroll to top
 
     window.scrollTo({
 
@@ -264,9 +287,9 @@ export class Dashboard implements OnInit {
   }
 
 
-  // =========================
+  // =========================================
   // DELETE PROJECT
-  // =========================
+  // =========================================
 
   deleteProject(id: string): void {
 
@@ -289,21 +312,26 @@ export class Dashboard implements OnInit {
 
         next: () => {
 
-          console.log(
-            'Project deleted successfully'
-          );
-
-          // Reload projects
           this.taskService.loadProjects();
+
+
+          // Current page empty hone par
+          // previous page par jao
+
+          if (
+            this.currentPage > 1 &&
+            this.paginatedProjects.length === 0
+          ) {
+
+            this.currentPage--;
+
+          }
 
         },
 
-        error: (error) => {
+        error: () => {
 
-          console.error(
-            'Error deleting project:',
-            error
-          );
+          // Handle error if needed
 
         }
 
@@ -312,9 +340,9 @@ export class Dashboard implements OnInit {
   }
 
 
-  // =========================
+  // =========================================
   // OPEN PROJECT
-  // =========================
+  // =========================================
 
   openProject(projectId: string): void {
 
@@ -326,9 +354,9 @@ export class Dashboard implements OnInit {
   }
 
 
-  // =========================
+  // =========================================
   // RESET FORM
-  // =========================
+  // =========================================
 
   resetForm(): void {
 
@@ -349,39 +377,44 @@ export class Dashboard implements OnInit {
 
 
   // =========================================
-  // PAGINATION
-  // =========================================
-
-  currentPage = 1;
-
-  itemsPerPage = 6;
-
-
-  // =========================================
   // TOTAL PAGES
   // =========================================
 
   get totalPages(): number {
+
     return Math.ceil(
-      this.taskService.projects().length / this.itemsPerPage
+      this.filteredProjects().length /
+      this.itemsPerPage
     );
+
   }
 
 
   // =========================================
-  // CURRENT PAGE PROJECTS
+  // PAGINATED PROJECTS
   // =========================================
 
-  get paginatedProjects() {
-    const projects = this.taskService.projects();
+  get paginatedProjects(): Project[] {
+
+    const projects =
+      this.filteredProjects();
+
 
     const startIndex =
-      (this.currentPage - 1) * this.itemsPerPage;
+      (this.currentPage - 1) *
+      this.itemsPerPage;
+
 
     const endIndex =
-      startIndex + this.itemsPerPage;
+      startIndex +
+      this.itemsPerPage;
 
-    return projects.slice(startIndex, endIndex);
+
+    return projects.slice(
+      startIndex,
+      endIndex
+    );
+
   }
 
 
@@ -390,10 +423,14 @@ export class Dashboard implements OnInit {
   // =========================================
 
   get pageNumbers(): number[] {
+
     return Array.from(
-      { length: this.totalPages },
+      {
+        length: this.totalPages
+      },
       (_, index) => index + 1
     );
+
   }
 
 
@@ -407,8 +444,11 @@ export class Dashboard implements OnInit {
       page < 1 ||
       page > this.totalPages
     ) {
+
       return;
+
     }
+
 
     this.currentPage = page;
 
@@ -421,8 +461,13 @@ export class Dashboard implements OnInit {
 
   nextPage(): void {
 
-    if (this.currentPage < this.totalPages) {
+    if (
+      this.currentPage <
+      this.totalPages
+    ) {
+
       this.currentPage++;
+
     }
 
   }
@@ -434,8 +479,12 @@ export class Dashboard implements OnInit {
 
   previousPage(): void {
 
-    if (this.currentPage > 1) {
+    if (
+      this.currentPage > 1
+    ) {
+
       this.currentPage--;
+
     }
 
   }

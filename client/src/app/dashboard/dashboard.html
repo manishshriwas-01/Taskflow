@@ -1,15 +1,23 @@
 <div class="dashboard">
 
-  <!-- ============================= -->
-  <!-- LEFT PANEL -->
-  <!-- ============================= -->
+  <!-- ========================================= -->
+  <!-- LEFT SIDEBAR -->
+  <!-- ========================================= -->
 
   <aside class="dashboard-sidebar">
 
     <div class="brand-badge">
-      <span class="brand-icon">✓</span>
-      <span>TaskFlow</span>
+
+      <span class="brand-icon">
+        ✓
+      </span>
+
+      <span>
+        TaskFlow
+      </span>
+
     </div>
+
 
     <div class="sidebar-content">
 
@@ -17,10 +25,14 @@
         PROJECT MANAGEMENT
       </span>
 
+
       <h1>
         Build your work.
-        <span>Stay organized.</span>
+        <span>
+          Stay organized.
+        </span>
       </h1>
+
 
       <p class="sidebar-description">
         Create projects, organize your tasks and keep everything
@@ -28,9 +40,9 @@
       </p>
 
 
-      <!-- ============================= -->
+      <!-- ===================================== -->
       <!-- PROJECT FORM -->
-      <!-- ============================= -->
+      <!-- ===================================== -->
 
       <form
         class="project-form"
@@ -50,6 +62,7 @@
 
           </div>
 
+
           <div>
 
             <h2>
@@ -61,6 +74,7 @@
               }
 
             </h2>
+
 
             <p>
 
@@ -85,6 +99,7 @@
             Project Name
           </mat-label>
 
+
           <input
             matInput
             type="text"
@@ -94,8 +109,6 @@
 
         </mat-form-field>
 
-
-        <!-- REQUIRED ERROR -->
 
         @if(
           projectForm.get('name')?.touched &&
@@ -108,8 +121,6 @@
 
         }
 
-
-        <!-- MIN LENGTH ERROR -->
 
         @if(
           projectForm.get('name')?.touched &&
@@ -131,6 +142,7 @@
             Description
           </mat-label>
 
+
           <textarea
             matInput
             rows="3"
@@ -141,7 +153,7 @@
         </mat-form-field>
 
 
-        <!-- FORM BUTTONS -->
+        <!-- BUTTONS -->
 
         <div class="form-actions">
 
@@ -169,9 +181,7 @@
               class="cancel-button"
               (click)="resetForm()"
             >
-
               Cancel
-
             </button>
 
           }
@@ -185,16 +195,17 @@
   </aside>
 
 
-  <!-- ============================= -->
+
+  <!-- ========================================= -->
   <!-- RIGHT CONTENT -->
-  <!-- ============================= -->
+  <!-- ========================================= -->
 
   <main class="dashboard-content">
 
 
-    <!-- ============================= -->
-    <!-- CONTENT HEADER -->
-    <!-- ============================= -->
+    <!-- ===================================== -->
+    <!-- HEADER -->
+    <!-- ===================================== -->
 
     <div class="content-header">
 
@@ -204,9 +215,11 @@
           WORKSPACE
         </span>
 
+
         <h2>
           Your Projects
         </h2>
+
 
         <p>
           Select a project to view and manage its tasks.
@@ -220,7 +233,7 @@
       <div class="project-count">
 
         <strong>
-          {{ taskService.projects().length }}
+          {{ filteredProjects().length }}
         </strong>
 
         <span>
@@ -232,9 +245,75 @@
     </div>
 
 
-    <!-- ============================= -->
-    <!-- EMPTY STATE -->
-    <!-- ============================= -->
+
+    <!-- ===================================== -->
+    <!-- SEARCH -->
+    <!-- ===================================== -->
+
+    @if(taskService.projects().length > 0) {
+
+      <div class="project-search">
+
+        <mat-form-field
+          appearance="outline"
+          class="search-field"
+        >
+
+          <mat-label>
+            Search Projects
+          </mat-label>
+
+
+          <input
+            matInput
+            type="text"
+            [value]="projectSearch()"
+            (input)="onProjectSearch($event)"
+            placeholder="Search by project name"
+          >
+
+        </mat-form-field>
+
+      </div>
+
+    }
+
+
+
+    <!-- ===================================== -->
+    <!-- EMPTY SEARCH RESULT -->
+    <!-- ===================================== -->
+
+    @if(
+      taskService.projects().length > 0 &&
+      filteredProjects().length === 0
+    ) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🔍
+        </div>
+
+
+        <h3>
+          No projects found
+        </h3>
+
+
+        <p>
+          Try searching with a different project name.
+        </p>
+
+      </div>
+
+    }
+
+
+
+    <!-- ===================================== -->
+    <!-- NO PROJECTS -->
+    <!-- ===================================== -->
 
     @if(taskService.projects().length === 0) {
 
@@ -244,9 +323,11 @@
           📁
         </div>
 
+
         <h3>
           No projects yet
         </h3>
+
 
         <p>
           Create your first project from the panel on the left
@@ -258,11 +339,12 @@
     }
 
 
-    <!-- ============================= -->
-    <!-- PROJECT GRID -->
-    <!-- ============================= -->
 
-    @if(taskService.projects().length > 0) {
+    <!-- ===================================== -->
+    <!-- PROJECT GRID -->
+    <!-- ===================================== -->
+
+    @if(filteredProjects().length > 0) {
 
       <div class="project-grid">
 
@@ -271,9 +353,7 @@
           track project._id
         ) {
 
-          <!-- ============================= -->
           <!-- PROJECT CARD -->
-          <!-- ============================= -->
 
           <article class="project-card">
 
@@ -291,11 +371,13 @@
                   📁
                 </div>
 
+
                 <div class="project-info">
 
                   <h3>
                     {{ project.name }}
                   </h3>
+
 
                   <span class="project-label">
                     PROJECT
@@ -313,9 +395,8 @@
             </div>
 
 
-            <!-- ============================= -->
+
             <!-- DESCRIPTION -->
-            <!-- ============================= -->
 
             <div
               class="project-description"
@@ -339,14 +420,10 @@
             </div>
 
 
-            <!-- ============================= -->
+
             <!-- CARD FOOTER -->
-            <!-- ============================= -->
 
             <div class="card-footer">
-
-
-              <!-- VIEW TASKS -->
 
               <button
                 mat-button
@@ -364,8 +441,6 @@
               </button>
 
 
-              <!-- PROJECT ACTIONS -->
-
               <div class="project-actions">
 
                 <button
@@ -373,9 +448,7 @@
                   type="button"
                   (click)="editProject(project)"
                 >
-
                   Edit
-
                 </button>
 
 
@@ -385,9 +458,7 @@
                   class="delete-button"
                   (click)="deleteProject(project._id)"
                 >
-
                   Delete
-
                 </button>
 
               </div>
@@ -401,16 +472,17 @@
       </div>
 
 
-      <!-- ============================= -->
+
+      <!-- ===================================== -->
       <!-- PAGINATION -->
-      <!-- ============================= -->
+      <!-- ===================================== -->
 
       @if(totalPages > 1) {
 
         <div class="pagination">
 
 
-          <!-- PREVIOUS BUTTON -->
+          <!-- PREVIOUS -->
 
           <button
             type="button"
@@ -422,6 +494,7 @@
             ← Previous
 
           </button>
+
 
 
           <!-- PAGE NUMBERS -->
@@ -449,7 +522,8 @@
           </div>
 
 
-          <!-- NEXT BUTTON -->
+
+          <!-- NEXT -->
 
           <button
             type="button"
