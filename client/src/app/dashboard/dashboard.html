@@ -214,6 +214,26 @@
 
 
     <!-- ============================= -->
+<!-- PROJECT SEARCH -->
+<!-- ============================= -->
+
+<div class="project-search">
+
+  <span class="search-icon">
+    🔍
+  </span>
+
+  <input
+    type="text"
+    placeholder="Search projects..."
+    [value]="projectSearch()"
+    (input)="onProjectSearch($event)"
+  />
+
+</div>
+
+
+    <!-- ============================= -->
     <!-- EMPTY STATE -->
     <!-- ============================= -->
 
@@ -243,12 +263,12 @@
     <!-- PROJECT GRID -->
     <!-- ============================= -->
 
-    @if(taskService.projects().length > 0) {
+    @if(filteredProjects().length > 0) {
 
       <div class="project-grid">
 
         @for(
-          project of taskService.projects();
+          project of  filteredProjects();
           track project._id
         ) {
 

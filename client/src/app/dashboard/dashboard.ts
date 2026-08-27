@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { signal ,computed} from '@angular/core';
 
 import {
   FormBuilder,
@@ -36,6 +37,37 @@ export class Dashboard implements OnInit {
   // =========================
 
   projectForm!: FormGroup;
+
+  projectSearch = signal('');
+
+
+
+  onProjectSearch(event: Event): void {
+
+  const input = event.target as HTMLInputElement;
+
+  this.projectSearch.set(input.value);
+
+} 
+filteredProjects = computed(() => {
+
+  const search = this.projectSearch()
+    .toLowerCase()
+    .trim();
+
+  const projects = this.taskService.projects();
+
+  if (!search) {
+    return projects;
+  }
+
+  return projects.filter(project =>
+    project.name
+      .toLowerCase()
+      .includes(search)
+  );
+
+});
 
 
   // =========================

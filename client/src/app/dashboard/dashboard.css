@@ -816,3 +816,77 @@
   }
 
 }
+
+
+/* =========================================
+   PROJECT SEARCH
+========================================= */
+
+.project-search {
+  width: 100%;
+  max-width: 520px;
+
+  height: 46px;
+
+  margin: 22px 0;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe4f0;
+
+  border-radius: 10px;
+
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.05);
+
+  transition: 0.2s ease;
+}
+
+.project-search:focus-within {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.search-icon {
+  margin-right: 10px;
+
+  font-size: 14px;
+
+  opacity: 0.6;
+}
+
+.project-search input {
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #172033;
+
+  font-size: 13px;
+}
+
+.project-search input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .project-search {
+    max-width: 100%;
+  }
+
+}
