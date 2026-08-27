@@ -492,3 +492,30 @@ Angular frontend connected to the live API with JWT-based authentication
 Frontend: https://taskflow-1-0-bknj.onrender.com/
 
 Backend API: https://taskflow-5uoj.onrender.com/health
+
+# Day 28 – TaskFlow
+
+## Today's Progress
+
+- Added pagination to the Dashboard project list.
+- Added pagination to the Project Tasks page.
+- Implemented clickable page numbers for direct navigation.
+- Added Previous and Next controls.
+- Added task search and status filtering.
+- Improved responsive UI for Dashboard and Project Tasks.
+- Updated task and project forms with consistent styling.
+- Removed unnecessary console logs for production.
+- Fixed frontend CSS and production build issues.
+- Prepared the application for deployment on Render.
+
+## Key Learning
+
+- Client-side pagination in Angular.
+- Combining filtering with pagination.
+- Handling page navigation and page state.
+- Responsive CSS design.
+- Preparing Angular applications for production deployment.
+
+## Status
+
+TaskFlow frontend UI, filtering, pagination and production improvements completed.
