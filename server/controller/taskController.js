@@ -1,5 +1,5 @@
 import Task from "../models/Task.js";
-import Project from "../models/Project.js"
+import Project from "../models/Project.js";
 
 
 // =========================================
@@ -59,12 +59,6 @@ export const getTasksByProject = async (
         } = req.params;
 
 
-        console.log(
-            'Loading tasks for project:',
-            projectId
-        );
-
-
         const tasks = await Task.find({
 
             projectId: projectId,
@@ -79,12 +73,6 @@ export const getTasksByProject = async (
         .sort({
             createdAt: -1
         });
-
-
-        console.log(
-            'Project tasks found:',
-            tasks.length
-        );
 
 
         res.status(200).json({
@@ -176,33 +164,42 @@ export const createTask = async (
     try {
 
         const {
-
             title,
-
             description,
-
             status,
-
             priority,
-
             dueDate,
-
             projectId
-
         } = req.body;
 
 
-        //project ownership check
-        const project=await Project.findOne({
-            _id:projectId,
-            userId:req.user.id
+        // =====================================
+        // PROJECT OWNERSHIP CHECK
+        // =====================================
+
+        const project = await Project.findOne({
+            _id: projectId,
+            userId: req.user.id
         });
-        if(!project){
+
+
+        if (!project) {
+
             return res.status(403).json({
-                success:false,
-                message:'You are not authorized to use this project'
+
+                success: false,
+
+                message:
+                    'You are not authorized to use this project'
+
             });
+
         }
+
+
+        // =====================================
+        // CREATE TASK
+        // =====================================
 
         const task = await Task.create({
 
@@ -265,68 +262,13 @@ export const updateTask = async (
     try {
 
         const {
-
             title,
-
             description,
-
             status,
-
             priority,
-
             dueDate,
-
             projectId
-
         } = req.body;
-
-
-        // =====================================
-        // TITLE VALIDATION
-        // =====================================
-
-        if (!title) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: 'Task title is required'
-
-            });
-
-        }
-
-
-        if (typeof title !== 'string') {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message: 'Task title must be a string'
-
-            });
-
-        }
-
-
-        const trimmedTitle =
-            title.trim();
-
-
-        if (trimmedTitle.length < 3) {
-
-            return res.status(400).json({
-
-                success: false,
-
-                message:
-                    'Task title must be at least 3 characters'
-
-            });
-
-        }
 
 
         // =====================================
@@ -353,7 +295,11 @@ export const updateTask = async (
             });
 
         }
-       //owener ship validation
+
+
+        // =====================================
+        // PROJECT OWNERSHIP CHECK
+        // =====================================
 
         if (projectId !== undefined) {
 
@@ -384,12 +330,12 @@ export const updateTask = async (
 
         }
 
+
         // =====================================
-        // UPDATE
+        // UPDATE TASK
         // =====================================
 
-        task.title =
-            trimmedTitle;
+        task.title = title.trim();
 
 
         task.description =
@@ -415,13 +361,6 @@ export const updateTask = async (
         if (dueDate !== undefined) {
 
             task.dueDate = dueDate;
-
-        }
-
-
-        if (projectId !== undefined) {
-
-            task.projectId = projectId;
 
         }
 

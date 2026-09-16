@@ -3,6 +3,7 @@ import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Task } from '../models/task';
+import { environment } from '../../environments/environment';
 
 export interface Project {
   _id: string;
@@ -29,11 +30,9 @@ export class Services {
   // API URLS
   // =========================================
 
-  private apiUrl =
-    'https://taskflow-5uoj.onrender.com/api/tasks';
+private apiUrl = `${environment.apiUrl}/tasks`;
 
-  private projectApiUrl =
-    'https://taskflow-5uoj.onrender.com/api/projects';
+private projectApiUrl = `${environment.apiUrl}/projects`;
 
   constructor(private http: HttpClient) {}
 

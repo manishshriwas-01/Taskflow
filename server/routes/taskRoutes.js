@@ -14,8 +14,7 @@ import {
     updateTaskValidator
 } from '../validators/taskValidator.js';
 
-import { validate } from '../middleware/validationMiddleware.js';
-
+import { validate } from '../middleware/validate.js';
 const router = express.Router();
 
 

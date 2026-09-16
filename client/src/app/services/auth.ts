@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 interface AuthResponse {
   success: boolean;
@@ -21,7 +22,7 @@ export class AuthService {
 
   private tokenKey = 'token';
 
-  private apiUrl = 'https://taskflow-5uoj.onrender.com/api/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   loggedIn = signal(false);
 
