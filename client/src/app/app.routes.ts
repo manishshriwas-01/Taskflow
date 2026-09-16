@@ -49,7 +49,8 @@ export const routes: Routes = [
 
   {
     path: 'task/:id',
-    component: TaskDetails
+    component: TaskDetails,
+    canActivate: [authGuard]
   },
 
   {
