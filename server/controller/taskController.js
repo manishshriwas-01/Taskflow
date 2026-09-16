@@ -191,6 +191,18 @@ export const createTask = async (
         } = req.body;
 
 
+        //project ownership check
+        const project=await Project.findOne({
+            _id:projectId,
+            userId:req.user.id
+        });
+        if(!project){
+            return res.status(403).json({
+                success:false,
+                message:'You are not authorized to use this project'
+            });
+        }
+
         const task = await Task.create({
 
             title,
@@ -340,7 +352,36 @@ export const updateTask = async (
             });
 
         }
+       //owener ship validation
 
+        if (projectId !== undefined) {
+
+            const project = await Project.findOne({
+
+                _id: projectId,
+
+                userId: req.user.id
+
+            });
+
+
+            if (!project) {
+
+                return res.status(403).json({
+
+                    success: false,
+
+                    message:
+                        'You are not authorized to use this project'
+
+                });
+
+            }
+
+
+            task.projectId = projectId;
+
+        }
 
         // =====================================
         // UPDATE
