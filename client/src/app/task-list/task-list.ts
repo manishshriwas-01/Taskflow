@@ -139,7 +139,7 @@ export class TaskList implements OnInit {
       */
 
       status: [
-        'Pending',
+        'Todo',
         Validators.required
       ],
 
@@ -321,10 +321,10 @@ export class TaskList implements OnInit {
       };
 
 
-      console.log(
-        'Updating Task:',
-        updatedTask
-      );
+      // console.log(
+      //   'Updating Task:',
+      //   updatedTask
+      // );
 
 
       this.taskService
@@ -333,10 +333,10 @@ export class TaskList implements OnInit {
 
           next: (response) => {
 
-            console.log(
-              'Task Updated:',
-              response.data
-            );
+            // console.log(
+            //   'Task Updated:',
+            //   response.data
+            // );
 
 
             // Reload tasks
@@ -584,7 +584,7 @@ export class TaskList implements OnInit {
 
       description: '',
 
-      status: 'Pending',
+      status: 'Todo',
 
       priority: 'Medium',
 

@@ -11,7 +11,9 @@ export const createTaskValidator = [
 
     body('status')
         .notEmpty()
-        .withMessage('Status is required'),
+        .withMessage('Status is required')
+        .isIn(['Todo', 'In Progress', 'Done'])
+        .withMessage('Status must be Todo, In Progress, or Done'),
 
     body('priority')
         .notEmpty()
@@ -22,8 +24,6 @@ export const createTaskValidator = [
         .withMessage('Due date is required')
 
 ];
-
-
 
 
 export const updateTaskValidator = [
@@ -37,7 +37,9 @@ export const updateTaskValidator = [
 
     body('status')
         .notEmpty()
-        .withMessage('Status is required'),
+        .withMessage('Status is required')
+        .isIn(['Todo', 'In Progress', 'Done'])
+        .withMessage('Status must be Todo, In Progress, or Done'),
 
     body('priority')
         .notEmpty()

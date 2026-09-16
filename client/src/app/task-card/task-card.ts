@@ -20,7 +20,7 @@ import { Task } from '../models/task';
     RouterLinkActive,
     DatePipe,
     DueSoonPipe,
-    StatusColorDirective,
+  
     MatCardModule,
     MatButtonModule,
     MatIconModule
