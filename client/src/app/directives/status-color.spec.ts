@@ -1,8 +1,16 @@
-import { StatusColor } from './status-color';
+import { StatusColorDirective } from './status-color';
 
-describe('StatusColor', () => {
+describe('StatusColorDirective', () => {
+
   it('should create an instance', () => {
-    const directive = new StatusColor();
+
+    const directive = new StatusColorDirective(
+      {} as any,
+      {} as any
+    );
+
     expect(directive).toBeTruthy();
+
   });
+
 });

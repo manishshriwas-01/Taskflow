@@ -1,10 +1,7 @@
 import request from 'supertest';
-
 import mongoose from 'mongoose';
 
 import app from '../server.js';
-
-import { connectDB } from '../config/db.js';
 
 
 let token;
@@ -14,7 +11,18 @@ let projectId;
 
 beforeAll(async () => {
 
+    // Use separate test database
+    process.env.MONGODB_URI =
+        process.env.MONGODB_TEST_URI;
+
+    // Connect to test database
+    const { connectDB } =
+        await import('../config/db.js');
+
     await connectDB();
+
+    // Clear test database before running tests
+    await mongoose.connection.dropDatabase();
 
 
     const email =
@@ -204,6 +212,7 @@ describe('Task API', () => {
         }
     );
 
+
     // =========================================
     // GET TASKS BY PROJECT
     // =========================================
@@ -254,7 +263,6 @@ describe('Task API', () => {
         'GET /api/tasks/:id - should return a single task',
         async () => {
 
-            // First create a task
             const createResponse =
                 await request(app)
                     .post('/api/tasks')
@@ -289,7 +297,6 @@ describe('Task API', () => {
                 createResponse.body.data._id;
 
 
-            // Get task by ID
             const response =
                 await request(app)
                     .get(
@@ -327,6 +334,7 @@ describe('Task API', () => {
         }
     );
 
+
     // =========================================
     // UPDATE TASK
     // =========================================
@@ -335,7 +343,6 @@ describe('Task API', () => {
         'PUT /api/tasks/:id - should update a task',
         async () => {
 
-            // Create task first
             const createResponse =
                 await request(app)
                     .post('/api/tasks')
@@ -370,7 +377,6 @@ describe('Task API', () => {
                 createResponse.body.data._id;
 
 
-            // Update task
             const response =
                 await request(app)
                     .put(
@@ -448,7 +454,6 @@ describe('Task API', () => {
         'DELETE /api/tasks/:id - should delete a task',
         async () => {
 
-            // Create task first
             const createResponse =
                 await request(app)
                     .post('/api/tasks')
@@ -483,7 +488,6 @@ describe('Task API', () => {
                 createResponse.body.data._id;
 
 
-            // Delete task
             const response =
                 await request(app)
                     .delete(
@@ -499,7 +503,6 @@ describe('Task API', () => {
                 .toBe(204);
 
 
-            // Verify task no longer exists
             const getResponse =
                 await request(app)
                     .get(
@@ -524,6 +527,7 @@ describe('Task API', () => {
 
         }
     );
+
 
     // =========================================
     // GET TASK BY ID - NOT FOUND
@@ -561,6 +565,7 @@ describe('Task API', () => {
 
         }
     );
+
 
     // =========================================
     // CREATE TASK - VALIDATION ERROR
@@ -604,6 +609,7 @@ describe('Task API', () => {
         }
     );
 
+
     // =========================================
     // UPDATE TASK - VALIDATION ERROR
     // =========================================
@@ -612,7 +618,6 @@ describe('Task API', () => {
         'PUT /api/tasks/:id - should return 400 when title is missing',
         async () => {
 
-            // Create a valid task first
             const createResponse =
                 await request(app)
                     .post('/api/tasks')
@@ -647,7 +652,6 @@ describe('Task API', () => {
                 createResponse.body.data._id;
 
 
-            // Try updating without title
             const response =
                 await request(app)
                     .put(

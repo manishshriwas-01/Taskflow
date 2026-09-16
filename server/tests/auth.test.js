@@ -7,8 +7,15 @@ import { connectDB } from '../config/db.js';
 
 beforeAll(async () => {
 
-    // Connect to MongoDB before tests
+    // Use separate test database
+    process.env.MONGODB_URI =
+        process.env.MONGODB_TEST_URI;
+
+    // Connect to test database
     await connectDB();
+
+    // Clear test database before running tests
+    await mongoose.connection.dropDatabase();
 
 });
 
@@ -32,12 +39,9 @@ describe('Auth API', () => {
         'POST /api/auth/register - should register a new user',
         async () => {
 
-            // Create unique email for test user
             const uniqueEmail =
                 `test${Date.now()}@example.com`;
 
-
-            // Send registration request
             const response =
                 await request(app)
                     .post('/api/auth/register')
@@ -51,8 +55,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Check successful registration
             expect(response.statusCode)
                 .toBe(201);
 
@@ -85,8 +87,6 @@ describe('Auth API', () => {
             const email =
                 `duplicate${Date.now()}@example.com`;
 
-
-            // First registration
             await request(app)
                 .post('/api/auth/register')
                 .send({
@@ -99,8 +99,6 @@ describe('Auth API', () => {
 
                 });
 
-
-            // Try registering same email again
             const response =
                 await request(app)
                     .post('/api/auth/register')
@@ -114,8 +112,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Duplicate email should return 409
             expect(response.statusCode)
                 .toBe(409);
 
@@ -137,7 +133,6 @@ describe('Auth API', () => {
         'POST /api/auth/register - should reject invalid data',
         async () => {
 
-            // Send invalid registration data
             const response =
                 await request(app)
                     .post('/api/auth/register')
@@ -151,8 +146,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Validation should return 400
             expect(response.statusCode)
                 .toBe(400);
 
@@ -179,8 +172,6 @@ describe('Auth API', () => {
 
             const password = 'Test@12345';
 
-
-            // Create user before login
             await request(app)
                 .post('/api/auth/register')
                 .send({
@@ -193,8 +184,6 @@ describe('Auth API', () => {
 
                 });
 
-
-            // Login with correct credentials
             const response =
                 await request(app)
                     .post('/api/auth/login')
@@ -206,8 +195,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Check successful login
             expect(response.statusCode)
                 .toBe(200);
 
@@ -243,8 +230,6 @@ describe('Auth API', () => {
 
             const correctPassword = 'Test@12345';
 
-
-            // Create user
             await request(app)
                 .post('/api/auth/register')
                 .send({
@@ -257,8 +242,6 @@ describe('Auth API', () => {
 
                 });
 
-
-            // Login using wrong password
             const response =
                 await request(app)
                     .post('/api/auth/login')
@@ -270,8 +253,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Wrong password should return 401
             expect(response.statusCode)
                 .toBe(401);
 
@@ -295,7 +276,6 @@ describe('Auth API', () => {
         'POST /api/auth/login - should reject non-existing email',
         async () => {
 
-            // Login with email not present in database
             const response =
                 await request(app)
                     .post('/api/auth/login')
@@ -309,8 +289,6 @@ describe('Auth API', () => {
 
                     });
 
-
-            // Unknown email should return 401
             expect(response.statusCode)
                 .toBe(401);
 
